@@ -1,0 +1,313 @@
+Você é um Engenheiro de Software Sênior com foco em Frontend Architecture, Design Systems e prototipação rápida (vibe coding).
+
+Sua missão é elaborar um PLANO DE IMPLEMENTAÇÃO + ESTRUTURA DE CÓDIGO para um protótipo funcional baseado na página de categorias do portal do MS.
+
+---
+
+## 🎯 OBJETIVO
+
+Construir um protótipo funcional em React que reproduza a seção de "Categorias" do site https://www.ms.gov.br, com foco em:
+
+- Componentização máxima
+- Código limpo e escalável
+- Separação clara de responsabilidades
+- Facilidade de evolução futura (design system)
+
+---
+
+## ⚙️ CONTEXTO TÉCNICO
+
+- Stack: React (preferencialmente com Vite ou Next.js)
+- Estilo: CSS Modules ou Tailwind
+- Abordagem: Vibe Coding (rápida, pragmática, porém bem estruturada)
+- Integração: Possibilidade de acessar a URL via MCP para replicar estrutura visual
+
+---
+
+## 🧠 REQUISITOS PRINCIPAIS
+
+1. A interface deve replicar a seção de categorias (grid com ícones + títulos)
+2. Cada categoria deve conter subcategorias
+3. Os dados devem viver em um único JSON parametrizável (`src/data/categories.json`), facilmente editável e pronto para ser substituído por API
+4. Código deve ser altamente reutilizável e componentizado
+5. Preparar para futura integração com API real
+
+---
+
+## 📦 DADOS (CATEGORIAS E SUBCATEGORIAS)
+
+As categorias devem ser **parametrizáveis** via um único arquivo JSON: `src/data/categories.json`.
+
+**Regras:**
+- O JSON é a **única fonte de verdade** dos dados — nenhum componente deve ter dados hard-coded.
+- Estrutura: array de categorias, cada uma com `id`, `name`, `icon`, `count` e `subcategories[]` (aninhadas).
+- Editar uma categoria ou subcategoria deve ser tão simples quanto editar uma linha do JSON.
+- O app importa o JSON diretamente (`import categories from './data/categories.json'`) — preparado para no futuro ser substituído por um `fetch()` a uma API real sem alterar componentes.
+
+**Schema esperado:**
+
+```json
+[
+  {
+    "id": "administracao-publica",
+    "name": "Administração Pública",
+    "icon": "building",
+    "count": 122,
+    "subcategories": [
+      { "id": "processos-protocolos", "name": "Processos e Protocolos", "count": 69 },
+      { "id": "tecnologia-sistemas", "name": "Tecnologia, Sistemas e Inovação", "count": 33 },
+      { "id": "compras-contratos", "name": "Compras, Contratos e Fiscalização", "count": 13 },
+      { "id": "capacitacao-servidores", "name": "Capacitação de Servidores", "count": 7 }
+    ]
+  }
+]
+```
+
+**Gere o `categories.json` completo** com todas as 12 categorias e subcategorias listadas no final deste prompt.
+
+---
+
+## 🧩 O QUE VOCÊ DEVE ENTREGAR
+
+### 1. 🏗️ Arquitetura do Projeto
+
+- Estrutura de pastas completa (frontend)
+- Separação entre:
+  - components
+  - features
+  - data (contém `categories.json` — fonte única de dados)
+  - hooks
+  - services
+  - types
+
+---
+
+### 2. 🧱 Definição de Componentes
+
+Liste e explique os componentes necessários, como por exemplo:
+
+- CategoryGrid
+- CategoryCard
+- SubcategoryList
+- SubcategoryItem
+- IconWrapper
+- LayoutContainer
+
+Para cada componente:
+- Responsabilidade
+- Props (tipadas)
+- Regras de renderização
+
+---
+
+### 3. 🧬 Modelagem de Dados
+
+Crie os tipos/interfaces (TypeScript) para:
+
+- Category
+- Subcategory
+
+E um mock de dados organizado
+
+---
+
+### 4. 🧑‍💻 Implementação (CÓDIGO)
+
+Gere o código completo e funcional para:
+
+- Componente principal da página
+- Grid de categorias
+- Card de categoria
+- Lista de subcategorias (expand/collapse ou hover)
+
+Código deve seguir:
+- Clean Code
+- Componentização real (sem código monolítico)
+- Tipagem forte (TypeScript)
+
+---
+
+### 5. 🎨 Estratégia de Estilo
+
+- Sugira abordagem (Tailwind ou CSS Modules)
+- Defina padrões visuais reutilizáveis
+- Preparação para Design System futuro
+
+---
+
+### 6. ⚡ Estratégia de Evolução
+
+Explique como evoluir isso para:
+
+- Integração com API real
+- Internacionalização
+- Acessibilidade (a11y)
+- Performance (lazy loading, memo, etc.)
+
+---
+
+### 7. 🔌 Estratégia MCP com Playwright (EXECUTE AGORA)
+
+**Antes de gerar qualquer código**, utilize as ferramentas do Playwright MCP para inspecionar a página real:
+
+**Passo 1 — Navegação**
+Use `mcp__playwright__browser_navigate` para acessar `https://www.ms.gov.br`.
+
+**Passo 2 — Screenshot**
+Use `mcp__playwright__browser_screenshot` para capturar o estado visual e identificar o layout da seção de categorias.
+
+**Passo 3 — Snapshot de Acessibilidade**
+Use `mcp__playwright__browser_snapshot` para extrair a árvore semântica (roles, labels, hierarquia) da seção de categorias.
+
+**Passo 4 — Interação (se necessário)**
+Se as subcategorias estiverem colapsadas, use `mcp__playwright__browser_click` para expandi-las e tire um novo snapshot.
+
+**Passo 5 — Mapeamento para Componentes**
+Com base no que foi extraído, identifique:
+- Seletores/classes dos containers de categoria
+- Estrutura real dos ícones (SVG inline, `<img>`, icon font?)
+- Marcação HTML das subcategorias
+- Comportamento de interação (hover, click, expand)
+
+Use esses dados para gerar componentes React que reflitam a estrutura **real** da página.
+
+---
+
+## 📌 REGRAS IMPORTANTES
+
+- NÃO gerar código bagunçado ou tudo em um arquivo
+- NÃO usar lógica inline complexa dentro de JSX
+- PRIORIZE reutilização e legibilidade
+- PENSE como se isso fosse virar produção
+
+---
+
+## 🎯 OUTPUT ESPERADO
+
+Quero uma resposta estruturada, com:
+
+1. Explicação da arquitetura
+2. Estrutura de pastas
+3. Definição dos componentes
+4. Tipos (interfaces)
+5. Código organizado por arquivos
+6. Estratégia de evolução
+
+Se possível, pense como um Tech Lead orientando um time júnior a implementar isso.
+
+---
+
+## 📋 LISTA DE CATEGORIAS (fonte para gerar o `categories.json`)
+
+*Administração Pública* — 122 cartas
+
+- Processos e Protocolos — 69
+- Tecnologia, Sistemas e Inovação — 33
+- Compras, Contratos e Fiscalização — 13
+- Capacitação de Servidores — 7
+
+---
+
+*Agropecuária e Meio Ambiente* — 166 cartas
+
+- Fiscalização do Campo e do Meio Ambiente — 39
+- Saúde, Criação e Movimentação de Animais — 38
+- Defesa das Plantas, Agrotóxicos e Certificação — 28
+- Registro de Animais, Propriedades e Terras Rurais — 33
+- Alimentos de Origem Animal — 11
+- Água, Fauna, Flora e Meio Ambiente — 17
+
+---
+
+*Assistência Social, Habitação e Cidadania* — 39 cartas
+
+- Direitos Humanos, Diversidade e Igualdade — 11
+- Proteção à Mulher, Crianças e Pessoas Vulneráveis — 6
+- Benefícios Sociais e Programas de Moradia — 8
+- Documentos, Identidade e Atendimento ao Cidadão — 9
+- Defesa do Consumidor — 5
+
+---
+
+*Ciência, Educação e Pesquisa* — 137 cartas
+
+- Ensino Superior — Acesso, Matrícula e Serviços — 54
+- Ensino Básico e Médio — 21
+- Educação Inclusiva, Especial e para Adultos — 16
+- Documentos e Históricos Escolares — 17
+- Biblioteca, Pesquisa e Extensão — 18
+- Cursos Técnicos, Bolsas e Apoio ao Estudante — 11
+
+---
+
+*Arte, Esporte e Turismo* — 29 cartas
+
+- Esporte, Lazer e Atividade Física — 10
+- Turismo e Patrimônio Cultural — 7
+- Museus, Bibliotecas, Arte e Cultura — 12
+
+---
+
+*Comunicação e Transparência* — 135 cartas
+
+- Ouvidoria — 84
+- Acesso à Informação — 38
+- Transparência, Dados e Comunicação Pública — 13
+
+---
+
+*Empresas e Negócios* — 25 cartas
+
+- Abrir, Alterar ou Fechar uma Empresa — 5
+- Certidões e Documentos Empresariais — 9
+- Qualidade, Pesos, Medidas e Incentivos — 11
+
+---
+
+*Finanças e Impostos* — 289 cartas
+
+- Impostos Estaduais — 69
+- Cadastro Fiscal e Nota Fiscal — 63
+- Isenções, Benefícios e Regimes Especiais — 73
+- Declarações, Obrigações e Fiscalização — 40
+- Pagamentos, Parcelamentos e Dívida com o Estado — 21
+- Recursos, Certidões e Restituições — 23
+
+---
+
+*Justiça e Segurança* — 41 cartas
+
+- Policiamento, Boletim de Ocorrência e Proteção à Mulher — 11
+- Bombeiros, Incêndios e Defesa Civil — 14
+- Sistema Prisional e Medidas Socioeducativas — 11
+- Programas de Prevenção e Cidadania — 5
+
+---
+
+*Saúde* — 38 cartas
+
+- Consultas, Exames e Atendimento — 14
+- Medicamentos — 11
+- Internação, Urgência e Emergência — 3
+- Vigilância Sanitária — 4
+- Doação, Programas e Saúde da Mulher — 6
+
+---
+
+*Trabalho e Previdência* — 46 cartas
+
+- Aposentadoria, Pensão e Benefícios — 17
+- Saúde e Situação Funcional do Servidor — 13
+- Emprego, Vagas e Qualificação Profissional — 8
+- Contribuição Previdenciária e Recadastramento — 8
+
+---
+
+*Trânsito, Transportes e Infraestrutura* — 142 cartas
+
+- Carteira de Habilitação — 34
+- Documentos do Veículo e Licenciamento — 18
+- Multas, Educação e Segurança no Trânsito — 12
+- Transporte de Passageiros, Passe Livre e Rodovias — 16
+- Serviços de Água, Esgoto e Saneamento — 46
+- Gás Natural e Energia — 16

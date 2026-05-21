@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gem install *)",
+      "PowerShell(gem install *)",
+      "PowerShell(Get-Command *)",
+      "PowerShell(gem *)",
+      "Bash(npm install *)",
+      "Bash(curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh)",
+      "Bash(sh)",
+      "Bash(curl -fsSL \"https://api.github.com/repos/rtk-ai/rtk/releases/latest\")",
+      "Bash(python -c \"import sys,json; r=json.load\\(sys.stdin\\); [print\\(a['name']\\) for a in r.get\\('assets',[]\\)]\")",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\dichiy.SEGOV\\\\Desktop\\\\SETDIG\\\\projeto xvia\\\\estudo das categorias\\\\prototipo\" -Recurse -Force)",
+      "Bash(Select-Object FullName)",
+      "Bash(Sort-Object FullName)"
+    ]
+  }
+}
