@@ -1,0 +1,153 @@
+[
+  {
+    "id": "administracao-publica",
+    "name": "Administração Pública",
+    "icon": "account_balance",
+    "count": 122,
+    "subcategories": [
+      { "id": "processos-protocolos", "name": "Processos e Protocolos", "count": 69 },
+      { "id": "tecnologia-sistemas", "name": "Tecnologia, Sistemas e Inovação", "count": 33 },
+      { "id": "compras-contratos", "name": "Compras, Contratos e Fiscalização", "count": 13 },
+      { "id": "capacitacao-servidores", "name": "Capacitação de Servidores", "count": 7 }
+    ]
+  },
+  {
+    "id": "agropecuaria-meio-ambiente",
+    "name": "Agropecuária e Meio Ambiente",
+    "icon": "agriculture",
+    "count": 166,
+    "subcategories": [
+      { "id": "fiscalizacao-campo-meio-ambiente", "name": "Fiscalização do Campo e do Meio Ambiente", "count": 39 },
+      { "id": "saude-criacao-movimentacao-animais", "name": "Saúde, Criação e Movimentação de Animais", "count": 38 },
+      { "id": "defesa-plantas-agrotoxicos", "name": "Defesa das Plantas, Agrotóxicos e Certificação", "count": 28 },
+      { "id": "registro-animais-propriedades", "name": "Registro de Animais, Propriedades e Terras Rurais", "count": 33 },
+      { "id": "alimentos-origem-animal", "name": "Alimentos de Origem Animal", "count": 11 },
+      { "id": "agua-fauna-flora-meio-ambiente", "name": "Água, Fauna, Flora e Meio Ambiente", "count": 17 }
+    ]
+  },
+  {
+    "id": "assistencia-social-habitacao-cidadania",
+    "name": "Assistência Social, Habitação e Cidadania",
+    "icon": "diversity_3",
+    "count": 39,
+    "subcategories": [
+      { "id": "direitos-humanos-diversidade", "name": "Direitos Humanos, Diversidade e Igualdade", "count": 11 },
+      { "id": "protecao-mulher-criancas", "name": "Proteção à Mulher, Crianças e Pessoas Vulneráveis", "count": 6 },
+      { "id": "beneficios-sociais-moradia", "name": "Benefícios Sociais e Programas de Moradia", "count": 8 },
+      { "id": "documentos-identidade-cidadao", "name": "Documentos, Identidade e Atendimento ao Cidadão", "count": 9 },
+      { "id": "defesa-consumidor", "name": "Defesa do Consumidor", "count": 5 }
+    ]
+  },
+  {
+    "id": "ciencia-educacao-pesquisa",
+    "name": "Ciência, Educação e Pesquisa",
+    "icon": "auto_stories",
+    "count": 137,
+    "subcategories": [
+      { "id": "ensino-superior", "name": "Ensino Superior — Acesso, Matrícula e Serviços", "count": 54 },
+      { "id": "ensino-basico-medio", "name": "Ensino Básico e Médio", "count": 21 },
+      { "id": "educacao-inclusiva", "name": "Educação Inclusiva, Especial e para Adultos", "count": 16 },
+      { "id": "documentos-historicos-escolares", "name": "Documentos e Históricos Escolares", "count": 17 },
+      { "id": "biblioteca-pesquisa-extensao", "name": "Biblioteca, Pesquisa e Extensão", "count": 18 },
+      { "id": "cursos-tecnicos-bolsas", "name": "Cursos Técnicos, Bolsas e Apoio ao Estudante", "count": 11 }
+    ]
+  },
+  {
+    "id": "arte-esporte-turismo",
+    "name": "Arte, Esporte e Turismo",
+    "icon": "theater_comedy",
+    "count": 29,
+    "subcategories": [
+      { "id": "esporte-lazer-atividade-fisica", "name": "Esporte, Lazer e Atividade Física", "count": 10 },
+      { "id": "turismo-patrimonio-cultural", "name": "Turismo e Patrimônio Cultural", "count": 7 },
+      { "id": "museus-bibliotecas-arte", "name": "Museus, Bibliotecas, Arte e Cultura", "count": 12 }
+    ]
+  },
+  {
+    "id": "comunicacao-transparencia",
+    "name": "Comunicação e Transparência",
+    "icon": "campaign",
+    "count": 135,
+    "subcategories": [
+      { "id": "ouvidoria", "name": "Ouvidoria", "count": 84 },
+      { "id": "acesso-informacao", "name": "Acesso à Informação", "count": 38 },
+      { "id": "transparencia-dados-comunicacao", "name": "Transparência, Dados e Comunicação Pública", "count": 13 }
+    ]
+  },
+  {
+    "id": "empresas-negocios",
+    "name": "Empresas e Negócios",
+    "icon": "apartment",
+    "count": 25,
+    "subcategories": [
+      { "id": "abrir-alterar-fechar-empresa", "name": "Abrir, Alterar ou Fechar uma Empresa", "count": 5 },
+      { "id": "certidoes-documentos-empresariais", "name": "Certidões e Documentos Empresariais", "count": 9 },
+      { "id": "qualidade-pesos-medidas-incentivos", "name": "Qualidade, Pesos, Medidas e Incentivos", "count": 11 }
+    ]
+  },
+  {
+    "id": "financas-impostos",
+    "name": "Finanças e Impostos",
+    "icon": "currency_exchange",
+    "count": 289,
+    "subcategories": [
+      { "id": "impostos-estaduais", "name": "Impostos Estaduais", "count": 69 },
+      { "id": "cadastro-fiscal-nota-fiscal", "name": "Cadastro Fiscal e Nota Fiscal", "count": 63 },
+      { "id": "isencoes-beneficios-regimes-especiais", "name": "Isenções, Benefícios e Regimes Especiais", "count": 73 },
+      { "id": "declaracoes-obrigacoes-fiscalizacao", "name": "Declarações, Obrigações e Fiscalização", "count": 40 },
+      { "id": "pagamentos-parcelamentos-divida", "name": "Pagamentos, Parcelamentos e Dívida com o Estado", "count": 21 },
+      { "id": "recursos-certidoes-restituicoes", "name": "Recursos, Certidões e Restituições", "count": 23 }
+    ]
+  },
+  {
+    "id": "justica-seguranca",
+    "name": "Justiça e Segurança",
+    "icon": "balance",
+    "count": 41,
+    "subcategories": [
+      { "id": "policiamento-bo-protecao-mulher", "name": "Policiamento, Boletim de Ocorrência e Proteção à Mulher", "count": 11 },
+      { "id": "bombeiros-incendios-defesa-civil", "name": "Bombeiros, Incêndios e Defesa Civil", "count": 14 },
+      { "id": "sistema-prisional-socioeducativas", "name": "Sistema Prisional e Medidas Socioeducativas", "count": 11 },
+      { "id": "prevencao-cidadania", "name": "Programas de Prevenção e Cidadania", "count": 5 }
+    ]
+  },
+  {
+    "id": "saude",
+    "name": "Saúde",
+    "icon": "medical_services",
+    "count": 38,
+    "subcategories": [
+      { "id": "consultas-exames-atendimento", "name": "Consultas, Exames e Atendimento", "count": 14 },
+      { "id": "medicamentos", "name": "Medicamentos", "count": 11 },
+      { "id": "internacao-urgencia-emergencia", "name": "Internação, Urgência e Emergência", "count": 3 },
+      { "id": "vigilancia-sanitaria", "name": "Vigilância Sanitária", "count": 4 },
+      { "id": "doacao-programas-saude-mulher", "name": "Doação, Programas e Saúde da Mulher", "count": 6 }
+    ]
+  },
+  {
+    "id": "trabalho-previdencia",
+    "name": "Trabalho e Previdência",
+    "icon": "work",
+    "count": 46,
+    "subcategories": [
+      { "id": "aposentadoria-pensao-beneficios", "name": "Aposentadoria, Pensão e Benefícios", "count": 17 },
+      { "id": "saude-situacao-servidor", "name": "Saúde e Situação Funcional do Servidor", "count": 13 },
+      { "id": "emprego-vagas-qualificacao", "name": "Emprego, Vagas e Qualificação Profissional", "count": 8 },
+      { "id": "contribuicao-previdenciaria-recadastramento", "name": "Contribuição Previdenciária e Recadastramento", "count": 8 }
+    ]
+  },
+  {
+    "id": "transito-transportes-infraestrutura",
+    "name": "Trânsito, Transportes e Infraestrutura",
+    "icon": "directions_car",
+    "count": 142,
+    "subcategories": [
+      { "id": "carteira-habilitacao", "name": "Carteira de Habilitação", "count": 34 },
+      { "id": "documentos-veiculo-licenciamento", "name": "Documentos do Veículo e Licenciamento", "count": 18 },
+      { "id": "multas-educacao-seguranca-transito", "name": "Multas, Educação e Segurança no Trânsito", "count": 12 },
+      { "id": "transporte-passageiros-rodovias", "name": "Transporte de Passageiros, Passe Livre e Rodovias", "count": 16 },
+      { "id": "agua-esgoto-saneamento", "name": "Serviços de Água, Esgoto e Saneamento", "count": 46 },
+      { "id": "gas-natural-energia", "name": "Gás Natural e Energia", "count": 16 }
+    ]
+  }
+]

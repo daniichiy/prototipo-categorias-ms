@@ -1,0 +1,6 @@
+.icon {
+  font-size: var(--icon-size);
+  color: var(--color-primary);
+  line-height: 1;
+  display: inline-block;
+}

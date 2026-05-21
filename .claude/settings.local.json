@@ -12,7 +12,19 @@
       "Bash(python -c \"import sys,json; r=json.load\\(sys.stdin\\); [print\\(a['name']\\) for a in r.get\\('assets',[]\\)]\")",
       "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\dichiy.SEGOV\\\\Desktop\\\\SETDIG\\\\projeto xvia\\\\estudo das categorias\\\\prototipo\" -Recurse -Force)",
       "Bash(Select-Object FullName)",
-      "Bash(Sort-Object FullName)"
+      "Bash(Sort-Object FullName)",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_snapshot",
+      "mcp__playwright__browser_take_screenshot",
+      "mcp__playwright__browser_evaluate",
+      "mcp__playwright__browser_close",
+      "Bash(npx tsc *)",
+      "Bash(npm run *)",
+      "mcp__playwright__browser_click"
     ]
-  }
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "playwright"
+  ]
 }

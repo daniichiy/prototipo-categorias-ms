@@ -1,0 +1,16 @@
+.page {
+  min-height: 100vh;
+  padding-block: var(--space-6);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.status {
+  text-align: center;
+  color: var(--color-muted);
+  padding: var(--space-5);
+}
