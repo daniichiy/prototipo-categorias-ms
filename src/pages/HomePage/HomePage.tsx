@@ -43,12 +43,9 @@ export function HomePage() {
   return (
     <main className={styles.page}>
       <PromoBanner
-        eyebrow="IPVA 2026"
-        title="Parcelou o IPVA? Atenção ao prazo"
-        description="A 5ª parcela vence em 29 de maio. Pague online com Pix, cartão ou débito automático."
-        ctaLabel="Pagar IPVA"
+        imageUrl="https://noticias.ms.gov.br/uploads/midias/7b4e0e834ce24be391415f426c051424.png"
         ctaUrl="https://www.sefaz.ms.gov.br/ipva/"
-        deadline="29.05"
+        alt="IPVA 2026 — campanha oficial do Governo do Estado de Mato Grosso do Sul"
       />
 
       <SearchBar />
