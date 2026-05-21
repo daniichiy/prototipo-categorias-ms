@@ -20,7 +20,14 @@
       "mcp__playwright__browser_close",
       "Bash(npx tsc *)",
       "Bash(npm run *)",
-      "mcp__playwright__browser_click"
+      "mcp__playwright__browser_click",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "PowerShell(Resolve-Path *)",
+      "WebFetch(domain:www.ms.gov.br)",
+      "Bash(python *)",
+      "Bash(node *)",
+      "PowerShell(Get-Process *)",
+      "PowerShell(Remove-Item *)"
     ]
   },
   "enableAllProjectMcpServers": true,

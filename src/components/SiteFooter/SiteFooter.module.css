@@ -1,0 +1,185 @@
+.footer {
+  margin-top: var(--space-8);
+}
+
+.topBand {
+  background-color: var(--color-bg);
+  border-top: 1px solid var(--color-rule);
+  padding-block: var(--space-6);
+}
+
+.topInner {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--space-5);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+}
+
+@media (min-width: 640px)  { .topInner { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 960px)  { .topInner { grid-template-columns: repeat(4, 1fr); gap: var(--space-7); } }
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.columnTitle {
+  font-size: var(--size-2);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-wider);
+  color: var(--color-primary);
+  text-transform: uppercase;
+  padding-bottom: var(--space-2);
+  border-bottom: 2px solid var(--color-primary);
+}
+
+.columnList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.columnList a {
+  font-size: var(--size-2);
+  color: var(--color-text);
+  transition: color var(--transition-fast);
+}
+
+.columnList a:hover {
+  color: var(--color-primary);
+}
+
+.addressBand {
+  background-color: var(--color-page);
+  border-top: 1px solid var(--color-rule);
+  padding-block: var(--space-6);
+}
+
+.addressInner {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--space-5);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .addressInner { grid-template-columns: 1.5fr auto; }
+}
+
+.addressBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.addressTitle {
+  font-size: var(--size-3);
+  font-weight: var(--weight-bold);
+  color: var(--color-primary);
+  margin-bottom: 4px;
+}
+
+.addressLine {
+  font-size: var(--size-2);
+  color: var(--color-text);
+}
+
+.mapLink {
+  margin-top: var(--space-3);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--size-2);
+  font-weight: var(--weight-semibold);
+  color: var(--color-primary);
+  align-self: flex-start;
+}
+
+.mapLink:hover { text-decoration: underline; }
+
+.mapLink .material-icons { font-size: 18px; }
+
+.brandBadge {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3) var(--space-5);
+  background-color: var(--color-primary-dark);
+  color: #ffffff;
+  border-radius: var(--radius-sm);
+  min-width: 200px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.badgeKicker {
+  font-size: 10px;
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.badgeName {
+  font-size: var(--size-5);
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.2px;
+  margin-top: 2px;
+}
+
+.badgeFlag {
+  display: block;
+  width: 36px;
+  height: 4px;
+  background: linear-gradient(to right, var(--color-yellow) 0%, var(--color-yellow) 50%, #ffffff 50%, #ffffff 100%);
+  margin-top: 8px;
+  border-radius: 2px;
+}
+
+.setdigBand {
+  background-color: var(--color-primary-dark);
+  padding-block: var(--space-3);
+}
+
+.setdigInner {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--space-5);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.setdigText {
+  font-size: var(--size-2);
+  color: #ffffff;
+}
+
+.setdigText strong { font-weight: var(--weight-bold); }
+
+.setdigLinks {
+  display: flex;
+  gap: var(--space-4);
+}
+
+.setdigLinks a {
+  font-size: var(--size-2);
+  color: #ffffff;
+  opacity: 0.92;
+  transition: opacity var(--transition-fast);
+}
+
+.setdigLinks a:hover {
+  opacity: 1;
+  text-decoration: underline;
+}

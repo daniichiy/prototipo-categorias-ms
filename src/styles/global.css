@@ -1,11 +1,32 @@
 @import './tokens.css';
 @import './reset.css';
 
-body {
+html {
   font-family: var(--font-sans);
-  font-size: var(--font-size-base);
+  font-size: var(--size-4);
   color: var(--color-text);
-  background-color: var(--color-page);
+  background-color: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  min-height: 100dvh;
+}
+
+p {
+  line-height: var(--leading-normal);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-sans);
+  color: var(--color-primary);
+  line-height: var(--leading-snug);
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
 }
 
 :focus-visible {
@@ -19,6 +40,8 @@ body {
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

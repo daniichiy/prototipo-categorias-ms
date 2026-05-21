@@ -1,0 +1,84 @@
+.section {
+  background-color: var(--color-page);
+  padding-block: var(--space-7);
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: var(--space-5);
+  text-align: center;
+}
+
+.title {
+  font-size: var(--size-7);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+.subtitle {
+  font-size: var(--size-3);
+  color: var(--color-muted);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3);
+}
+
+@media (min-width: 640px)  { .grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 960px)  { .grid { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 1200px) { .grid { grid-template-columns: repeat(6, 1fr); } }
+
+.cell { list-style: none; }
+
+.tile {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-3);
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-sm);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.tile:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.tileMark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  font-size: var(--size-4);
+  font-weight: var(--weight-bold);
+  color: #ffffff;
+  flex-shrink: 0;
+  letter-spacing: 0.5px;
+}
+
+.tone-blue  .tileMark { background-color: var(--color-primary); }
+.tone-navy  .tileMark { background-color: var(--color-primary-dark); }
+.tone-green .tileMark { background-color: var(--color-success); }
+.tone-gold  .tileMark { background-color: #d4870d; }
+.tone-red   .tileMark { background-color: #c0392b; }
+
+.tileLabel {
+  font-size: var(--size-2);
+  font-weight: var(--weight-semibold);
+  color: var(--color-primary);
+  line-height: 1.25;
+}

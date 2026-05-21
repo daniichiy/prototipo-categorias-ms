@@ -1,0 +1,17 @@
+.page {
+  display: flex;
+  flex-direction: column;
+}
+
+.body {
+  background-color: var(--color-page);
+  padding-block: var(--space-6);
+  flex: 1;
+}
+
+.status {
+  text-align: center;
+  color: var(--color-muted);
+  padding: var(--space-7);
+  font-size: var(--size-3);
+}

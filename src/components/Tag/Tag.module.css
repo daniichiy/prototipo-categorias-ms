@@ -1,0 +1,28 @@
+.tag {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+  line-height: 1.4;
+}
+
+.neutral {
+  background-color: var(--color-tag-bg);
+  color: var(--color-tag-ink);
+}
+
+.success {
+  background-color: var(--color-success-soft);
+  color: var(--color-success);
+}
+
+.accent {
+  background-color: var(--color-accent-soft);
+  color: var(--color-accent-ink);
+}

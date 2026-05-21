@@ -1,0 +1,11 @@
+.page {
+  display: flex;
+  flex-direction: column;
+}
+
+.status {
+  text-align: center;
+  color: var(--color-muted);
+  padding: var(--space-7);
+  font-size: var(--size-3);
+}

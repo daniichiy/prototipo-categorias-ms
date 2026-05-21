@@ -1,0 +1,15 @@
+.list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+  padding-block: var(--space-4) var(--space-5);
+}
+
+.cell { list-style: none; }
+
+.empty {
+  font-size: var(--size-3);
+  color: var(--color-muted);
+  padding: var(--space-4);
+  font-style: italic;
+}

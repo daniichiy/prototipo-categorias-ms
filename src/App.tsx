@@ -1,31 +1,19 @@
-import { LayoutContainer } from '@/components/LayoutContainer';
-import { SectionHeader } from '@/components/SectionHeader';
-import { CategoryGrid } from '@/features/categories/CategoryGrid';
-import { useCategories } from '@/hooks/useCategories';
-import styles from './App.module.css';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { SiteHeader } from '@/components/SiteHeader';
+import { SiteFooter } from '@/components/SiteFooter';
+import { HomePage } from '@/pages/HomePage';
+import { CategoryPage } from '@/pages/CategoryPage';
 
 export function App() {
-  const { data, loading, error } = useCategories();
-
   return (
-    <main className={styles.page}>
-      <LayoutContainer as="section" className={styles.section}>
-        <SectionHeader
-          id="categorias-title"
-          title="Categorias"
-          subtitle="Encontre o serviço desejado navegando pelas categorias abaixo."
-        />
-
-        {loading ? (
-          <p className={styles.status}>Carregando categorias…</p>
-        ) : error ? (
-          <p className={styles.status} role="alert">
-            Não foi possível carregar as categorias.
-          </p>
-        ) : (
-          <CategoryGrid categories={data} labelledBy="categorias-title" />
-        )}
-      </LayoutContainer>
-    </main>
+    <>
+      <SiteHeader />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/categoria/:id" element={<CategoryPage />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+      <SiteFooter />
+    </>
   );
 }
