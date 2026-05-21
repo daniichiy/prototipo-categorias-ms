@@ -10,3 +10,5 @@ dist-ssr
 !.vscode/extensions.json
 
 .playwright-mcp
+
+.claude/settings.local.json
