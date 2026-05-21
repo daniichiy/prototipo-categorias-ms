@@ -9,11 +9,10 @@ interface Props {
 export function AccordionList({ subcategories }: Props) {
   return (
     <div className={styles.list} role="region" aria-label="Subcategorias">
-      {subcategories.map((sub, idx) => (
+      {subcategories.map((sub) => (
         <AccordionItem
           key={sub.id}
           subcategory={sub}
-          defaultOpen={idx === 0}
         />
       ))}
     </div>

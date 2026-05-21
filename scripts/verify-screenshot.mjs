@@ -3,7 +3,6 @@ import { chromium } from 'playwright-core';
 const URL = 'http://localhost:5173';
 
 async function main() {
-  // Tenta vários paths comuns de Chrome no Windows
   const candidates = [
     'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
     'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe',
@@ -35,12 +34,26 @@ async function main() {
   await page.screenshot({ path: './verify-category.png', fullPage: true });
   const titleCat = await page.locator('h1').first().innerText();
   const accordionCount = await page.locator('button[aria-expanded]').count();
-  const firstSubcatExpanded = await page.locator('button[aria-expanded="true"]').count();
-  const firstCardHref = await page.locator('a[target="_blank"]').first().getAttribute('href');
+  const closedByDefault = await page.locator('button[aria-expanded="false"]').count();
+
+  // Open the first accordion and screenshot to validate ServiceCard rendering
+  console.log('Opening first accordion…');
+  await page.locator('button[aria-expanded]').first().click();
+  await page.waitForTimeout(500);
+  const firstCardHref = await page.locator('a[target="_blank"][href*="ms.gov.br"]').first().getAttribute('href');
+  // Check that service cards have NO material icon child
+  const cardsWithIcon = await page.locator('a[target="_blank"][href*="ms.gov.br"] > .material-icons').count();
+  await page.screenshot({ path: './verify-category-expanded.png', fullPage: true });
 
   console.log(JSON.stringify({
     home: { title: titleHome, headline: headlineHome, categoryCards: cardsCount },
-    category: { headline: titleCat, accordions: accordionCount, openByDefault: firstSubcatExpanded, firstCardUrl: firstCardHref },
+    category: {
+      headline: titleCat,
+      accordions: accordionCount,
+      closedByDefault,
+      firstCardUrl: firstCardHref,
+      serviceCardsLeftIcons: cardsWithIcon,
+    },
   }, null, 2));
 
   await browser.close();

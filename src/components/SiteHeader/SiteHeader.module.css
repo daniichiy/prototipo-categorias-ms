@@ -42,34 +42,19 @@
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
   color: #ffffff;
+  flex-shrink: 0;
 }
 
-.brandShield {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border: 1.5px solid #ffffff;
-  border-radius: var(--radius-sm);
+.brandLogo {
+  height: 40px;
+  width: auto;
+  display: block;
 }
 
-.brandText {
-  display: inline-flex;
-  align-items: baseline;
-  color: #ffffff;
-  font-weight: var(--weight-bold);
-  font-size: var(--size-6);
-  letter-spacing: 0.5px;
-  line-height: 1;
+@media (max-width: 640px) {
+  .brandLogo { height: 32px; }
 }
-
-.brandMs { color: #ffffff; }
-.brandDot { color: var(--color-yellow); padding-inline: 1px; }
-.brandGov { color: #ffffff; }
-.brandBr { color: #ffffff; }
 
 .nav { display: none; }
 

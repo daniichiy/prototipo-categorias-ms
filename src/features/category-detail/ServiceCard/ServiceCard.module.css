@@ -23,13 +23,6 @@
 .card:hover .title { color: var(--color-primary-ink); }
 .card:hover .arrow { color: var(--color-primary); }
 
-.icon {
-  font-size: 32px;
-  color: var(--color-primary);
-  flex-shrink: 0;
-  line-height: 1;
-}
-
 .body {
   flex: 1;
   display: flex;

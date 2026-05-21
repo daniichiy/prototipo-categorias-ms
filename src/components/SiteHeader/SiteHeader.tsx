@@ -32,16 +32,11 @@ export function SiteHeader() {
       <div className={styles.main}>
         <div className={styles.mainInner}>
           <Link to="/" className={styles.brand} aria-label="ms.gov.br — Página inicial">
-            <span className={styles.brandShield} aria-hidden="true">
-              <IconWrapper name="account_balance" size={26} color="#ffffff" ariaHidden />
-            </span>
-            <span className={styles.brandText}>
-              <span className={styles.brandMs}>ms</span>
-              <span className={styles.brandDot}>.</span>
-              <span className={styles.brandGov}>gov</span>
-              <span className={styles.brandDot}>.</span>
-              <span className={styles.brandBr}>br</span>
-            </span>
+            <img
+              src="https://noticias.ms.gov.br/uploads/midias/b61e2cfe41ee46169b616c9168911172.svg"
+              alt="ms.gov.br"
+              className={styles.brandLogo}
+            />
           </Link>
 
           <nav className={styles.nav} aria-label="Menu principal">
