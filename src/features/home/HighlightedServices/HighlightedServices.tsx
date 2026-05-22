@@ -6,10 +6,10 @@ import styles from './HighlightedServices.module.css';
 type Audience = 'Cidadão' | 'Servidor Público' | 'Empresa' | 'Gestão Pública';
 
 const AUDIENCES: { id: Audience; categoriesHint: string[] }[] = [
-  { id: 'Cidadão', categoriesHint: ['saude-cuidado', 'transito-transportes-infraestrutura', 'assistencia-social-habitacao-cidadania', 'ciencia-educacao-pesquisa'] },
-  { id: 'Servidor Público', categoriesHint: ['trabalho-emprego-previdencia', 'administracao-publica'] },
-  { id: 'Empresa', categoriesHint: ['empresa-industria-comercio', 'financas-impostos', 'agropecuaria-meio-ambiente'] },
-  { id: 'Gestão Pública', categoriesHint: ['comunicacao-transparencia', 'justica-seguranca'] },
+  { id: 'Cidadão', categoriesHint: ['saude', 'transito-transportes-infraestrutura', 'assistencia-social-habitacao-cidadania', 'ciencia-educacao-pesquisa'] },
+  { id: 'Servidor Público', categoriesHint: ['trabalho-previdencia', 'administracao-publica', 'justica-seguranca', 'comunicacao-transparencia'] },
+  { id: 'Empresa', categoriesHint: ['empresas-negocios', 'financas-impostos', 'agropecuaria-meio-ambiente', 'comunicacao-transparencia'] },
+  { id: 'Gestão Pública', categoriesHint: ['comunicacao-transparencia', 'justica-seguranca', 'administracao-publica', 'financas-impostos'] },
 ];
 
 interface FeaturedItem {

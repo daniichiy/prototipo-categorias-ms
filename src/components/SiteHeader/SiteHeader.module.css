@@ -36,13 +36,12 @@
 
 .skipLinks a,
 .utilityRight a {
-  color: #ffffff;
-  opacity: 0.92;
-  transition: opacity var(--transition-fast);
+  color: var(--color-primary);
+  transition: color var(--transition-fast);
 }
 
 .skipLinks a:hover,
-.utilityRight a:hover { opacity: 1; }
+.utilityRight a:hover { color: var(--color-primary-ink); }
 
 .skipLinks { display: none; }
 @media (min-width: 768px) { .skipLinks { display: flex; } }
