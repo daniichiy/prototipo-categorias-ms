@@ -1,129 +1,50 @@
 {
   "Administração Pública": {
     "id": "administracao-publica",
-    "icon": "account_balance",
-    "subcategorias": [
-      { "id": "compras-contratos", "name": "Compras, Contratos e Fiscalização", "keywords": ["licit", "contrat", "fiscaliz", "fornecedor", "leil", "credenciament", "convên", "fiscal"], "agencies": [] },
-      { "id": "tecnologia-sistemas", "name": "Tecnologia, Sistemas e Inovação", "keywords": ["sistema", "digital", "dados", "tecno", "inova"], "agencies": [] },
-      { "id": "capacitacao-servidores", "name": "Capacitação de Servidores", "keywords": ["capacita", "curso", "trein", "escola", "formação", "qualific"], "agencies": ["ESCOLAGOV"] },
-      { "id": "processos-protocolos", "name": "Processos e Protocolos", "keywords": ["protocol", "denúnc", "ouvidor", "manifest", "pedido", "requer", "petição", "vínculo", "boleto", "dívida", "parcela", "revisão", "acesso à informação"], "agencies": [] }
-    ]
+    "icon": "account_balance"
   },
   "Agropecuária e Meio Ambiente": {
     "id": "agropecuaria-meio-ambiente",
-    "icon": "agriculture",
-    "subcategorias": [
-      { "id": "fiscalizacao-campo", "name": "Fiscalização do Campo e do Meio Ambiente", "keywords": ["fiscaliz", "denúnc", "infração", "auto de", "embargo"], "agencies": [] },
-      { "id": "animais-criacao", "name": "Saúde, Criação e Movimentação de Animais", "keywords": ["animal", "animais", "rebanho", "gtv", "vacina", "ovinos", "bovinos", "suín", "movimentação"], "agencies": [] },
-      { "id": "defesa-plantas", "name": "Defesa das Plantas, Agrotóxicos e Certificação", "keywords": ["agrotóxico", "praga", "plant", "fitoss", "certificad", "vegetal"], "agencies": [] },
-      { "id": "registro-rural", "name": "Registro de Animais, Propriedades e Terras Rurais", "keywords": ["registro", "propriedade", "rural", "terra", "georreferenc", "car ", "cadastro ambiental"], "agencies": [] },
-      { "id": "alimentos-origem-animal", "name": "Alimentos de Origem Animal", "keywords": ["alimento", "leite", "laticín", "abate", "frigorif", "carne", "embutid"], "agencies": [] },
-      { "id": "agua-fauna-flora", "name": "Água, Fauna, Flora e Meio Ambiente", "keywords": ["água", "fauna", "flora", "ambient", "licen", "outorga", "florest", "recurso hídric", "supressão"], "agencies": ["IMASUL"] }
-    ]
+    "icon": "agriculture"
   },
   "Assistência Social, Habitação e Cidadania": {
     "id": "assistencia-social-habitacao-cidadania",
-    "icon": "diversity_3",
-    "subcategorias": [
-      { "id": "direitos-humanos", "name": "Direitos Humanos, Diversidade e Igualdade", "keywords": ["direitos human", "diversid", "igualdade", "racial", "lgbt", "indígena"], "agencies": [] },
-      { "id": "protecao-vulneraveis", "name": "Proteção à Mulher, Crianças e Pessoas Vulneráveis", "keywords": ["mulher", "criança", "adolesc", "idoso", "vulneráv", "violência", "deficiên"], "agencies": [] },
-      { "id": "beneficios-moradia", "name": "Benefícios Sociais e Programas de Moradia", "keywords": ["benefício", "mais social", "morad", "habitaç", "auxíl", "casa", "imóvel"], "agencies": ["AGEHAB"] },
-      { "id": "documentos-cidadao", "name": "Documentos, Identidade e Atendimento ao Cidadão", "keywords": ["identid", "rg ", "cin ", "carteira de identidade", "atend", "delegacia virtual"], "agencies": [] },
-      { "id": "defesa-consumidor", "name": "Defesa do Consumidor", "keywords": ["consumidor", "procon"], "agencies": [] }
-    ]
+    "icon": "diversity_3"
   },
   "Ciência, Educação e Pesquisa": {
     "id": "ciencia-educacao-pesquisa",
-    "icon": "auto_stories",
-    "subcategorias": [
-      { "id": "ensino-superior", "name": "Ensino Superior — Acesso, Matrícula e Serviços", "keywords": ["vestibular", "matrícula", "ingress", "transferência interna", "trancamento", "graduação", "pós-graduação", "mestrado", "doutorado"], "agencies": ["UEMS"] },
-      { "id": "ensino-basico-medio", "name": "Ensino Básico e Médio", "keywords": ["ensino médio", "ensino fundamental", "rematrícula", "escola estad", "rede estadual"], "agencies": [] },
-      { "id": "educacao-inclusiva", "name": "Educação Inclusiva, Especial e para Adultos", "keywords": ["inclusiv", "especial", "eja ", "jovens e adultos", "libras"], "agencies": [] },
-      { "id": "documentos-escolares", "name": "Documentos e Históricos Escolares", "keywords": ["histórico escolar", "2ª via", "diploma", "certificado", "declaração de matrícula", "boletim"], "agencies": [] },
-      { "id": "biblioteca-pesquisa", "name": "Biblioteca, Pesquisa e Extensão", "keywords": ["bibliotec", "pesquis", "extensão", "fundect", "iniciação científica", "tcc"], "agencies": ["FUNDECT"] },
-      { "id": "cursos-bolsas", "name": "Cursos Técnicos, Bolsas e Apoio ao Estudante", "keywords": ["curso técnic", "bolsa", "apoio ao estud", "escola técnica", "auxíl"], "agencies": [] }
-    ]
+    "icon": "auto_stories"
   },
   "Arte, Esporte e Turismo": {
     "id": "arte-esporte-turismo",
-    "icon": "theater_comedy",
-    "subcategorias": [
-      { "id": "esporte-lazer", "name": "Esporte, Lazer e Atividade Física", "keywords": ["esport", "lazer", "atlet", "atividade física", "competiç"], "agencies": ["FUNDESPORTE"] },
-      { "id": "turismo-patrimonio", "name": "Turismo e Patrimônio Cultural", "keywords": ["turism", "turíst", "patrim", "cadastur"], "agencies": ["FUNDTUR"] },
-      { "id": "museus-arte", "name": "Museus, Bibliotecas, Arte e Cultura", "keywords": ["museu", "bibliotec", "cultur", "art", "edital", "evento"], "agencies": ["FCMS"] }
-    ]
+    "icon": "theater_comedy"
   },
   "Comunicação e Transparência": {
     "id": "comunicacao-transparencia",
-    "icon": "campaign",
-    "subcategorias": [
-      { "id": "ouvidoria", "name": "Ouvidoria", "keywords": ["ouvidor", "manifest", "denúnc", "elogio", "reclamaç", "sugestão"], "agencies": [] },
-      { "id": "acesso-informacao", "name": "Acesso à Informação", "keywords": ["acesso à informação", "lai ", "fala br", "pedido de acesso"], "agencies": [] },
-      { "id": "transparencia-dados", "name": "Transparência, Dados e Comunicação Pública", "keywords": ["transparênc", "dados", "comunicaç", "portal da transp", "notíc", "estatíst"], "agencies": [] }
-    ]
+    "icon": "campaign"
   },
-  "Empresa, Indústria e Comércio": {
-    "id": "empresa-industria-comercio",
-    "icon": "apartment",
-    "subcategorias": [
-      { "id": "abrir-empresa", "name": "Abrir, Alterar ou Fechar uma Empresa", "keywords": ["abertura", "abrir", "alterar empresa", "fechar empresa", "encerramento", "constituição", "viabilid"], "agencies": ["JUCEMS"] },
-      { "id": "certidoes-empresariais", "name": "Certidões e Documentos Empresariais", "keywords": ["certidão", "certidões", "documento empres", "atestado", "termo de acord"], "agencies": [] },
-      { "id": "qualidade-medidas", "name": "Qualidade, Pesos, Medidas e Incentivos", "keywords": ["qualidade", "peso", "medida", "metrolog", "incentivo", "verifica", "inmetro"], "agencies": ["AEM"] }
-    ]
+  "Empresas e Negócios": {
+    "id": "empresas-negocios",
+    "icon": "apartment"
   },
   "Finanças e Impostos": {
     "id": "financas-impostos",
-    "icon": "currency_exchange",
-    "subcategorias": [
-      { "id": "impostos-estaduais", "name": "Impostos Estaduais", "keywords": ["icms", "ipva", "itcd", "imposto", "tributo", "alíquota"], "agencies": [] },
-      { "id": "cadastro-fiscal", "name": "Cadastro Fiscal e Nota Fiscal", "keywords": ["cadastro fiscal", "nota fiscal", "nfe ", "nfce", "sintegra", "inscrição estadual"], "agencies": [] },
-      { "id": "isencoes-beneficios", "name": "Isenções, Benefícios e Regimes Especiais", "keywords": ["isenç", "benefíc", "regime especial", "diferimento", "redução", "crédito presumido", "incentivo"], "agencies": [] },
-      { "id": "declaracoes-fiscalizacao", "name": "Declarações, Obrigações e Fiscalização", "keywords": ["declar", "obrigação", "fiscaliz", "auto de", "alim", "act ", "intimação", "lançamento"], "agencies": [] },
-      { "id": "pagamentos-divida", "name": "Pagamentos, Parcelamentos e Dívida com o Estado", "keywords": ["pagament", "parcelament", "dívida", "boleto", "guia", "darms"], "agencies": [] },
-      { "id": "recursos-restituicoes", "name": "Recursos, Certidões e Restituições", "keywords": ["recurso", "certidão", "restitu", "consulta tributária", "impugnação"], "agencies": [] }
-    ]
+    "icon": "currency_exchange"
   },
   "Justiça e Segurança": {
     "id": "justica-seguranca",
-    "icon": "balance",
-    "subcategorias": [
-      { "id": "policiamento", "name": "Policiamento, Boletim de Ocorrência e Proteção à Mulher", "keywords": ["polici", "boletim", "ocorrênc", "mulher", "delegacia virtual", "violência", "antecedente"], "agencies": ["PMMS", "PCMS"] },
-      { "id": "bombeiros-defesa-civil", "name": "Bombeiros, Incêndios e Defesa Civil", "keywords": ["bombeir", "incênd", "defesa civil", "pscip", "vistoria", "pânico"], "agencies": ["CBMMS"] },
-      { "id": "sistema-prisional", "name": "Sistema Prisional e Medidas Socioeducativas", "keywords": ["prisional", "presídio", "penitenc", "socioeduc", "interno", "cadeia"], "agencies": ["AGEPEN"] },
-      { "id": "prevencao-cidadania", "name": "Programas de Prevenção e Cidadania", "keywords": ["prevenç", "cidadania", "program"], "agencies": [] }
-    ]
+    "icon": "balance"
   },
-  "Saúde e Cuidado": {
-    "id": "saude-cuidado",
-    "icon": "medical_services",
-    "subcategorias": [
-      { "id": "consultas-exames", "name": "Consultas, Exames e Atendimento", "keywords": ["consult", "exame", "atendiment", "teleconsulta", "telessa", "fila"], "agencies": [] },
-      { "id": "medicamentos", "name": "Medicamentos", "keywords": ["medicament", "ceaf ", "componente especial", "receita", "fármac"], "agencies": [] },
-      { "id": "internacao-urgencia", "name": "Internação, Urgência e Emergência", "keywords": ["internaç", "urgênc", "emergênc", "samu", "leito"], "agencies": [] },
-      { "id": "vigilancia-sanitaria", "name": "Vigilância Sanitária", "keywords": ["vigilânc", "sanitár", "pas ", "alvará sanit", "processo administrativo sanitário"], "agencies": [] },
-      { "id": "doacao-programas-mulher", "name": "Doação, Programas e Saúde da Mulher", "keywords": ["doação", "doador", "programa de saúd", "saúde da mulher", "pré-natal", "amament", "hemofil", "anemia"], "agencies": [] }
-    ]
+  "Saúde": {
+    "id": "saude",
+    "icon": "medical_services"
   },
-  "Trabalho, Emprego e Previdência": {
-    "id": "trabalho-emprego-previdencia",
-    "icon": "work",
-    "subcategorias": [
-      { "id": "aposentadoria-pensao", "name": "Aposentadoria, Pensão e Benefícios", "keywords": ["aposent", "pensão", "benefíc", "previd", "abono"], "agencies": ["AGEPREV"] },
-      { "id": "saude-servidor", "name": "Saúde e Situação Funcional do Servidor", "keywords": ["servidor", "licença", "atestado", "perícia", "situação funcion", "junta médica"], "agencies": [] },
-      { "id": "emprego-vagas", "name": "Emprego, Vagas e Qualificação Profissional", "keywords": ["emprego", "vaga", "trabalh", "qualific", "intermediaç"], "agencies": ["FUNTRAB"] },
-      { "id": "contribuicao-recadastramento", "name": "Contribuição Previdenciária e Recadastramento", "keywords": ["contribuiç", "recadastr", "censo previd", "prova de vida"], "agencies": [] }
-    ]
+  "Trabalho e Previdência": {
+    "id": "trabalho-previdencia",
+    "icon": "work"
   },
   "Trânsito, Transportes e Infraestrutura": {
     "id": "transito-transportes-infraestrutura",
-    "icon": "directions_car",
-    "subcategorias": [
-      { "id": "habilitacao", "name": "Carteira de Habilitação", "keywords": ["cnh ", "habilitaç", "ppd", "carteira nacional", "renovação cnh"], "agencies": [] },
-      { "id": "documentos-veiculo", "name": "Documentos do Veículo e Licenciamento", "keywords": ["veículo", "licenciament", "crlv", "transferência", "vistoria", "placa", "ipva"], "agencies": ["DETRAN"] },
-      { "id": "multas-transito", "name": "Multas, Educação e Segurança no Trânsito", "keywords": ["multa", "infração", "recurso de multa", "educação no trânsito", "defesa prévia", "contestaç"], "agencies": [] },
-      { "id": "transporte-rodovias", "name": "Transporte de Passageiros, Passe Livre e Rodovias", "keywords": ["transporte", "passageir", "passe livre", "rodov", "estrad", "concess"], "agencies": ["AGESUL"] },
-      { "id": "agua-saneamento", "name": "Serviços de Água, Esgoto e Saneamento", "keywords": ["água", "esgoto", "saneament", "2ª via de conta", "sanesul", "ligação"], "agencies": ["SANESUL"] },
-      { "id": "gas-energia", "name": "Gás Natural e Energia", "keywords": ["gás", "energia", "agência virtual", "msgás", "msg"], "agencies": ["MSGÁS", "MSGÁS"] }
-    ]
+    "icon": "directions_car"
   }
 }

@@ -1,14 +1,22 @@
 """
-Seed script: reads the Excel sheet `Proposta 2` of `data/Todas as cartas.xlsx`,
-applies the heuristic subcategory classifier from `data/subcategoria-rules.json`,
-and writes the structured `src/data/categories.json` consumed by the React app.
+Seed script: gera `src/data/categories.json` a partir de:
+  1. data/relacionamento-categorias.xlsx (sheet 'Cartas de Serviço') — taxonomia oficial
+     (categoria, subcategoria, título da carta). Fonte de verdade do mapeamento.
+  2. data/Todas as cartas.xlsx (sheet 'Proposta 2') — lookup de URL, órgão e sigla por
+     título (a planilha de taxonomia não tem essas colunas).
+  3. data/subcategoria-rules.json — metadados por categoria (id slug + ícone Material).
 
-Run:  npm run seed     (or directly:  python scripts/seed-categories.py)
+Match por título normalizado (sem acentos, lowercase). Quando não há match exato,
+tenta fuzzy match (difflib) com cutoff 0.85.
+
+Run:  npm run seed     (ou:  python scripts/seed-categories.py)
 """
 from __future__ import annotations
 
+import difflib
 import json
 import re
+import sys
 import unicodedata
 from collections import defaultdict
 from pathlib import Path
@@ -16,150 +24,177 @@ from pathlib import Path
 import openpyxl
 
 ROOT = Path(__file__).resolve().parent.parent
-EXCEL_PATH = ROOT / "data" / "Todas as cartas.xlsx"
-RULES_PATH = ROOT / "data" / "subcategoria-rules.json"
+TAXONOMY_PATH = ROOT / "data" / "relacionamento-categorias.xlsx"
+LEGACY_PATH = ROOT / "data" / "Todas as cartas.xlsx"
+META_PATH = ROOT / "data" / "subcategoria-rules.json"
 OUTPUT_PATH = ROOT / "src" / "data" / "categories.json"
-SHEET_NAME = "Proposta 2"
+
+TAXONOMY_SHEET = "Cartas de Serviço"
+LEGACY_SHEET = "Proposta 2"
+
+FUZZY_CUTOFF = 0.85
+
+
+def normalize(text: str | None) -> str:
+    if not text:
+        return ""
+    text = unicodedata.normalize("NFKD", str(text)).encode("ascii", "ignore").decode()
+    return re.sub(r"\s+", " ", text).strip().lower()
 
 
 def slugify(text: str) -> str:
-    """Normalize to a URL-friendly id."""
     text = unicodedata.normalize("NFKD", text).encode("ascii", "ignore").decode()
     text = re.sub(r"[^a-zA-Z0-9]+", "-", text).strip("-").lower()
     return text or "item"
 
 
-def normalize(text: str) -> str:
-    """Lowercase + strip accents for keyword matching."""
-    text = unicodedata.normalize("NFKD", text).encode("ascii", "ignore").decode()
-    return text.lower().strip()
+def load_taxonomy() -> list[tuple[str, str, str]]:
+    """Read the new spreadsheet. Returns [(categoria, subcategoria, titulo), ...]
+    with cascade-fill on empty cells (Excel-merged style)."""
+    wb = openpyxl.load_workbook(TAXONOMY_PATH, data_only=True, read_only=True)
+    ws = wb[TAXONOMY_SHEET]
+    rows: list[tuple[str, str, str]] = []
+    current_cat, current_sub = None, None
+    for row in ws.iter_rows(min_row=4, values_only=True):
+        cat, sub, titulo = row
+        if cat:
+            current_cat = str(cat).strip()
+        if sub:
+            current_sub = str(sub).strip()
+        if titulo and current_cat and current_sub:
+            rows.append((current_cat, current_sub, str(titulo).strip()))
+    return rows
 
 
-def classify(title: str, agency_code: str, rules_for_cat: list[dict]) -> dict:
-    """Pick the first matching subcategoria for a card.
+def load_legacy_lookup() -> dict[str, dict[str, str]]:
+    """Read old spreadsheet to build {normalized_title: {sigla, url, orgao}}.
+    Duplicates: same title across rows resolves to the same service — keep last."""
+    wb = openpyxl.load_workbook(LEGACY_PATH, data_only=True, read_only=True)
+    ws = wb[LEGACY_SHEET]
+    lookup: dict[str, dict[str, str]] = {}
+    for row in ws.iter_rows(min_row=2, values_only=True):
+        sigla, titulo, _categoria, url, orgao = row
+        if not titulo:
+            continue
+        lookup[normalize(titulo)] = {
+            "sigla": str(sigla).strip() if sigla else "",
+            "url": str(url).strip() if url else "",
+            "orgao": str(orgao).strip() if orgao else "",
+        }
+    return lookup
 
-    Priority:
-      1. Exact agency match (case-insensitive)
-      2. Keyword found in normalized title
-    Returns the rule dict or None.
-    """
-    norm_title = normalize(title)
-    norm_agency = normalize(agency_code or "")
 
-    # Agency match first
-    for rule in rules_for_cat:
-        for ag in rule.get("agencies", []):
-            if normalize(ag) == norm_agency:
-                return rule
-
-    # Keyword in title
-    for rule in rules_for_cat:
-        for kw in rule.get("keywords", []):
-            if normalize(kw) in norm_title:
-                return rule
-
+def fuzzy_lookup(
+    title: str,
+    lookup: dict[str, dict[str, str]],
+    keys_list: list[str],
+) -> dict[str, str] | None:
+    """Try fuzzy match when exact lookup fails."""
+    matches = difflib.get_close_matches(normalize(title), keys_list, n=1, cutoff=FUZZY_CUTOFF)
+    if matches:
+        return lookup[matches[0]]
     return None
 
 
 def main() -> None:
-    print(f"[seed] Reading rules from {RULES_PATH.relative_to(ROOT)}")
-    rules = json.loads(RULES_PATH.read_text(encoding="utf-8"))
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
-    print(f"[seed] Reading Excel: {EXCEL_PATH.relative_to(ROOT)} (sheet: {SHEET_NAME})")
-    wb = openpyxl.load_workbook(EXCEL_PATH, data_only=True, read_only=True)
-    ws = wb[SHEET_NAME]
+    print(f"[seed] Lendo taxonomia: {TAXONOMY_PATH.relative_to(ROOT)} (sheet: {TAXONOMY_SHEET})")
+    records = load_taxonomy()
+    print(f"[seed]   {len(records)} cartas com (categoria, subcategoria, título)")
 
-    # Iterate rows. Header: siglaorgao, titulo_servico, categoria, url, nome_orgao
-    rows = list(ws.iter_rows(min_row=2, values_only=True))
-    print(f"[seed] {len(rows)} cards in spreadsheet")
+    print(f"[seed] Lendo lookup de URLs: {LEGACY_PATH.relative_to(ROOT)} (sheet: {LEGACY_SHEET})")
+    legacy = load_legacy_lookup()
+    legacy_keys = list(legacy.keys())
+    print(f"[seed]   {len(legacy)} títulos no lookup")
 
-    # Group: category_name -> subcategoria_id -> [cards]
-    grouped: dict[str, dict[str, list[dict]]] = defaultdict(lambda: defaultdict(list))
-    subcat_meta: dict[str, dict[str, dict]] = defaultdict(dict)
-    unmatched_count = 0
+    print(f"[seed] Lendo metadados de categoria: {META_PATH.relative_to(ROOT)}")
+    meta = json.loads(META_PATH.read_text(encoding="utf-8"))
 
-    for sigla, titulo, categoria, url, orgao in rows:
-        if not categoria or not titulo:
-            continue
-        cat_name = str(categoria).strip()
-        cat_rules = rules.get(cat_name)
-        if cat_rules is None:
-            print(f"[seed] WARN: categoria '{cat_name}' não está em subcategoria-rules.json — pulando carta '{titulo[:50]}'")
-            continue
+    # category_name -> list[(subcategoria, card_dict)]
+    grouped: dict[str, list[tuple[str, dict]]] = defaultdict(list)
+    exact_hits = 0
+    fuzzy_hits = 0
+    no_match = 0
+    no_match_titles: list[str] = []
 
-        match = classify(titulo, sigla or "", cat_rules["subcategorias"])
-
-        if match is None:
-            # Demais serviços bucket
-            subcat_id = "demais-servicos"
-            subcat_name = "Demais serviços"
-            unmatched_count += 1
+    for cat_name, sub_name, titulo in records:
+        norm = normalize(titulo)
+        info = legacy.get(norm)
+        if info is not None:
+            exact_hits += 1
         else:
-            subcat_id = match["id"]
-            subcat_name = match["name"]
+            info = fuzzy_lookup(titulo, legacy, legacy_keys)
+            if info is not None:
+                fuzzy_hits += 1
+            else:
+                no_match += 1
+                no_match_titles.append(titulo)
+                info = {"sigla": "", "url": "", "orgao": ""}
 
-        card = {
-            "id": f"{cat_rules['id']}--{slugify(titulo)[:80]}",
-            "title": str(titulo).strip(),
-            "url": str(url).strip() if url else "",
-            "agency": str(orgao).strip() if orgao else "",
-            "agencyCode": str(sigla).strip() if sigla else "",
-        }
-        grouped[cat_name][subcat_id].append(card)
-        if subcat_id not in subcat_meta[cat_name]:
-            subcat_meta[cat_name][subcat_id] = {"id": subcat_id, "name": subcat_name}
+        cat_id = meta.get(cat_name, {}).get("id") or slugify(cat_name)
+        sub_id = slugify(sub_name)
+        card_id = f"{cat_id}--{sub_id}--{slugify(titulo)[:80]}"
 
-    # Emit in stable order: same order as rules file (then "Demais serviços" last)
+        grouped[cat_name].append((sub_name, {
+            "id": card_id,
+            "title": titulo,
+            "url": info["url"],
+            "agency": info["orgao"],
+            "agencyCode": info["sigla"],
+        }))
+
+    # Build output in the order defined by `subcategoria-rules.json`
     output = []
-    for cat_name, cat_rules in rules.items():
-        subcats_in_data = grouped.get(cat_name, {})
-        if not subcats_in_data:
+    for cat_name, cat_meta in meta.items():
+        items = grouped.get(cat_name, [])
+        if not items:
             continue
 
-        ordered_ids = [r["id"] for r in cat_rules["subcategorias"]]
-        ordered_ids.append("demais-servicos")
+        # Group cards by subcategoria preserving first-encounter order
+        sub_order: list[str] = []
+        sub_cards: dict[str, list[dict]] = defaultdict(list)
+        for sub_name, card in items:
+            if sub_name not in sub_cards:
+                sub_order.append(sub_name)
+            sub_cards[sub_name].append(card)
 
         subcategories_out = []
-        for sub_id in ordered_ids:
-            cards = subcats_in_data.get(sub_id, [])
-            if not cards:
-                continue
-            meta = subcat_meta[cat_name].get(sub_id) or {
-                "id": sub_id,
-                "name": next((r["name"] for r in cat_rules["subcategorias"] if r["id"] == sub_id), sub_id),
-            }
-            # Sort cards alphabetically for deterministic output
-            cards_sorted = sorted(cards, key=lambda c: normalize(c["title"]))
+        for sub_name in sub_order:
+            cards = sorted(sub_cards[sub_name], key=lambda c: normalize(c["title"]))
             subcategories_out.append({
-                "id": meta["id"],
-                "name": meta["name"],
-                "count": len(cards_sorted),
-                "cards": cards_sorted,
+                "id": slugify(sub_name),
+                "name": sub_name,
+                "count": len(cards),
+                "cards": cards,
             })
 
         total = sum(s["count"] for s in subcategories_out)
         output.append({
-            "id": cat_rules["id"],
+            "id": cat_meta["id"],
             "name": cat_name,
-            "icon": cat_rules["icon"],
+            "icon": cat_meta["icon"],
             "count": total,
             "subcategories": subcategories_out,
         })
 
-    # Stats
+    # Report
     print()
     print("[seed] === Resultado ===")
-    import sys
-    if hasattr(sys.stdout, "reconfigure"):
-        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     for cat in output:
         print(f"  {cat['count']:>4}  {cat['name']}")
         for sub in cat["subcategories"]:
-            marker = "  (catch-all)" if sub["id"] == "demais-servicos" else ""
-            print(f"        {sub['count']:>4}  +- {sub['name']}{marker}")
+            print(f"        {sub['count']:>4}  +- {sub['name']}")
     total_cards = sum(c["count"] for c in output)
     print()
-    print(f"[seed] Total: {total_cards} cards | Sem match (catch-all): {unmatched_count} ({100*unmatched_count//max(total_cards,1)}%)")
+    print(f"[seed] Total: {total_cards} cartas")
+    print(f"[seed] URL match: {exact_hits} exato + {fuzzy_hits} fuzzy = {exact_hits + fuzzy_hits} "
+          f"({100 * (exact_hits + fuzzy_hits) // max(total_cards, 1)}%)")
+    if no_match:
+        print(f"[seed] {no_match} carta(s) sem URL (link vazio):")
+        for t in no_match_titles:
+            print(f"        - {t[:100]}")
 
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT_PATH.write_text(json.dumps(output, ensure_ascii=False, indent=2), encoding="utf-8")
