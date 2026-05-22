@@ -33,7 +33,7 @@ export function SiteHeader() {
         <div className={styles.mainInner}>
           <Link to="/" className={styles.brand} aria-label="ms.gov.br — Página inicial">
             <img
-              src="https://noticias.ms.gov.br/uploads/midias/b61e2cfe41ee46169b616c9168911172.svg"
+              src="/logo-ms.svg"
               alt="ms.gov.br"
               className={styles.brandLogo}
             />
