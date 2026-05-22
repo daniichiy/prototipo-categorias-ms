@@ -1,7 +1,7 @@
 :root {
   /* === Portal-fiel: cores extraídas do ms.gov.br + print === */
   --color-primary: #004f9f;                 /* azul institucional do portal */
-  --color-primary-dark: #003a8c;            /* navy do header e indicadores */
+  --color-primary-dark: #004f9f;            /* navy do header e indicadores */
   --color-primary-ink: #001e4d;
   --color-primary-soft: rgba(0, 79, 159, 0.08);
 
