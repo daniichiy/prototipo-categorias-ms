@@ -1,21 +1,29 @@
 .tile {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
-  gap: var(--space-2);
+  gap: var(--space-3);
   height: 100%;
   width: 100%;
-  padding: var(--space-4);
+  padding: var(--space-3) var(--space-4);
   background-color: var(--color-bg);
   border: 1px solid var(--color-rule);
   border-radius: var(--radius-sm);
-  text-align: center;
+  text-align: left;
   color: var(--color-primary);
   transition:
     border-color var(--transition-fast),
     box-shadow var(--transition-fast),
     transform var(--transition-fast);
+}
+
+@media (min-width: 640px) {
+  .tile {
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--space-4);
+    text-align: center;
+  }
 }
 
 .tile:hover {
@@ -28,10 +36,30 @@
 .tile:hover .label { color: var(--color-primary-ink); }
 
 .icon {
-  font-size: 38px;
+  font-size: 28px;
+  flex-shrink: 0;
   color: var(--color-primary);
   line-height: 1;
   transition: color var(--transition-fast);
+}
+
+@media (min-width: 640px) {
+  .icon {
+    font-size: 38px;
+  }
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+@media (min-width: 640px) {
+  .info {
+    align-items: center;
+  }
 }
 
 .label {
