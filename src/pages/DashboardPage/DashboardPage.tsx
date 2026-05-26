@@ -365,39 +365,45 @@ function Solicitacoes({ items }: { items: Solicitacao[] }) {
   );
 }
 
-const docAbbrev = (id: string) => ({ cin: 'CIN', cnh: 'CNH', sus: 'SUS', titulo: 'TE' } as Record<string, string>)[id] || 'DOC';
+const docIcon = (id: string): string => ({
+  cin: 'id-card',
+  cnh: 'car',
+  sus: 'heart-pulse',
+  titulo: 'file-check',
+} as Record<string, string>)[id] || 'wallet';
 
 function Documentos({ items }: { items: Documento[] }) {
   return (
-    <section>
-      <div className="section-head">
-        <h2>Documentos digitais</h2>
-        <span className="count">na sua carteira</span>
-        <div className="right">
-          <a href="#" className="see-all">Abrir carteira <Ic name="chevron-right" size={14} /></a>
-        </div>
+    <div className="aside-card">
+      <div className="ac-head">
+        <span style={{ width: 28, height: 28, borderRadius: 6, background: 'var(--background-brand-soft)', color: 'var(--color-primary-500)', display: 'grid', placeItems: 'center' }}>
+          <Ic name="wallet" size={14} stroke={2} />
+        </span>
+        <h3>Documentos digitais</h3>
+        <a href="#" className="ac-link">Abrir carteira</a>
       </div>
-      <div className="docs-grid">
-        {items.map((d) => (
-          <div key={d.id} className="doc">
-            <div className="doc-icon">{docAbbrev(d.id)}</div>
-            <div>
-              <div className="doc-name">{d.nome}</div>
-              <div className="doc-num">{d.codigo}</div>
-              <div className="doc-orgao">
-                {d.orgao}{d.validade ? ` · validade ${d.validade}` : ''}
+      {items.length === 0 ? (
+        <div style={{ padding: '20px 0', color: 'var(--text-muted)', fontSize: 13, textAlign: 'center' }}>
+          Nenhum documento na carteira.
+        </div>
+      ) : (
+        <div className="notif-list">
+          {items.map((d) => (
+            <div key={d.id} className={'notif ' + (d.warning ? 'urgent' : 'success')}>
+              <div className="n-dot">
+                <Ic name={docIcon(d.id)} size={16} stroke={2} />
+              </div>
+              <div>
+                <div className="n-title">{d.nome}</div>
+                <div className="n-meta">
+                  <b>{d.orgao}</b>{d.validade ? ` · validade ${d.validade}` : ` · ${d.codigo}`}
+                </div>
               </div>
             </div>
-            <div className="doc-meta">
-              <span className={'doc-badge ' + (d.warning ? 'warn' : 'ok')}>
-                {d.warning ? <><Ic name="alert-triangle" size={11} /> Vence em breve</> : <><Ic name="check-circle" size={11} /> Válido</>}
-              </span>
-              <div className="qr-mini" title="QR Code"><Ic name="qr" size={16} /></div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </section>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
 

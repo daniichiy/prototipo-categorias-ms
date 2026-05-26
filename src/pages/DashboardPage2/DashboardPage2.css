@@ -202,11 +202,11 @@
   background: var(--bg-surface);
   border: 1px solid var(--border-card);
   border-radius: 8px;
-  padding: 22px 22px 18px;
+  padding: 16px 16px 14px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  min-height: 168px;
+  gap: 5px;
+  min-height: 128px;
   cursor: pointer;
   text-decoration: none;
   color: inherit;
@@ -220,11 +220,11 @@
 }
 .painel2 .m-top {
   display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 .painel2 .m-icon {
-  width: 46px; height: 46px;
-  border-radius: 10px;
+  width: 38px; height: 38px;
+  border-radius: 9px;
   background: var(--primary-soft);
   color: var(--primary);
   display: grid; place-items: center;
@@ -232,13 +232,13 @@
 .painel2 .m-count {
   font-family: var(--font-open);
   font-weight: 700;
-  font-size: 30px;
+  font-size: 24px;
   line-height: 1;
   color: var(--primary);
 }
 .painel2 .m-badge {
   position: absolute;
-  top: 18px; right: 18px;
+  top: 13px; right: 13px;
   background: var(--c-error);
   color: #fff;
   font-size: 11px; font-weight: 700;
@@ -249,13 +249,13 @@
 .painel2 .m-title {
   font-family: var(--font-open);
   font-weight: 700;
-  font-size: 18px;
+  font-size: 16px;
   color: var(--text-app);
 }
 .painel2 .m-sub {
-  font-size: 13px;
+  font-size: 12.5px;
   color: var(--text-muted);
-  line-height: 1.5;
+  line-height: 1.45;
   flex: 1;
 }
 .painel2 .m-link {
@@ -431,20 +431,23 @@
 }
 .painel2 .proactive-card .pc-cta-secondary:hover { color: var(--text-app); }
 
-/* ====== RECOMENDADO ====== */
+/* ====== RECOMENDADO (lista compacta no aside) ====== */
 .painel2 .reco-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 .painel2 .reco-card {
   border: 1px solid var(--border-card);
   border-radius: 8px;
-  padding: 18px;
+  padding: 14px;
   display: flex;
-  flex-direction: column;
-  gap: 8px;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 12px;
   cursor: pointer;
+  text-decoration: none;
+  color: inherit;
   transition: border-color 120ms ease, box-shadow 120ms ease, transform 120ms ease;
 }
 .painel2 .reco-card:hover {
@@ -453,32 +456,45 @@
   transform: translateY(-1px);
 }
 .painel2 .reco-card .reco-icon {
-  width: 40px; height: 40px;
+  width: 38px; height: 38px;
   border-radius: 8px;
   background: var(--primary-soft);
   color: var(--primary);
   display: grid; place-items: center;
+  flex: none;
 }
+.painel2 .reco-card .reco-body { min-width: 0; }
 .painel2 .reco-card .reco-title {
   font-family: var(--font-open);
   font-weight: 700;
-  font-size: 15px;
+  font-size: 14px;
   color: var(--text-app);
   line-height: 1.3;
 }
 .painel2 .reco-card .reco-desc {
-  font-size: 13px;
+  font-size: 12.5px;
   color: var(--text-muted);
-  line-height: 1.5;
-  flex: 1;
+  line-height: 1.45;
+  margin-top: 3px;
 }
 .painel2 .reco-card .reco-orgao {
+  display: inline-block;
+  margin-top: 6px;
   font-size: 10px;
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-weight: 600;
 }
+
+/* ====== LOWER GRID (Atenção à esquerda + Recomendado à direita) ====== */
+.painel2 .lower-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 20px;
+  align-items: start;
+}
+.painel2 .lower-grid > .ds-card { margin: 0; }
 
 /* ====== FOOTER ====== */
 .painel2 .ms-footer {
@@ -501,7 +517,7 @@
 /* ====== RESPONSIVE ====== */
 @media (max-width: 1180px) {
   .painel2 .m-grid { grid-template-columns: repeat(2, 1fr); }
-  .painel2 .reco-grid { grid-template-columns: 1fr; }
+  .painel2 .lower-grid { grid-template-columns: 1fr; }
   .painel2 .ms-header { grid-template-columns: 1fr auto; padding: 18px 24px; }
   .painel2 .ms-search { grid-column: 1 / -1; order: 3; max-width: none; }
   .painel2 .ms-utilbar,

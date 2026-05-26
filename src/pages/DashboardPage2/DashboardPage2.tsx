@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Ic } from '../DashboardPage/icons';
 import {
-  CITIZEN, PROACTIVE, SOLICITACOES, NOTIFICACOES, DOCUMENTOS,
+  CITIZEN, PROACTIVE, SOLICITACOES, DOCUMENTOS,
   FAVORITOS, RECOMENDADOS, HISTORICO, AGENDAMENTOS,
   type ProactiveItem,
 } from '../DashboardPage/data';
@@ -98,9 +98,7 @@ interface ModuleCard {
 }
 
 function ModuleGrid() {
-  const unread = NOTIFICACOES.filter((n) => n.unread).length;
   const cards: ModuleCard[] = [
-    { icon: 'bell', title: 'Notificações', count: NOTIFICACOES.length, badge: unread, sub: `${unread} não lidas entre os últimos avisos dos órgãos.`, link: 'Ver notificações' },
     { icon: 'star', title: 'Favoritos', count: FAVORITOS.length, sub: 'Serviços salvos para acesso rápido no portal.', link: 'Ver favoritos' },
     { icon: 'file-text', title: 'Solicitações', count: SOLICITACOES.length, sub: 'Acompanhe protocolos e status em andamento.', link: 'Ver solicitações' },
     { icon: 'calendar', title: 'Agendamentos', count: AGENDAMENTOS.length, sub: 'Próximos atendimentos presenciais marcados.', link: 'Ver agendamentos' },
@@ -110,7 +108,6 @@ function ModuleGrid() {
 
   return (
     <section aria-label="Meus módulos">
-      <h2 className="sec-title">Meus módulos</h2>
       <div className="m-grid">
         {cards.map((c) => (
           <a key={c.title} href="#" className="m-card" onClick={(e) => e.preventDefault()}>
@@ -163,11 +160,11 @@ function AtencaoSection() {
   return (
     <section className="ds-card highlight" aria-labelledby="atencao-title">
       <div className="card-head">
-        <span className="ico"><Ic name="sparkles" size={18} stroke={2} /></span>
-        <h2 id="atencao-title">Atenção para você</h2>
+        <span className="ico"><Ic name="bell" size={18} stroke={2} /></span>
+        <h2 id="atencao-title">Notificações</h2>
         <span className="count">{PROACTIVE.length} itens priorizados pela sua agenda cidadã</span>
         <div className="right">
-          <a href="#" className="see-all" onClick={(e) => e.preventDefault()}>Configurar alertas <Ic name="chevron-right" size={14} /></a>
+          <a href="#" className="see-all" onClick={(e) => e.preventDefault()}>ver notificações <Ic name="chevron-right" size={14} /></a>
         </div>
       </div>
       <div className="proactive-list">
@@ -184,15 +181,16 @@ function RecomendadoSection() {
       <div className="card-head">
         <span className="ico"><Ic name="sparkles" size={18} stroke={2} /></span>
         <h2 id="reco-title">Recomendado para você</h2>
-        <span className="count">sugestões personalizadas com base no seu perfil</span>
       </div>
       <div className="reco-grid">
         {RECOMENDADOS.map((r) => (
           <a key={r.id} href="#" className="reco-card" onClick={(e) => e.preventDefault()}>
             <span className="reco-icon"><Ic name={r.icon} size={20} stroke={2} /></span>
-            <div className="reco-title">{r.titulo}</div>
-            <div className="reco-desc">{r.desc}</div>
-            <div className="reco-orgao">{r.orgao}</div>
+            <div className="reco-body">
+              <div className="reco-title">{r.titulo}</div>
+              <div className="reco-desc">{r.desc}</div>
+              <div className="reco-orgao">{r.orgao}</div>
+            </div>
           </a>
         ))}
       </div>
@@ -227,8 +225,10 @@ export function DashboardPage2() {
         </div>
 
         <ModuleGrid />
-        <AtencaoSection />
-        <RecomendadoSection />
+        <div className="lower-grid">
+          <AtencaoSection />
+          <RecomendadoSection />
+        </div>
       </main>
 
       <MsFooter />
