@@ -9,6 +9,14 @@ import {
 } from './data';
 import './DashboardPage.css';
 
+const AVATAR_PHOTO = 'https://cataas.com/cat?width=64&height=64';
+
+function maskCpf(cpf: string) {
+  const digits = cpf.replace(/\D/g, '');
+  if (digits.length !== 11) return cpf;
+  return `${digits.slice(0, 3)}.***.***-${digits.slice(9)}`;
+}
+
 /* ===== Shell ===== */
 function GovBar() {
   return (
@@ -112,7 +120,7 @@ function TopBar({ user, theme, onTheme, unreadCount, onProfile, onNotifs }: TopB
       </div>
 
       <button className="profile-chip" onClick={onProfile}>
-        <div className="avatar">{user.firstName[0]}</div>
+        <div className="avatar"><img src={AVATAR_PHOTO} alt="" /></div>
         <div>
           <div className="name">{user.firstName}</div>
           <div className="sub">conta gov.br <b style={{ color: '#FF9900' }}>Ouro</b></div>
@@ -186,7 +194,7 @@ function Greeting() {
           </span>
           <span className="pill">
             <Ic name="user" size={13} />
-            CPF <b>{CITIZEN.cpf}</b>
+            CPF <b>{maskCpf(CITIZEN.cpf)}</b>
           </span>
         </div>
       </div>
@@ -513,15 +521,15 @@ export function DashboardPage() {
           <div className="section-stack">
             <Greeting />
             <ProactiveSection items={PROACTIVE} />
-            <Favoritos items={FAVORITOS} />
             <Solicitacoes items={SOLICITACOES} />
-            <Documentos items={DOCUMENTOS} />
+            <Favoritos items={FAVORITOS} />
+            <HistoricoAside />
           </div>
 
           <aside className="aside-stack">
             <NotifAside items={NOTIFICACOES} />
+            <Documentos items={DOCUMENTOS} />
             <Recomendados items={RECOMENDADOS} />
-            <HistoricoAside />
           </aside>
         </main>
       </div>
