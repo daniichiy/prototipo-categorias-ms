@@ -164,7 +164,7 @@ function AtencaoSection() {
         <h2 id="atencao-title">Notificações</h2>
         <span className="count">{PROACTIVE.length} itens priorizados pela sua agenda cidadã</span>
         <div className="right">
-          <a href="#" className="see-all" onClick={(e) => e.preventDefault()}>ver notificações <Ic name="chevron-right" size={14} /></a>
+          <a href="#" className="see-all" onClick={(e) => e.preventDefault()}>Ver notificações <Ic name="chevron-right" size={14} /></a>
         </div>
       </div>
       <div className="proactive-list">
