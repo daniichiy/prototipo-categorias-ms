@@ -173,32 +173,6 @@
   user-select: none;
 }
 
-.entrar {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 22px;
-  background-color: var(--color-primary);
-  color: #ffffff;
-  font-family: var(--font-sans);
-  font-size: var(--size-2);
-  font-weight: var(--weight-bold);
-  letter-spacing: var(--tracking-wide);
-  text-transform: uppercase;
-  border: none;
-  border-radius: var(--radius-pill);
-  cursor: pointer;
-  transition: background-color var(--transition-fast), transform var(--transition-fast);
-  flex-shrink: 0;
-}
-
-.entrar:hover {
-  background-color: var(--color-primary-ink);
-  transform: translateY(-1px);
-}
-
-.entrar .material-icons { font-size: 20px; }
-
 @media (max-width: 768px) {
   .menuInner {
     flex-direction: column;
@@ -206,7 +180,6 @@
     gap: var(--space-3);
   }
   .menu { justify-content: flex-start; }
-  .entrar { align-self: flex-end; }
 }
 
 @media (max-width: 480px) {

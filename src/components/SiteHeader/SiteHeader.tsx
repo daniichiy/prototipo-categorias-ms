@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { UserMenu } from './UserMenu';
 import styles from './SiteHeader.module.css';
 
 const MENU = [
@@ -132,10 +133,7 @@ export function SiteHeader() {
             ))}
           </ul>
 
-          <button type="button" className={styles.entrar}>
-            <span className="material-icons" aria-hidden="true">account_circle</span>
-            <span>Entrar</span>
-          </button>
+          <UserMenu />
         </div>
       </nav>
     </header>
