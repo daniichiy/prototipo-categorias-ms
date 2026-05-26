@@ -99,10 +99,11 @@ interface ModuleCard {
 
 function ModuleGrid() {
   const cards: ModuleCard[] = [
-    { icon: 'star', title: 'Favoritos', count: FAVORITOS.length, sub: 'Serviços salvos para acesso rápido no portal.', link: 'Ver favoritos' },
-    { icon: 'file-text', title: 'Solicitações', count: SOLICITACOES.length, sub: 'Acompanhe protocolos e status em andamento.', link: 'Ver solicitações' },
-    { icon: 'calendar', title: 'Agendamentos', count: AGENDAMENTOS.length, sub: 'Próximos atendimentos presenciais marcados.', link: 'Ver agendamentos' },
+    { icon: 'user', title: 'Meu Perfil', sub: 'Seus dados pessoais e preferências de acesso.', link: 'Ver perfil' },
     { icon: 'wallet', title: 'Documentos', count: DOCUMENTOS.length, sub: 'Sua carteira digital de documentos oficiais.', link: 'Abrir carteira' },
+    { icon: 'calendar', title: 'Agendamentos', count: AGENDAMENTOS.length, sub: 'Próximos atendimentos presenciais marcados.', link: 'Ver agendamentos' },
+    { icon: 'file-text', title: 'Solicitações', count: SOLICITACOES.length, sub: 'Acompanhe protocolos e status em andamento.', link: 'Ver solicitações' },
+    { icon: 'star', title: 'Favoritos', count: FAVORITOS.length, sub: 'Serviços salvos para acesso rápido no portal.', link: 'Ver favoritos' },
     { icon: 'clock', title: 'Histórico', count: HISTORICO.length, sub: 'Suas últimas atividades e acessos no portal.', link: 'Ver histórico' },
   ];
 

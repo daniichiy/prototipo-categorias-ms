@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styles from './UserMenu.module.css';
 
 const USER = {
-  name: 'Dani',
+  name: 'Daniele',
   photo: 'https://cataas.com/cat?width=120&height=120',
 };
 

@@ -194,12 +194,11 @@
 
 /* ====== MODULE CARDS (6) ====== */
 .painel2 .m-grid {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
 }
 .painel2 .m-card {
-  flex: 1 1 200px;
   background: var(--bg-surface);
   border: 1px solid var(--border-card);
   border-radius: 8px;
@@ -517,6 +516,7 @@
 
 /* ====== RESPONSIVE ====== */
 @media (max-width: 1180px) {
+  .painel2 .m-grid { grid-template-columns: repeat(2, 1fr); }
   .painel2 .lower-grid { grid-template-columns: 1fr; }
   .painel2 .ms-header { grid-template-columns: 1fr auto; padding: 18px 24px; }
   .painel2 .ms-search { grid-column: 1 / -1; order: 3; max-width: none; }
@@ -526,6 +526,7 @@
   .painel2 .ms-footer { padding-left: 24px; padding-right: 24px; }
 }
 @media (max-width: 760px) {
+  .painel2 .m-grid { grid-template-columns: 1fr; }
   .painel2 .ms-utilbar { overflow-x: auto; white-space: nowrap; padding: 0 16px; gap: 16px; }
   .painel2 .ms-utilbar::-webkit-scrollbar { display: none; }
   .painel2 .ms-utilbar .right span { display: none; }
