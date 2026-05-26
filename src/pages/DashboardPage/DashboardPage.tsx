@@ -28,11 +28,11 @@ function GovBar() {
         <a href="#">Diário Oficial</a>
       </div>
       <div className="right">
-        <span style={{ color: 'rgba(255,255,255,0.7)' }}>Acessibilidade:</span>
+        <span style={{ color: 'var(--color-muted)' }}>Acessibilidade:</span>
         <div className="a11y-btns">
           <button title="Diminuir fonte">A-</button>
           <button title="Aumentar fonte">A+</button>
-          <button title="Alto contraste" style={{ background: 'rgba(255,255,255,0.22)' }}>◐</button>
+          <button title="Alto contraste" style={{ background: 'var(--color-primary)', color: '#fff' }}>◐</button>
         </div>
       </div>
     </div>
