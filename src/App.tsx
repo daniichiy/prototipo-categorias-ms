@@ -4,6 +4,7 @@ import { SiteFooter } from '@/components/SiteFooter';
 import { HomePage } from '@/pages/HomePage';
 import { CategoryPage } from '@/pages/CategoryPage';
 import { DashboardPage } from '@/pages/DashboardPage';
+import { DashboardPage2 } from '@/pages/DashboardPage2';
 
 function PortalLayout() {
   return (
@@ -19,6 +20,7 @@ export function App() {
   return (
     <Routes>
       <Route path="/painel" element={<DashboardPage />} />
+      <Route path="/painel2" element={<DashboardPage2 />} />
       <Route element={<PortalLayout />}>
         <Route path="/" element={<HomePage />} />
         <Route path="/categoria/:id" element={<CategoryPage />} />

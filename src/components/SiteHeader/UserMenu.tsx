@@ -73,6 +73,17 @@ export function UserMenu() {
             <span className="material-icons" aria-hidden="true">space_dashboard</span>
             <span>Meu Painel</span>
           </Link>
+
+          <Link
+            to="/painel2"
+            className={styles.menuItem}
+            role="menuitem"
+            onClick={() => setOpen(false)}
+          >
+            <span className="material-icons" aria-hidden="true">space_dashboard</span>
+            <span>Meu Painel 2</span>
+          </Link>
+
           <button
             type="button"
             className={styles.menuItem}

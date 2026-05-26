@@ -72,6 +72,15 @@ export interface NavItem {
   icon: string;
 }
 
+export interface Agendamento {
+  id: string;
+  servico: string;
+  orgao: string;
+  local: string;
+  data: string;
+  hora: string;
+}
+
 export const CITIZEN: Citizen = {
   name: 'Daniele Lins',
   firstName: 'Daniele',
@@ -164,6 +173,11 @@ export const HISTORICO = [
   { label: 'Emissão de Certidão Negativa', date: 'Ontem · 09:15', orgao: 'Sefaz-MS' },
   { label: 'Login na conta gov.br', date: '22/05 · 18:42', orgao: 'gov.br' },
   { label: 'Atualização de endereço', date: '20/05 · 11:30', orgao: 'SEJUSP' },
+];
+
+export const AGENDAMENTOS: Agendamento[] = [
+  { id: 'ag1', servico: 'Emissão de Carteira de Identidade (CIN)', orgao: 'SEJUSP', local: 'Campo Grande — Unidade Centro', data: '28/05/2026', hora: '10:30' },
+  { id: 'ag2', servico: 'Perícia médica para renovação de CNH', orgao: 'Detran-MS', local: 'Campo Grande — Sede Administrativa', data: '03/06/2026', hora: '14:00' },
 ];
 
 export const NAV: NavItem[] = [
