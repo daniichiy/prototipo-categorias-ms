@@ -45,6 +45,10 @@ const PATHS: Record<string, ReactNode> = {
   'download': <><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" /></>,
   'share': <><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><path d="m8.59 13.51 6.83 3.98M15.41 6.51l-6.82 3.98" /></>,
   'accessibility': <><circle cx="12" cy="4" r="2" /><path d="M19 13v-2a7 7 0 0 0-14 0v2M12 8v8M9 16l-2 5M15 16l2 5" /></>,
+  'leaf': <><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z" /><path d="M2 21c0-3 1.85-5.36 5.08-6" /></>,
+  'droplet': <><path d="M12 2.69 17.66 8.35a8 8 0 1 1-11.31 0z" /></>,
+  'book': <><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" /></>,
+  'layers': <><path d="m12 2 9 5-9 5-9-5 9-5z" /><path d="m3 12 9 5 9-5M3 17l9 5 9-5" /></>,
 };
 
 export function Ic({ name, size = 18, stroke = 1.75, ...rest }: Props) {
