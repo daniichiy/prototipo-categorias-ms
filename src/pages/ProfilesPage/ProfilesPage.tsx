@@ -112,7 +112,7 @@ function ProactiveCard({ item }: { item: ProactiveItem }) {
 
 /* ===== Menu lateral de perfis ===== */
 function PerfilMenu({ perfis, ativo, onSelect }: {
-  perfis: PerfilProativo[]; ativo: string; onSelect: (id: string) => void;
+  perfis: PerfilProativo[]; ativo: string | null; onSelect: (id: string) => void;
 }) {
   function onKey(e: React.KeyboardEvent) {
     if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
@@ -126,14 +126,14 @@ function PerfilMenu({ perfis, ativo, onSelect }: {
   }
   return (
     <nav className="pf-menu" aria-label="Perfis do cidadão" role="tablist" aria-orientation="vertical" onKeyDown={onKey}>
-      {perfis.map((p) => (
+      {perfis.map((p, i) => (
         <button
           key={p.id}
           id={`perfil-${p.id}`}
           role="tab"
           aria-selected={p.id === ativo}
           aria-controls="pf-feed"
-          tabIndex={p.id === ativo ? 0 : -1}
+          tabIndex={(ativo === null ? i === 0 : p.id === ativo) ? 0 : -1}
           className={'pf-menu-item' + (p.id === ativo ? ' active' : '')}
           style={{ ['--pf-cor' as string]: p.cor }}
           onClick={() => onSelect(p.id)}
@@ -270,9 +270,10 @@ function GlobalSections() {
 
 /* ===== Página ===== */
 export function ProfilesPage() {
-  const [ativo, setAtivo] = useState(PERFIS_PROATIVOS[0].id);
+  // UX: inicia sem nenhum perfil selecionado (estado de boas-vindas).
+  const [ativo, setAtivo] = useState<string | null>(null);
   const perfil = useMemo(
-    () => PERFIS_PROATIVOS.find((p) => p.id === ativo) ?? PERFIS_PROATIVOS[0],
+    () => PERFIS_PROATIVOS.find((p) => p.id === ativo) ?? null,
     [ativo],
   );
 
@@ -311,31 +312,43 @@ export function ProfilesPage() {
           <section
             id="pf-feed"
             role="tabpanel"
-            aria-labelledby={`perfil-${perfil.id}`}
+            aria-labelledby={perfil ? `perfil-${perfil.id}` : undefined}
             className="pf-feed"
           >
-            <div className="pf-feed-head" style={{ ['--pf-cor' as string]: perfil.cor }}>
-              <span className="pf-feed-ico"><Ic name={perfil.icon} size={26} stroke={2} /></span>
-              <div>
-                <h2 className="pf-feed-title">{perfil.nome}</h2>
-                <p className="pf-feed-desc">{perfil.descricao}</p>
-              </div>
-              <span className="pf-feed-count">{perfil.itens.length} ações proativas</span>
-            </div>
+            {perfil ? (
+              <>
+                <div className="pf-feed-head" style={{ ['--pf-cor' as string]: perfil.cor }}>
+                  <span className="pf-feed-ico"><Ic name={perfil.icon} size={26} stroke={2} /></span>
+                  <div>
+                    <h2 className="pf-feed-title">{perfil.nome}</h2>
+                    <p className="pf-feed-desc">{perfil.descricao}</p>
+                  </div>
+                  <span className="pf-feed-count">{perfil.itens.length} ações proativas</span>
+                </div>
 
-            <div className="proactive-list">
-              {perfil.itens.map((it) => <ProactiveCard key={it.id} item={it} />)}
-            </div>
+                <div className="proactive-list">
+                  {perfil.itens.map((it) => <ProactiveCard key={it.id} item={it} />)}
+                </div>
 
-            <DocumentosBlock docs={DOCUMENTOS_PERFIL[perfil.id] ?? []} />
+                <DocumentosBlock docs={DOCUMENTOS_PERFIL[perfil.id] ?? []} />
 
-            <p className="pf-demo-note">
-              <Ic name="info" size={13} /> Ações e documentos ilustrativos — o protótipo não consome dados reais do cidadão.
-            </p>
+                <p className="pf-demo-note">
+                  <Ic name="info" size={13} /> Ações e documentos ilustrativos — o protótipo não consome dados reais do cidadão.
+                </p>
+              </>
+            ) : (
+              <>
+                <div className="pf-empty-hint">
+                  <Ic name="layers" size={16} stroke={2} />
+                  <span>Selecione um <b>perfil ao lado</b> para ver os serviços que o Estado antecipa para você. Enquanto isso, este é o seu painel:</span>
+                </div>
+                <GlobalSections />
+              </>
+            )}
           </section>
         </div>
 
-        <GlobalSections />
+        {perfil && <GlobalSections />}
       </main>
 
       <MsFooter />

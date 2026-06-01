@@ -103,6 +103,18 @@
   display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-soft); margin: 14px 0 0;
 }
 
+/* ===== Sem perfil selecionado: dica + painel do cidadão no topo ===== */
+.painel2.perfis .pf-empty-hint {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--primary-soft); color: var(--primary);
+  border: 1px solid #CFE0F2; border-radius: 8px;
+  padding: 12px 16px; font-size: 13.5px; line-height: 1.45;
+}
+.painel2.perfis .pf-empty-hint svg { flex: none; }
+.painel2.perfis .pf-empty-hint b { font-weight: 700; }
+/* Quando o painel global está no topo (sem perfil), remove o espaço extra inicial */
+.painel2.perfis .pf-feed > .pf-global { margin-top: 16px; }
+
 /* ===== Documentos do perfil (carteira digital) ===== */
 .painel2.perfis .pf-doc-block { margin-top: 22px; }
 .painel2.perfis .pf-block-title {
