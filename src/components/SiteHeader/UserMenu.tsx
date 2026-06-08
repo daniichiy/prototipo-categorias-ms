@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
-import styles from './UserMenu.module.css';
+import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import styles from "./UserMenu.module.css";
 
 const USER = {
-  name: 'Daniele',
-  photo: 'https://cataas.com/cat?width=120&height=120',
+  name: "Daniele",
+  photo: "https://cataas.com/cat?width=120&height=120",
 };
 
 export function UserMenu() {
@@ -21,14 +21,14 @@ export function UserMenu() {
       }
     }
     function handleKey(event: KeyboardEvent) {
-      if (event.key === 'Escape') setOpen(false);
+      if (event.key === "Escape") setOpen(false);
     }
 
-    document.addEventListener('mousedown', handlePointer);
-    document.addEventListener('keydown', handleKey);
+    document.addEventListener("mousedown", handlePointer);
+    document.addEventListener("keydown", handleKey);
     return () => {
-      document.removeEventListener('mousedown', handlePointer);
-      document.removeEventListener('keydown', handleKey);
+      document.removeEventListener("mousedown", handlePointer);
+      document.removeEventListener("keydown", handleKey);
     };
   }, [open]);
 
@@ -70,7 +70,9 @@ export function UserMenu() {
             role="menuitem"
             onClick={() => setOpen(false)}
           >
-            <span className="material-icons" aria-hidden="true">space_dashboard</span>
+            <span className="material-icons" aria-hidden="true">
+              space_dashboard
+            </span>
             <span>Meu Painel</span>
           </Link>
 
@@ -80,8 +82,22 @@ export function UserMenu() {
             role="menuitem"
             onClick={() => setOpen(false)}
           >
-            <span className="material-icons" aria-hidden="true">space_dashboard</span>
+            <span className="material-icons" aria-hidden="true">
+              space_dashboard
+            </span>
             <span>Meu Painel 2</span>
+          </Link>
+
+          <Link
+            to="/perfis"
+            className={styles.menuItem}
+            role="menuitem"
+            onClick={() => setOpen(false)}
+          >
+            <span className="material-icons" aria-hidden="true">
+              groups
+            </span>
+            <span>Perfis do cidadão</span>
           </Link>
 
           <button
@@ -90,7 +106,9 @@ export function UserMenu() {
             role="menuitem"
             onClick={() => setOpen(false)}
           >
-            <span className="material-icons" aria-hidden="true">logout</span>
+            <span className="material-icons" aria-hidden="true">
+              logout
+            </span>
             <span>Sair</span>
           </button>
         </div>

@@ -5,6 +5,7 @@ import { HomePage } from '@/pages/HomePage';
 import { CategoryPage } from '@/pages/CategoryPage';
 import { DashboardPage } from '@/pages/DashboardPage';
 import { DashboardPage2 } from '@/pages/DashboardPage2';
+import { ProfilesPage, MetodologiaPage } from '@/pages/ProfilesPage';
 
 function PortalLayout() {
   return (
@@ -21,6 +22,8 @@ export function App() {
     <Routes>
       <Route path="/painel" element={<DashboardPage />} />
       <Route path="/painel2" element={<DashboardPage2 />} />
+      <Route path="/perfis" element={<ProfilesPage />} />
+      <Route path="/perfis/metodologia" element={<MetodologiaPage />} />
       <Route element={<PortalLayout />}>
         <Route path="/" element={<HomePage />} />
         <Route path="/categoria/:id" element={<CategoryPage />} />
