@@ -3,48 +3,52 @@
     "id": "administracao-publica",
     "icon": "account_balance"
   },
-  "Agropecuária e Meio Ambiente": {
-    "id": "agropecuaria-meio-ambiente",
+  "Agronegócio e Meio Ambiente": {
+    "id": "agronegocio-e-meio-ambiente",
     "icon": "agriculture"
   },
+  "Arte, Esporte e Turismo": {
+    "id": "arte-esporte-e-turismo",
+    "icon": "theater_comedy"
+  },
   "Assistência Social, Habitação e Cidadania": {
-    "id": "assistencia-social-habitacao-cidadania",
+    "id": "assistencia-social-habitacao-e-cidadania",
     "icon": "diversity_3"
   },
   "Ciência, Educação e Pesquisa": {
-    "id": "ciencia-educacao-pesquisa",
+    "id": "ciencia-educacao-e-pesquisa",
     "icon": "auto_stories"
   },
-  "Arte, Esporte e Turismo": {
-    "id": "arte-esporte-turismo",
-    "icon": "theater_comedy"
-  },
   "Comunicação e Transparência": {
-    "id": "comunicacao-transparencia",
+    "id": "comunicacao-e-transparencia",
     "icon": "campaign"
   },
-  "Empresas e Negócios": {
-    "id": "empresas-negocios",
+  "Empresa, Indústria e Comércio": {
+    "id": "empresa-industria-e-comercio",
     "icon": "apartment"
   },
   "Finanças e Impostos": {
-    "id": "financas-impostos",
+    "id": "financas-e-impostos",
     "icon": "currency_exchange"
   },
   "Justiça e Segurança": {
-    "id": "justica-seguranca",
+    "id": "justica-e-seguranca",
     "icon": "balance"
   },
-  "Saúde": {
-    "id": "saude",
+  "Saneamento, Água e Energia": {
+    "id": "saneamento-agua-e-energia",
+    "icon": "water_drop"
+  },
+  "Saúde e Cuidado": {
+    "id": "saude-e-cuidado",
     "icon": "medical_services"
   },
-  "Trabalho e Previdência": {
-    "id": "trabalho-previdencia",
+  "Trabalho, Emprego e Previdência": {
+    "id": "trabalho-emprego-e-previdencia",
     "icon": "work"
   },
   "Trânsito, Transportes e Infraestrutura": {
-    "id": "transito-transportes-infraestrutura",
+    "id": "transito-transportes-e-infraestrutura",
     "icon": "directions_car"
   }
 }
