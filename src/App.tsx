@@ -3,6 +3,7 @@ import { SiteHeader } from '@/components/SiteHeader';
 import { SiteFooter } from '@/components/SiteFooter';
 import { HomePage } from '@/pages/HomePage';
 import { CategoryPage } from '@/pages/CategoryPage';
+import { ServiceDetailPage } from '@/pages/ServiceDetailPage';
 import { DashboardPage } from '@/pages/DashboardPage';
 import { DashboardPage2 } from '@/pages/DashboardPage2';
 import { ProfilesPage, MetodologiaPage } from '@/pages/ProfilesPage';
@@ -27,6 +28,7 @@ export function App() {
       <Route element={<PortalLayout />}>
         <Route path="/" element={<HomePage />} />
         <Route path="/categoria/:id" element={<CategoryPage />} />
+        <Route path="/servico/:id" element={<ServiceDetailPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>
