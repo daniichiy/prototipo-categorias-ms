@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { CIDADAO_FEATURED } from '@/data/featuredServices';
 import { LayoutContainer } from '@/components/LayoutContainer';
@@ -70,6 +70,17 @@ const RELATED_SERVICES = [
 
 export function ServiceDetailPageV3() {
   const [openSections, setOpenSections] = useState<Set<SectionKey>>(new Set(['descricao']));
+  const [showStickyBar, setShowStickyBar] = useState(false);
+  const heroRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      ([entry]) => setShowStickyBar(!entry.isIntersecting),
+      { threshold: 0 },
+    );
+    if (heroRef.current) obs.observe(heroRef.current);
+    return () => obs.disconnect();
+  }, []);
 
   const toggle = (key: SectionKey) => {
     setOpenSections((prev) => {
@@ -94,7 +105,32 @@ export function ServiceDetailPageV3() {
 
   return (
     <main className={styles.page}>
-      <div className={styles.heroBand}>
+      {showStickyBar && (
+        <div className={styles.stickyBar} role="banner" aria-label="Barra de acesso rápido ao serviço">
+          <LayoutContainer>
+            <div className={styles.stickyBarInner}>
+              <span className={`material-icons ${styles.stickyBarIcon}`} aria-hidden="true">
+                {service.icon}
+              </span>
+              <span className={styles.stickyBarTitle}>{service.title}</span>
+              {service.externalUrl && (
+                <a
+                  href={service.externalUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.stickyBarBtn}
+                  aria-label="Acessar serviço no portal oficial"
+                >
+                  <span className="material-icons" aria-hidden="true" style={{ fontSize: 16 }}>open_in_new</span>
+                  Acessar serviço
+                </a>
+              )}
+            </div>
+          </LayoutContainer>
+        </div>
+      )}
+
+      <div ref={heroRef} className={styles.heroBand}>
         <LayoutContainer>
           <nav aria-label="Breadcrumb" className={styles.breadcrumb}>
             <ol className={styles.breadcrumbList}>
@@ -144,7 +180,7 @@ export function ServiceDetailPageV3() {
                 <span className="material-icons" aria-hidden="true">
                   {allExpanded ? 'unfold_less' : 'unfold_more'}
                 </span>
-                {allExpanded ? 'Recolher todos' : 'Expandir todos'}
+                {allExpanded ? 'Recolher' : 'Expandir'}
               </button>
             </div>
 
