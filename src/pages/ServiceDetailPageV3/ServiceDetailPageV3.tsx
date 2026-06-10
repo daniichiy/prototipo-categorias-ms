@@ -45,6 +45,8 @@ function AccordionSection({
 // Layout específico para o Boletim de acidente: seções em accordion + serviços relacionados
 const service = CIDADAO_FEATURED.find((s) => s.id === 'boletim-acidente-transito')!;
 
+const ALL_SECTIONS: SectionKey[] = ['descricao', 'instrucoes', 'quem', 'onde', 'prazos', 'outras'];
+
 const RELATED_SERVICES = [
   {
     id: 'boletim-ocorrencias-online',
@@ -79,6 +81,12 @@ export function ServiceDetailPageV3() {
   };
 
   const isOpen = (key: SectionKey) => openSections.has(key);
+
+  const allExpanded = ALL_SECTIONS.every((k) => openSections.has(k));
+
+  const toggleAll = () => {
+    setOpenSections(allExpanded ? new Set() : new Set(ALL_SECTIONS));
+  };
 
   const channelIcon =
     service.channel === 'Online' ? 'computer' :
@@ -126,6 +134,20 @@ export function ServiceDetailPageV3() {
       <LayoutContainer>
         <div className={styles.layout}>
           <article className={styles.content}>
+            <div className={styles.accordionToolbar}>
+              <button
+                type="button"
+                className={styles.expandAllBtn}
+                onClick={toggleAll}
+                aria-expanded={allExpanded}
+              >
+                <span className="material-icons" aria-hidden="true">
+                  {allExpanded ? 'unfold_less' : 'unfold_more'}
+                </span>
+                {allExpanded ? 'Recolher todos' : 'Expandir todos'}
+              </button>
+            </div>
+
             <AccordionSection id="descricao" title="O que é este serviço?" open={isOpen('descricao')} onToggle={toggle}>
               <p className={styles.sectionText}>{service.description}</p>
             </AccordionSection>
