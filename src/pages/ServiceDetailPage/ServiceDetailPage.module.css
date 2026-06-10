@@ -120,8 +120,6 @@
   font-size: var(--size-5);
   font-weight: var(--weight-bold);
   color: var(--color-primary-dark);
-  border-bottom: 2px solid var(--color-primary);
-  padding-bottom: var(--space-3);
   margin-bottom: var(--space-4);
   line-height: 1.2;
 }
