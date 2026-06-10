@@ -45,6 +45,28 @@
   text-overflow: ellipsis;
 }
 
+.stickyExpandBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  border-radius: var(--radius-sm);
+  font-size: var(--size-2);
+  font-weight: var(--weight-semibold);
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+}
+.stickyExpandBtn:hover {
+  border-color: #fff;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.stickyExpandBtn .material-icons { font-size: 18px; }
+
 .stickyBarBtn {
   display: inline-flex;
   align-items: center;
@@ -61,15 +83,15 @@
   border: 2px solid #fff;
   transition: background-color var(--transition-fast), color var(--transition-fast);
 }
-
 .stickyBarBtn:hover {
   background-color: var(--color-primary);
   color: #fff;
 }
 
 @media (max-width: 600px) {
-  .stickyBarInner { justify-content: stretch; }
-  .stickyBarBtn { width: 100%; justify-content: center; padding: var(--space-3) var(--space-4); font-size: var(--size-3); }
+  .stickyBarInner { justify-content: stretch; gap: var(--space-2); }
+  .stickyExpandBtn,
+  .stickyBarBtn { flex: 1; justify-content: center; padding: var(--space-3) var(--space-2); font-size: var(--size-2); }
 }
 
 /* ── Hero band ──────────────────────────────────────────── */
@@ -195,10 +217,14 @@
   line-height: var(--leading-normal);
 }
 
-/* ── Expand-all toolbar ──────────────────────────────────── */
+/* ── Expand-all toolbar — visível no desktop, oculto no mobile (sticky bar cobre) ── */
 .accordionToolbar {
   display: flex;
   justify-content: flex-end;
+}
+
+@media (max-width: 600px) {
+  .accordionToolbar { display: none; }
 }
 
 .expandAllBtn {

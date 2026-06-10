@@ -109,6 +109,17 @@ export function ServiceDetailPageV3() {
         <div className={styles.stickyBar} role="banner" aria-label="Barra de acesso rápido ao serviço">
           <LayoutContainer>
             <div className={styles.stickyBarInner}>
+              <button
+                type="button"
+                className={styles.stickyExpandBtn}
+                onClick={toggleAll}
+                aria-expanded={allExpanded}
+              >
+                <span className="material-icons" aria-hidden="true">
+                  {allExpanded ? 'unfold_less' : 'unfold_more'}
+                </span>
+                {allExpanded ? 'Recolher' : 'Expandir'}
+              </button>
               {service.externalUrl && (
                 <a
                   href={service.externalUrl}
