@@ -31,7 +31,7 @@
   margin-inline: auto;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: var(--space-5);
 }
 
@@ -67,6 +67,12 @@
 .stickyBarBtn:hover {
   background-color: var(--color-primary);
   color: #fff;
+}
+
+@media (max-width: 600px) {
+  .stickyBar { padding-inline: var(--space-4); }
+  .stickyBarInner { justify-content: stretch; }
+  .stickyBarBtn { width: 100%; justify-content: center; padding: var(--space-3) var(--space-4); font-size: var(--size-3); }
 }
 
 /* ── Hero band ──────────────────────────────────────────── */
@@ -159,6 +165,14 @@
 .heroActionBtn:hover {
   background-color: var(--color-primary);
   color: #fff;
+}
+
+@media (max-width: 600px) {
+  .heroContent { flex-direction: column; gap: var(--space-3); }
+  .heroIcon { font-size: 36px; margin-top: 0; }
+  .heroTitle { font-size: var(--size-5); }
+  .heroTitleRow { flex-direction: column; align-items: flex-start; gap: var(--space-3); }
+  .heroActionBtn { width: 100%; justify-content: center; }
 }
 
 /* ── Avaliação estática no hero ──────────────────────────── */

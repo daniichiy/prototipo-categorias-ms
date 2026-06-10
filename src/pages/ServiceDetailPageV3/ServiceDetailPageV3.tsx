@@ -109,10 +109,6 @@ export function ServiceDetailPageV3() {
         <div className={styles.stickyBar} role="banner" aria-label="Barra de acesso rápido ao serviço">
           <LayoutContainer>
             <div className={styles.stickyBarInner}>
-              <span className={`material-icons ${styles.stickyBarIcon}`} aria-hidden="true">
-                {service.icon}
-              </span>
-              <span className={styles.stickyBarTitle}>{service.title}</span>
               {service.externalUrl && (
                 <a
                   href={service.externalUrl}
@@ -121,7 +117,6 @@ export function ServiceDetailPageV3() {
                   className={styles.stickyBarBtn}
                   aria-label="Acessar serviço no portal oficial"
                 >
-                  <span className="material-icons" aria-hidden="true" style={{ fontSize: 16 }}>open_in_new</span>
                   Acessar serviço
                 </a>
               )}

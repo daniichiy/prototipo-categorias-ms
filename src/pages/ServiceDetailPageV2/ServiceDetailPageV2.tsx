@@ -32,7 +32,6 @@ export function ServiceDetailPageV2() {
       {/* Barra sticky — aparece quando o hero some da tela */}
       <div className={`${styles.stickyBar} ${showStickyBar ? styles.stickyBarVisible : ''}`} aria-hidden={!showStickyBar}>
         <div className={styles.stickyBarInner}>
-          <p className={styles.stickyBarTitle}>{service.title}</p>
           {service.externalUrl && (
             <a
               href={service.externalUrl}
