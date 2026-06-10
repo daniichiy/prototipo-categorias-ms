@@ -1,13 +1,63 @@
-import { useParams, Link, Navigate } from 'react-router-dom';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { CIDADAO_FEATURED } from '@/data/featuredServices';
 import { LayoutContainer } from '@/components/LayoutContainer';
-import styles from './ServiceDetailPage.module.css';
+import styles from './ServiceDetailPageV3.module.css';
 
-export function ServiceDetailPage() {
-  const { id } = useParams<{ id: string }>();
-  const service = CIDADAO_FEATURED.find((s) => s.id === id);
+type SectionKey = 'descricao' | 'instrucoes' | 'quem' | 'onde' | 'prazos' | 'outras';
 
-  if (!service) return <Navigate to="/" replace />;
+function AccordionSection({
+  id,
+  title,
+  open,
+  onToggle,
+  children,
+}: {
+  id: SectionKey;
+  title: string;
+  open: boolean;
+  onToggle: (id: SectionKey) => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className={`${styles.accordion} ${open ? styles.accordionOpen : ''}`}>
+      <button
+        type="button"
+        className={styles.accordionHeader}
+        aria-expanded={open}
+        onClick={() => onToggle(id)}
+      >
+        <span className={styles.accordionTitle}>{title}</span>
+        <span className={`material-icons ${styles.accordionIcon} ${open ? styles.accordionIconOpen : ''}`} aria-hidden="true">
+          expand_more
+        </span>
+      </button>
+
+      <div className={styles.accordionBody} aria-hidden={!open}>
+        <div className={styles.accordionBodyInner}>
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Layout específico para o Boletim de acidente: seções em accordion
+const service = CIDADAO_FEATURED.find((s) => s.id === 'boletim-acidente-transito')!;
+
+export function ServiceDetailPageV3() {
+  const [openSections, setOpenSections] = useState<Set<SectionKey>>(new Set(['descricao']));
+
+  const toggle = (key: SectionKey) => {
+    setOpenSections((prev) => {
+      const next = new Set(prev);
+      if (next.has(key)) next.delete(key);
+      else next.add(key);
+      return next;
+    });
+  };
+
+  const isOpen = (key: SectionKey) => openSections.has(key);
 
   const channelIcon =
     service.channel === 'Online' ? 'computer' :
@@ -48,51 +98,11 @@ export function ServiceDetailPage() {
       <LayoutContainer>
         <div className={styles.layout}>
           <article className={styles.content}>
-
-            {/* 1 — O que é este serviço? */}
-            <section className={styles.section}>
-              <h2 className={styles.sectionTitle}>O que é este serviço?</h2>
+            <AccordionSection id="descricao" title="O que é este serviço?" open={isOpen('descricao')} onToggle={toggle}>
               <p className={styles.sectionText}>{service.description}</p>
-            </section>
+            </AccordionSection>
 
-            {/* 2 — Exigências para realizar o serviço */}
-            {service.requirements && service.requirements.length > 0 && (
-              <section className={styles.section}>
-                <h2 className={styles.sectionTitle}>Exigências para realizar o serviço</h2>
-                <ul className={styles.reqList}>
-                  {service.requirements.map((req, i) => (
-                    <li key={i} className={styles.reqItem}>
-                      <span className={`material-icons ${styles.reqIcon}`} aria-hidden="true">check_circle</span>
-                      <span className={styles.sectionText}>{req}</span>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            )}
-
-            {/* 3 — Quem pode utilizar este serviço? */}
-            <section className={styles.section}>
-              <h2 className={styles.sectionTitle}>Quem pode utilizar este serviço?</h2>
-              <p className={styles.sectionText}>{service.whoCanUse}</p>
-            </section>
-
-            {/* 4 — Prazos */}
-            <section className={styles.section}>
-              <h2 className={styles.sectionTitle}>Prazos</h2>
-              <p className={styles.sectionText}>{service.deadline}</p>
-            </section>
-
-            {/* 5 — Quais os custos? */}
-            {service.costs && (
-              <section className={styles.section}>
-                <h2 className={styles.sectionTitle}>Quais os custos?</h2>
-                <p className={styles.sectionText}>{service.costs}</p>
-              </section>
-            )}
-
-            {/* 6 — Etapas */}
-            <section className={styles.section}>
-              <h2 className={styles.sectionTitle}>Etapas</h2>
+            <AccordionSection id="instrucoes" title="Instruções para realizar o serviço" open={isOpen('instrucoes')} onToggle={toggle}>
               <ol className={styles.stepList}>
                 {service.instructions.map((inst) => (
                   <li key={inst.step} className={styles.stepItem}>
@@ -114,12 +124,22 @@ export function ServiceDetailPage() {
                   </li>
                 ))}
               </ol>
-            </section>
+            </AccordionSection>
 
-            {/* 7 — Outras informações */}
+            <AccordionSection id="quem" title="Quem pode utilizar este serviço?" open={isOpen('quem')} onToggle={toggle}>
+              <p className={styles.sectionText}>{service.whoCanUse}</p>
+            </AccordionSection>
+
+            <AccordionSection id="onde" title="Onde é o serviço?" open={isOpen('onde')} onToggle={toggle}>
+              <p className={styles.sectionText}>{service.where}</p>
+            </AccordionSection>
+
+            <AccordionSection id="prazos" title="Prazos" open={isOpen('prazos')} onToggle={toggle}>
+              <p className={styles.sectionText}>{service.deadline}</p>
+            </AccordionSection>
+
             {service.otherInfo && service.otherInfo.length > 0 && (
-              <section className={styles.section}>
-                <h2 className={styles.sectionTitle}>Outras informações</h2>
+              <AccordionSection id="outras" title="Outras Informações" open={isOpen('outras')} onToggle={toggle}>
                 <dl className={styles.infoList}>
                   {service.otherInfo.map((info) => (
                     <div key={info.title} className={styles.infoItem}>
@@ -128,10 +148,9 @@ export function ServiceDetailPage() {
                     </div>
                   ))}
                 </dl>
-              </section>
+              </AccordionSection>
             )}
 
-            {/* Avaliação */}
             <div className={styles.ratingBlock}>
               <p className={styles.ratingQuestion}>Esta informação foi útil para você?</p>
               <div className={styles.ratingButtons}>
@@ -145,10 +164,26 @@ export function ServiceDetailPage() {
                 </button>
               </div>
             </div>
-
           </article>
 
           <aside className={styles.sidebar}>
+            <div className={styles.sideCard}>
+              <h3 className={styles.sideTitle}>Acessar serviço</h3>
+              {service.externalUrl ? (
+                <a
+                  href={service.externalUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.sideBtn}
+                >
+                  <span className="material-icons" aria-hidden="true">open_in_new</span>
+                  Acessar no portal oficial
+                </a>
+              ) : (
+                <p className={styles.sideMuted}>Atendimento presencial. Consulte o endereço abaixo.</p>
+              )}
+            </div>
+
             <div className={styles.sideCard}>
               <h3 className={styles.sideTitle}>Canal de atendimento</h3>
               <p className={styles.sideText}>
@@ -171,45 +206,6 @@ export function ServiceDetailPage() {
           </aside>
         </div>
       </LayoutContainer>
-
-      {/* Barra fixa de ações no rodapé da tela */}
-      {(service.externalUrl || service.attendanceOnlineUrl || service.attendancePresentialUrl) && (
-        <div className={styles.fixedBar}>
-          {service.externalUrl && (
-            <a
-              href={service.externalUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.fixedBarBtnPrimary}
-            >
-              <span className="material-icons" aria-hidden="true">open_in_new</span>
-              Acessar Serviço
-            </a>
-          )}
-          {service.attendanceOnlineUrl && (
-            <a
-              href={service.attendanceOnlineUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.fixedBarBtnOutline}
-            >
-              <span className="material-icons" aria-hidden="true">computer</span>
-              Atendimento Online
-            </a>
-          )}
-          {service.attendancePresentialUrl && (
-            <a
-              href={service.attendancePresentialUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.fixedBarBtnOutline}
-            >
-              <span className="material-icons" aria-hidden="true">place</span>
-              Atendimento Presencial
-            </a>
-          )}
-        </div>
-      )}
     </main>
   );
 }

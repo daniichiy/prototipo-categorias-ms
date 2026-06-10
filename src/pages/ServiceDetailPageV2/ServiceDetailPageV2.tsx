@@ -1,13 +1,12 @@
-import { useParams, Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { CIDADAO_FEATURED } from '@/data/featuredServices';
 import { LayoutContainer } from '@/components/LayoutContainer';
-import styles from './ServiceDetailPage.module.css';
+import styles from './ServiceDetailPageV2.module.css';
 
-export function ServiceDetailPage() {
-  const { id } = useParams<{ id: string }>();
-  const service = CIDADAO_FEATURED.find((s) => s.id === id);
+// Layout específico para o serviço CRLV-e: botão de acesso ao lado do título + perfis na sidebar
+const service = CIDADAO_FEATURED.find((s) => s.id === 'emitir-crlv-e')!;
 
-  if (!service) return <Navigate to="/" replace />;
+export function ServiceDetailPageV2() {
 
   const channelIcon =
     service.channel === 'Online' ? 'computer' :
@@ -31,9 +30,26 @@ export function ServiceDetailPage() {
             <span className={`material-icons ${styles.heroIcon}`} aria-hidden="true">
               {service.icon}
             </span>
-            <div>
+            <div className={styles.heroBody}>
               <p className={styles.agencyLabel}>{service.agency}</p>
-              <h1 className={styles.heroTitle}>{service.title}</h1>
+
+              {/* título + botão de acesso lado a lado */}
+              <div className={styles.heroTitleRow}>
+                <h1 className={styles.heroTitle}>{service.title}</h1>
+                {service.externalUrl && (
+                  <a
+                    href={service.externalUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.heroActionBtn}
+                    aria-label="Acessar serviço no portal oficial"
+                  >
+                    <span className="material-icons" aria-hidden="true">open_in_new</span>
+                    Acessar serviço
+                  </a>
+                )}
+              </div>
+
               <span className={`${styles.channelBadge} ${styles[`channel${service.channel.replace(/\s/g, '').replace('e', 'E')}`]}`}>
                 <span className="material-icons" aria-hidden="true" style={{ fontSize: 14 }}>
                   {channelIcon}
@@ -48,51 +64,13 @@ export function ServiceDetailPage() {
       <LayoutContainer>
         <div className={styles.layout}>
           <article className={styles.content}>
-
-            {/* 1 — O que é este serviço? */}
             <section className={styles.section}>
               <h2 className={styles.sectionTitle}>O que é este serviço?</h2>
               <p className={styles.sectionText}>{service.description}</p>
             </section>
 
-            {/* 2 — Exigências para realizar o serviço */}
-            {service.requirements && service.requirements.length > 0 && (
-              <section className={styles.section}>
-                <h2 className={styles.sectionTitle}>Exigências para realizar o serviço</h2>
-                <ul className={styles.reqList}>
-                  {service.requirements.map((req, i) => (
-                    <li key={i} className={styles.reqItem}>
-                      <span className={`material-icons ${styles.reqIcon}`} aria-hidden="true">check_circle</span>
-                      <span className={styles.sectionText}>{req}</span>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            )}
-
-            {/* 3 — Quem pode utilizar este serviço? */}
             <section className={styles.section}>
-              <h2 className={styles.sectionTitle}>Quem pode utilizar este serviço?</h2>
-              <p className={styles.sectionText}>{service.whoCanUse}</p>
-            </section>
-
-            {/* 4 — Prazos */}
-            <section className={styles.section}>
-              <h2 className={styles.sectionTitle}>Prazos</h2>
-              <p className={styles.sectionText}>{service.deadline}</p>
-            </section>
-
-            {/* 5 — Quais os custos? */}
-            {service.costs && (
-              <section className={styles.section}>
-                <h2 className={styles.sectionTitle}>Quais os custos?</h2>
-                <p className={styles.sectionText}>{service.costs}</p>
-              </section>
-            )}
-
-            {/* 6 — Etapas */}
-            <section className={styles.section}>
-              <h2 className={styles.sectionTitle}>Etapas</h2>
+              <h2 className={styles.sectionTitle}>Instruções para realizar o serviço</h2>
               <ol className={styles.stepList}>
                 {service.instructions.map((inst) => (
                   <li key={inst.step} className={styles.stepItem}>
@@ -116,10 +94,24 @@ export function ServiceDetailPage() {
               </ol>
             </section>
 
-            {/* 7 — Outras informações */}
+            <section className={styles.section}>
+              <h2 className={styles.sectionTitle}>Quem pode utilizar este serviço?</h2>
+              <p className={styles.sectionText}>{service.whoCanUse}</p>
+            </section>
+
+            <section className={styles.section}>
+              <h2 className={styles.sectionTitle}>Onde é o serviço?</h2>
+              <p className={styles.sectionText}>{service.where}</p>
+            </section>
+
+            <section className={styles.section}>
+              <h2 className={styles.sectionTitle}>Prazos</h2>
+              <p className={styles.sectionText}>{service.deadline}</p>
+            </section>
+
             {service.otherInfo && service.otherInfo.length > 0 && (
               <section className={styles.section}>
-                <h2 className={styles.sectionTitle}>Outras informações</h2>
+                <h2 className={styles.sectionTitle}>Outras Informações</h2>
                 <dl className={styles.infoList}>
                   {service.otherInfo.map((info) => (
                     <div key={info.title} className={styles.infoItem}>
@@ -131,7 +123,6 @@ export function ServiceDetailPage() {
               </section>
             )}
 
-            {/* Avaliação */}
             <div className={styles.ratingBlock}>
               <p className={styles.ratingQuestion}>Esta informação foi útil para você?</p>
               <div className={styles.ratingButtons}>
@@ -145,10 +136,24 @@ export function ServiceDetailPage() {
                 </button>
               </div>
             </div>
-
           </article>
 
           <aside className={styles.sidebar}>
+            {/* perfil — diferencial desta variante */}
+            {service.profiles && service.profiles.length > 0 && (
+              <div className={styles.sideCard}>
+                <h3 className={styles.sideTitle}>Perfil</h3>
+                <div className={styles.profileTagList}>
+                  {service.profiles.map((p) => (
+                    <span key={p} className={styles.profileTag}>
+                      <span className="material-icons" aria-hidden="true" style={{ fontSize: 14 }}>person</span>
+                      {p}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
             <div className={styles.sideCard}>
               <h3 className={styles.sideTitle}>Canal de atendimento</h3>
               <p className={styles.sideText}>
@@ -171,45 +176,6 @@ export function ServiceDetailPage() {
           </aside>
         </div>
       </LayoutContainer>
-
-      {/* Barra fixa de ações no rodapé da tela */}
-      {(service.externalUrl || service.attendanceOnlineUrl || service.attendancePresentialUrl) && (
-        <div className={styles.fixedBar}>
-          {service.externalUrl && (
-            <a
-              href={service.externalUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.fixedBarBtnPrimary}
-            >
-              <span className="material-icons" aria-hidden="true">open_in_new</span>
-              Acessar Serviço
-            </a>
-          )}
-          {service.attendanceOnlineUrl && (
-            <a
-              href={service.attendanceOnlineUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.fixedBarBtnOutline}
-            >
-              <span className="material-icons" aria-hidden="true">computer</span>
-              Atendimento Online
-            </a>
-          )}
-          {service.attendancePresentialUrl && (
-            <a
-              href={service.attendancePresentialUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.fixedBarBtnOutline}
-            >
-              <span className="material-icons" aria-hidden="true">place</span>
-              Atendimento Presencial
-            </a>
-          )}
-        </div>
-      )}
     </main>
   );
 }

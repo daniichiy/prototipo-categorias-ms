@@ -6,13 +6,18 @@ export interface ServiceDetail {
   category: string;
   categorySlug: string;
   description: string;
-  instructions: { step: number; text: string; link?: string; linkLabel?: string }[];
+  requirements?: string[];
   whoCanUse: string;
-  where: string;
   deadline: string;
+  costs?: string;
+  instructions: { step: number; text: string; link?: string; linkLabel?: string }[];
+  where: string;
   channel: 'Online' | 'Presencial' | 'Online e Presencial';
   otherInfo?: { title: string; content: string }[];
   externalUrl?: string;
+  attendanceOnlineUrl?: string;
+  attendancePresentialUrl?: string;
+  profiles?: string[];
 }
 
 export const CIDADAO_FEATURED: ServiceDetail[] = [
@@ -25,50 +30,68 @@ export const CIDADAO_FEATURED: ServiceDetail[] = [
     categorySlug: 'financas-impostos',
     channel: 'Online',
     description:
-      'Emite certidão que informa a situação fiscal do contribuinte perante o Fisco Estadual, comprovando a existência ou inexistência de débitos tributários estaduais inscritos ou não em dívida ativa.',
+      'Emite certidão que comprova a situação fiscal do contribuinte perante o Fisco Estadual, confirmando a existência ou inexistência de débitos tributários estaduais — inscritos ou não em dívida ativa — referentes a tributos administrados pela Secretaria de Estado de Fazenda de Mato Grosso do Sul.',
+    requirements: [
+      'CPF (pessoa física) ou CNPJ (pessoa jurídica) do contribuinte a ser consultado.',
+      'Acesso à internet para emissão pelo canal online.',
+      'Não é necessário realizar cadastro prévio ou login no sistema para a consulta pública.',
+      'Para contribuintes com Inscrição Estadual ativa, consulte também pelo número do CACMS.',
+    ],
+    whoCanUse:
+      'Pessoa física ou jurídica com inscrição no Cadastro de Contribuintes do Estado de Mato Grosso do Sul (CACMS), ou qualquer interessado que necessite verificar ou comprovar a situação fiscal de um contribuinte perante o Fisco Estadual.',
+    deadline:
+      'A certidão é emitida de forma imediata, instantaneamente após a solicitação online. O documento gerado tem validade de 30 (trinta) dias corridos a partir da data de emissão.',
+    costs: 'Gratuito. Não há cobrança de taxas ou emolumentos para emissão da certidão pelo canal online. Em caso de necessidade de autenticação física em cartório, eventuais custos são de responsabilidade do solicitante.',
     instructions: [
       {
         step: 1,
-        text: 'Acesse o sistema SINTEGRA-MS pelo site da SEFAZ-MS.',
+        text: 'Acesse o portal de serviços da SEFAZ-MS e localize a opção "Certidão Tributária Estadual".',
         link: 'https://www.sefaz.ms.gov.br',
         linkLabel: 'Acessar SEFAZ-MS',
       },
       {
         step: 2,
-        text: 'Informe o CPF (pessoa física) ou CNPJ (pessoa jurídica) do contribuinte.',
+        text: 'Selecione o tipo de pessoa: Física (CPF) ou Jurídica (CNPJ).',
       },
       {
         step: 3,
-        text: 'Selecione a opção "Certidão Circunstanciada de Débitos Estaduais" no menu de serviços.',
+        text: 'Informe o número do CPF ou CNPJ do contribuinte a ser consultado e preencha o campo de verificação (CAPTCHA).',
       },
       {
         step: 4,
-        text: 'Confirme os dados e clique em "Emitir Certidão".',
+        text: 'Selecione "Certidão Circunstanciada de Débitos Estaduais" e clique em "Emitir".',
       },
       {
         step: 5,
-        text: 'Salve ou imprima o documento emitido. A certidão tem validade de 30 dias a partir da emissão.',
+        text: 'Verifique os dados exibidos e confirme a emissão do documento.',
+      },
+      {
+        step: 6,
+        text: 'Salve o arquivo PDF gerado ou imprima o documento. A certidão tem validade de 30 dias a partir da data de emissão.',
       },
     ],
-    whoCanUse:
-      'Pessoa física ou jurídica com inscrição no Cadastro de Contribuintes do Estado de Mato Grosso do Sul (CACMS), ou qualquer interessado que necessite comprovar a situação fiscal perante o Fisco Estadual.',
-    where: 'Pelo portal SINTEGRA-MS (online), sem necessidade de deslocamento a unidades de atendimento.',
-    deadline: 'Imediato — a certidão é gerada instantaneamente após a solicitação online.',
+    where: 'Exclusivamente pelo portal online da SEFAZ-MS, sem necessidade de deslocamento a unidades de atendimento presencial.',
     otherInfo: [
       {
-        title: 'Validade da certidão',
-        content: 'A certidão circunstanciada de débitos estaduais tem validade de 30 (trinta) dias corridos a partir da data de emissão.',
+        title: 'Validade',
+        content: 'A certidão circunstanciada de débitos estaduais tem validade de 30 (trinta) dias corridos a partir da data de emissão, conforme legislação estadual vigente.',
       },
       {
-        title: 'Custo',
-        content: 'Gratuito. Não há taxa para emissão da certidão pelo canal online.',
+        title: 'Legislação aplicável',
+        content: 'Lei Estadual nº 1.810/1997 (Código Tributário Estadual de Mato Grosso do Sul); Decreto nº 9.203/1998 e suas alterações; Resolução SEFAZ nº 2.826/2015.',
       },
       {
-        title: 'Legislação',
-        content: 'Lei Estadual nº 1.810/1997 — Código Tributário Estadual de Mato Grosso do Sul e Decreto nº 9.203/1998.',
+        title: 'Certidão positiva com efeito de negativa',
+        content: 'Quando existirem débitos com exigibilidade suspensa (parcelados, em discussão judicial ou administrativa), a certidão emitida pode ter efeito de negativa, indicando a situação regularizada temporariamente.',
+      },
+      {
+        title: 'Canais de suporte',
+        content: 'Dúvidas sobre a certidão podem ser esclarecidas pelo telefone 0800-647-0101 (SEFAZ-MS) ou presencialmente nas agências fazendárias distribuídas nos municípios do Estado.',
       },
     ],
     externalUrl: 'https://www.sefaz.ms.gov.br',
+    attendanceOnlineUrl: 'https://www.sefaz.ms.gov.br/atendimento-virtual',
+    attendancePresentialUrl: 'https://www.sefaz.ms.gov.br/agencias',
   },
   {
     id: 'consultar-fila-ambulatorial',
@@ -168,6 +191,7 @@ export const CIDADAO_FEATURED: ServiceDetail[] = [
         content: 'O valor do licenciamento inclui a taxa DETRAN e eventuais débitos pendentes do veículo.',
       },
     ],
+    profiles: ['Cidadão', 'Servidor Público'],
     externalUrl: 'https://www.detran.ms.gov.br',
   },
   {
