@@ -64,22 +64,7 @@ export function ServiceDetailPageV2() {
             </span>
             <div className={styles.heroBody}>
               <p className={styles.agencyLabel}>{service.agency}</p>
-
-              {/* título + botão de acesso lado a lado */}
-              <div className={styles.heroTitleRow}>
-                <h1 className={styles.heroTitle}>{service.title}</h1>
-                {service.externalUrl && (
-                  <a
-                    href={service.externalUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.heroActionBtn}
-                    aria-label="Acessar serviço no portal oficial"
-                  >
-                    Acessar serviço
-                  </a>
-                )}
-              </div>
+              <h1 className={styles.heroTitle}>{service.title}</h1>
 
               {/* Avaliação estática — exibição apenas, sem interação */}
               <div className={styles.starRating} aria-label={`Avaliação: ${SERVICE_RATING} de 5 estrelas, ${SERVICE_RATING_COUNT.toLocaleString('pt-BR')} avaliações`}>
@@ -103,6 +88,17 @@ export function ServiceDetailPageV2() {
                 {service.channel}
               </span>
             </div>
+            {service.externalUrl && (
+              <a
+                href={service.externalUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.heroActionBtn}
+                aria-label="Acessar serviço no portal oficial"
+              >
+                Acessar serviço
+              </a>
+            )}
           </div>
         </LayoutContainer>
       </div>

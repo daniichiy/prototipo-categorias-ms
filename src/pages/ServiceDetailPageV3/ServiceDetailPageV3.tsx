@@ -45,6 +45,9 @@ function AccordionSection({
 // Layout específico para o Boletim de acidente: seções em accordion + serviços relacionados
 const service = CIDADAO_FEATURED.find((s) => s.id === 'boletim-acidente-transito')!;
 
+const SERVICE_RATING = 4.5;
+const SERVICE_RATING_COUNT = 892;;
+
 const ALL_SECTIONS: SectionKey[] = ['descricao', 'instrucoes', 'quem', 'onde', 'prazos', 'outras'];
 
 const RELATED_SERVICES = [
@@ -149,26 +152,34 @@ export function ServiceDetailPageV3() {
           </nav>
 
           <div className={styles.heroContent}>
-            <span className={`material-icons ${styles.heroIcon}`} aria-hidden="true">
-              {service.icon}
-            </span>
             <div className={styles.heroBody}>
               <p className={styles.agencyLabel}>{service.agency}</p>
-              <div className={styles.heroTitleRow}>
-                <h1 className={styles.heroTitle}>{service.title}</h1>
-                {service.externalUrl && (
-                  <a
-                    href={service.externalUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.heroActionBtn}
-                    aria-label="Acessar serviço no portal oficial"
-                  >
-                    Acessar serviço
-                  </a>
-                )}
+              <h1 className={styles.heroTitle}>{service.title}</h1>
+              <div className={styles.starRating} aria-label={`Avaliação: ${SERVICE_RATING} de 5 estrelas, ${SERVICE_RATING_COUNT.toLocaleString('pt-BR')} avaliações`}>
+                <span className={styles.ratingScore}>{SERVICE_RATING.toFixed(1).replace('.', ',')}</span>
+                {[1, 2, 3, 4, 5].map((star) => {
+                  const fill = Math.min(1, Math.max(0, SERVICE_RATING - (star - 1)));
+                  const icon = fill >= 0.75 ? 'star' : fill >= 0.25 ? 'star_half' : 'star_border';
+                  return (
+                    <span key={star} className={styles.starIcon} aria-hidden="true">
+                      <span className="material-icons">{icon}</span>
+                    </span>
+                  );
+                })}
+                <span className={styles.ratingCount}>({SERVICE_RATING_COUNT.toLocaleString('pt-BR')})</span>
               </div>
             </div>
+            {service.externalUrl && (
+              <a
+                href={service.externalUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.heroActionBtn}
+                aria-label="Acessar serviço no portal oficial"
+              >
+                Acessar serviço
+              </a>
+            )}
           </div>
         </LayoutContainer>
       </div>
