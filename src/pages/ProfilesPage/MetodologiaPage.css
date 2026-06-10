@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Roboto:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap");
 
 /* Estilo da página de Metodologia & Glossário. Escopado em .perfis-doc
    (separado de .painel2.perfis para não colidir com o layout proativo). */
@@ -13,7 +13,7 @@
   --line-soft: #ECEFF1;
   --bg-app: #EFF3F6;
   --surface: #FFFFFF;
-  --font-open: "Open Sans", system-ui, sans-serif;
+  --font-open: "Roboto", system-ui, sans-serif;
   --font-roboto: "Roboto", system-ui, sans-serif;
   --shadow: 0 4px 14px rgba(0, 32, 64, 0.10);
 

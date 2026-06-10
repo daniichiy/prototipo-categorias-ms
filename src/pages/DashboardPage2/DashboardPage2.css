@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Roboto:wght@400;500;600;700&family=Archivo:wght@400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&family=Archivo:wght@400;500;700&display=swap");
 
 /* Meu Painel 2 — layout institucional ms.gov.br (v2), adaptado ao DS do portal.
    Tudo escopado em .painel2 para não colidir com o Painel 1. */
@@ -22,7 +22,7 @@
   --c-success: #198038;
   --c-warning: #FF6200;
 
-  --font-open: "Open Sans", system-ui, sans-serif;
+  --font-open: "Roboto", system-ui, sans-serif;
   --font-roboto: "Roboto", system-ui, sans-serif;
   --font-mono: "Archivo", "Roboto Mono", ui-monospace, monospace;
 
