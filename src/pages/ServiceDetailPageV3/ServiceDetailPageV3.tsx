@@ -42,8 +42,29 @@ function AccordionSection({
   );
 }
 
-// Layout específico para o Boletim de acidente: seções em accordion
+// Layout específico para o Boletim de acidente: seções em accordion + serviços relacionados
 const service = CIDADAO_FEATURED.find((s) => s.id === 'boletim-acidente-transito')!;
+
+const RELATED_SERVICES = [
+  {
+    id: 'boletim-ocorrencias-online',
+    title: 'Registrar boletim de ocorrências',
+    icon: 'local_police',
+    category: 'Justiça e Segurança',
+  },
+  {
+    id: 'consultar-boletim-ocorrencias',
+    title: 'Consultar boletim de ocorrências',
+    icon: 'manage_search',
+    category: 'Justiça e Segurança',
+  },
+  {
+    id: 'antecedentes-criminais',
+    title: 'Solicitar antecedentes criminais',
+    icon: 'description',
+    category: 'Justiça e Segurança',
+  },
+];
 
 export function ServiceDetailPageV3() {
   const [openSections, setOpenSections] = useState<Set<SectionKey>>(new Set(['descricao']));
@@ -81,15 +102,22 @@ export function ServiceDetailPageV3() {
             <span className={`material-icons ${styles.heroIcon}`} aria-hidden="true">
               {service.icon}
             </span>
-            <div>
+            <div className={styles.heroBody}>
               <p className={styles.agencyLabel}>{service.agency}</p>
-              <h1 className={styles.heroTitle}>{service.title}</h1>
-              <span className={`${styles.channelBadge} ${styles[`channel${service.channel.replace(/\s/g, '').replace('e', 'E')}`]}`}>
-                <span className="material-icons" aria-hidden="true" style={{ fontSize: 14 }}>
-                  {channelIcon}
-                </span>
-                {service.channel}
-              </span>
+              <div className={styles.heroTitleRow}>
+                <h1 className={styles.heroTitle}>{service.title}</h1>
+                {service.externalUrl && (
+                  <a
+                    href={service.externalUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.heroActionBtn}
+                    aria-label="Acessar serviço no portal oficial"
+                  >
+                    Acessar serviço
+                  </a>
+                )}
+              </div>
             </div>
           </div>
         </LayoutContainer>
@@ -164,26 +192,10 @@ export function ServiceDetailPageV3() {
                 </button>
               </div>
             </div>
+
           </article>
 
           <aside className={styles.sidebar}>
-            <div className={styles.sideCard}>
-              <h3 className={styles.sideTitle}>Acessar serviço</h3>
-              {service.externalUrl ? (
-                <a
-                  href={service.externalUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.sideBtn}
-                >
-                  <span className="material-icons" aria-hidden="true">open_in_new</span>
-                  Acessar no portal oficial
-                </a>
-              ) : (
-                <p className={styles.sideMuted}>Atendimento presencial. Consulte o endereço abaixo.</p>
-              )}
-            </div>
-
             <div className={styles.sideCard}>
               <h3 className={styles.sideTitle}>Canal de atendimento</h3>
               <p className={styles.sideText}>
@@ -194,10 +206,26 @@ export function ServiceDetailPageV3() {
               </p>
             </div>
 
-            <div className={styles.sideCard}>
-              <h3 className={styles.sideTitle}>Órgão responsável</h3>
-              <p className={styles.sideText}>{service.agency}</p>
-            </div>
+            {/* Serviços relacionados na lateral */}
+            <section className={styles.relatedSection}>
+              <h2 className={styles.relatedTitle}>Serviços relacionados</h2>
+              <div className={styles.relatedGrid}>
+                {RELATED_SERVICES.map((rel) => (
+                  <Link key={rel.id} to={`/servico/${rel.id}`} className={styles.relatedCard}>
+                    <span className={`material-icons ${styles.relatedCardIcon}`} aria-hidden="true">
+                      {rel.icon}
+                    </span>
+                    <div className={styles.relatedCardBody}>
+                      <p className={styles.relatedCardTitle}>{rel.title}</p>
+                      <p className={styles.relatedCardCategory}>{rel.category}</p>
+                    </div>
+                    <span className={`material-icons ${styles.relatedCardArrow}`} aria-hidden="true">
+                      chevron_right
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </section>
 
             <Link to="/" className={styles.backLink}>
               <span className="material-icons" aria-hidden="true">arrow_back</span>

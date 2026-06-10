@@ -182,7 +182,6 @@ export function ServiceDetailPage() {
               rel="noopener noreferrer"
               className={styles.fixedBarBtnPrimary}
             >
-              <span className="material-icons" aria-hidden="true">open_in_new</span>
               Acessar Serviço
             </a>
           )}

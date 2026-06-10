@@ -41,7 +41,6 @@ export function ServiceDetailPageV2() {
               className={styles.stickyBarBtn}
               tabIndex={showStickyBar ? 0 : -1}
             >
-              <span className="material-icons" aria-hidden="true">open_in_new</span>
               Acessar serviço
             </a>
           )}
@@ -78,7 +77,6 @@ export function ServiceDetailPageV2() {
                     className={styles.heroActionBtn}
                     aria-label="Acessar serviço no portal oficial"
                   >
-                    <span className="material-icons" aria-hidden="true">open_in_new</span>
                     Acessar serviço
                   </a>
                 )}
