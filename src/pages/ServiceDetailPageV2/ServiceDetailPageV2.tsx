@@ -1,3 +1,4 @@
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { CIDADAO_FEATURED } from '@/data/featuredServices';
 import { LayoutContainer } from '@/components/LayoutContainer';
@@ -6,7 +7,21 @@ import styles from './ServiceDetailPageV2.module.css';
 // Layout específico para o serviço CRLV-e: botão de acesso ao lado do título + perfis na sidebar
 const service = CIDADAO_FEATURED.find((s) => s.id === 'emitir-crlv-e')!;
 
+const SERVICE_RATING = 4.2;
+const SERVICE_RATING_COUNT = 1406;
+
 export function ServiceDetailPageV2() {
+  const heroRef = useRef<HTMLDivElement>(null);
+  const [showStickyBar, setShowStickyBar] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => setShowStickyBar(!entry.isIntersecting),
+      { threshold: 0 }
+    );
+    if (heroRef.current) observer.observe(heroRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   const channelIcon =
     service.channel === 'Online' ? 'computer' :
@@ -14,7 +29,26 @@ export function ServiceDetailPageV2() {
 
   return (
     <main className={styles.page}>
-      <div className={styles.heroBand}>
+      {/* Barra sticky — aparece quando o hero some da tela */}
+      <div className={`${styles.stickyBar} ${showStickyBar ? styles.stickyBarVisible : ''}`} aria-hidden={!showStickyBar}>
+        <div className={styles.stickyBarInner}>
+          <p className={styles.stickyBarTitle}>{service.title}</p>
+          {service.externalUrl && (
+            <a
+              href={service.externalUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.stickyBarBtn}
+              tabIndex={showStickyBar ? 0 : -1}
+            >
+              <span className="material-icons" aria-hidden="true">open_in_new</span>
+              Acessar serviço
+            </a>
+          )}
+        </div>
+      </div>
+
+      <div ref={heroRef} className={styles.heroBand}>
         <LayoutContainer>
           <nav aria-label="Breadcrumb" className={styles.breadcrumb}>
             <ol className={styles.breadcrumbList}>
@@ -48,6 +82,21 @@ export function ServiceDetailPageV2() {
                     Acessar serviço
                   </a>
                 )}
+              </div>
+
+              {/* Avaliação estática — exibição apenas, sem interação */}
+              <div className={styles.starRating} aria-label={`Avaliação: ${SERVICE_RATING} de 5 estrelas, ${SERVICE_RATING_COUNT.toLocaleString('pt-BR')} avaliações`}>
+                <span className={styles.ratingScore}>{SERVICE_RATING.toFixed(1).replace('.', ',')}</span>
+                {[1, 2, 3, 4, 5].map((star) => {
+                  const fill = Math.min(1, Math.max(0, SERVICE_RATING - (star - 1)));
+                  const icon = fill >= 0.75 ? 'star' : fill >= 0.25 ? 'star_half' : 'star_border';
+                  return (
+                    <span key={star} className={styles.starIcon} aria-hidden="true">
+                      <span className="material-icons">{icon}</span>
+                    </span>
+                  );
+                })}
+                <span className={styles.ratingCount}>({SERVICE_RATING_COUNT.toLocaleString('pt-BR')})</span>
               </div>
 
               <span className={`${styles.channelBadge} ${styles[`channel${service.channel.replace(/\s/g, '').replace('e', 'E')}`]}`}>
