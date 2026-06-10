@@ -4,8 +4,6 @@ import { SiteFooter } from '@/components/SiteFooter';
 import { HomePage } from '@/pages/HomePage';
 import { CategoryPage } from '@/pages/CategoryPage';
 import { ServiceDetailPage } from '@/pages/ServiceDetailPage';
-import { ServiceDetailPageV2 } from '@/pages/ServiceDetailPageV2';
-import { ServiceDetailPageV3 } from '@/pages/ServiceDetailPageV3';
 import { DashboardPage } from '@/pages/DashboardPage';
 import { DashboardPage2 } from '@/pages/DashboardPage2';
 import { ProfilesPage, MetodologiaPage } from '@/pages/ProfilesPage';
@@ -31,10 +29,8 @@ export function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/categoria/:id" element={<CategoryPage />} />
         {/* layouts específicos — IDs fixos, sem :id no path */}
-        <Route path="/servico/emitir-crlv-e" element={<ServiceDetailPageV2 />} />
-        <Route path="/servico/boletim-acidente-transito" element={<ServiceDetailPageV3 />} />
+        <Route path="/servico/boletim-acidente-transito" element={<ServiceDetailPage />} />
         {/* layout padrão com useParams — captura certidão e demais */}
-        <Route path="/servico/:id" element={<ServiceDetailPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>
