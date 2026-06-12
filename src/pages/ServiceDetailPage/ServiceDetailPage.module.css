@@ -271,7 +271,7 @@
 
 @media (min-width: 768px) {
   .contentGrid {
-    grid-template-columns: 1fr 280px;
+    grid-template-columns: 1fr 360px;
   }
 }
 
@@ -560,10 +560,9 @@
   top: var(--space-5);
 }
 
-/* Mobile: sidebar aparece acima do accordion */
+/* Mobile: sidebar aparece abaixo do accordion por padrão */
 @media (max-width: 767px) {
   .sidebar {
-    order: -1;
     position: static;
   }
 }

@@ -84,13 +84,27 @@ export function ServiceDetailPage() {
       });
       const imgData = canvas.toDataURL('image/png');
 
-      const pdf = new jsPDF({
-        orientation: 'portrait',
-        unit: 'px',
-        format: [canvas.width, canvas.height]
-      });
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
+      
+      const imgWidth = canvas.width;
+      const imgHeight = canvas.height;
+      const pdfHeight = (imgHeight * pdfWidth) / imgWidth;
 
-      pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+      let heightLeft = pdfHeight;
+      let position = 0;
+
+      pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, pdfHeight);
+      heightLeft -= pageHeight;
+
+      while (heightLeft > 0) {
+        position = heightLeft - pdfHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, pdfHeight);
+        heightLeft -= pageHeight;
+      }
+
       pdf.save(`carta-de-servico-${service.id}.pdf`);
     } catch (error) {
       console.error('Erro ao gerar PDF:', error);
@@ -215,22 +229,21 @@ export function ServiceDetailPage() {
               className={styles.metaRatingWrapper}
               aria-label={`Avaliação: ${rating.toFixed(1)} de 5 estrelas, ${ratingCount.toLocaleString('pt-BR')} avaliações`}
             >
-              <span className={styles.metaRatingLabel}>Avaliação:</span>
-              <div className={styles.metaRatingPill}>
-                <span className={styles.metaRatingScore}>{rating.toFixed(1).replace('.', ',')}</span>
-                <span className={styles.metaStars} aria-hidden="true">
-                  {[1, 2, 3, 4, 5].map((star) => {
-                    const fill = Math.min(1, Math.max(0, rating - (star - 1)));
-                    const icon = fill >= 0.75 ? 'star' : fill >= 0.25 ? 'star_half' : 'star_border';
-                    return (
-                      <span key={star} className="material-icons" style={{ fontSize: 18 }}>
-                        {icon}
-                      </span>
-                    );
-                  })}
+              <span className={styles.metaRatingLabel} style={{ fontWeight: 700, fontSize: 16 }}>Avaliação:</span>
+              <span className={styles.metaStars} style={{ display: 'flex', gap: 4, alignItems: 'center' }} aria-hidden="true">
+                {[1, 2, 3, 4, 5].map((star) => {
+                  const isFilled = rating >= star - 0.5;
+                  const color = isFilled ? 'var(--color-primary-600, #002F5F)' : '#EAEBEC';
+                  return (
+                    <span key={star} className="material-icons" style={{ fontSize: 24, color }}>
+                      star
+                    </span>
+                  );
+                })}
+                <span style={{ fontSize: 16, color: 'var(--color-text-light, #6E757A)', marginLeft: 4, fontWeight: 500 }}>
+                  ({ratingCount.toLocaleString('pt-BR')})
                 </span>
-                <span className={styles.metaRatingCount}>({ratingCount.toLocaleString('pt-BR')})</span>
-              </div>
+              </span>
             </div>
 
             <div className={styles.metaActions}>
