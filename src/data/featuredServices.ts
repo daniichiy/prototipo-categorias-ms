@@ -1,6 +1,7 @@
 export interface ServiceDetail {
   id: string;
   title: string;
+  popularName?: string;
   agency: string;
   icon: string;
   category: string;
@@ -18,6 +19,9 @@ export interface ServiceDetail {
   attendanceOnlineUrl?: string;
   attendancePresentialUrl?: string;
   profiles?: string[];
+  updatedAt?: string;
+  rating?: number;
+  ratingCount?: number;
 }
 
 export const CIDADAO_FEATURED: ServiceDetail[] = [
@@ -255,8 +259,12 @@ export const CIDADAO_FEATURED: ServiceDetail[] = [
   {
     id: 'boletim-acidente-transito',
     title: 'Realizar boletim on-line de acidente de trânsito – atendimento sem vítimas',
+    popularName: 'Boletim de acidente online, BO de trânsito sem vítimas, registro de sinistro de trânsito',
     agency: 'Polícia Militar de Mato Grosso do Sul',
     icon: 'local_police',
+    updatedAt: '12/06/2026',
+    rating: 4.5,
+    ratingCount: 892,
     category: 'Justiça e Segurança',
     categorySlug: 'justica-seguranca',
     channel: 'Online',

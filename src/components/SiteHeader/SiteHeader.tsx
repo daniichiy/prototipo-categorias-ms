@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { UserMenu } from './UserMenu';
 import styles from './SiteHeader.module.css';
 
@@ -59,6 +59,9 @@ const SOCIAL = [
 ];
 
 export function SiteHeader() {
+  const location = useLocation();
+  const isServicePage = location.pathname.startsWith('/servico');
+
   return (
     <header className={styles.header} role="banner">
       {/* Band 1: utility bar (skip links + Ouvidoria/Transparência) */}
@@ -110,32 +113,34 @@ export function SiteHeader() {
       </div>
 
       {/* Band 3: white menu bar with home + nav items + Entrar */}
-      <nav className={styles.menuBar} id="nav-principal" aria-label="Menu principal">
-        <div className={styles.menuInner}>
-          <ul className={styles.menu}>
-            <li className={styles.menuHome}>
-              <Link to="/" aria-label="Início">
-                <span className="material-icons" aria-hidden="true">home</span>
-              </Link>
-            </li>
-            {MENU.map((item, idx) => (
-              <li key={item.label} className={styles.menuItem}>
-                <a
-                  href={item.href}
-                  target={item.href.startsWith('http') ? '_blank' : undefined}
-                  rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  className={styles.menuLink}
-                >
-                  {item.label}
-                </a>
-                {idx < MENU.length - 1 && <span className={styles.divider} aria-hidden="true">|</span>}
+      {!isServicePage && (
+        <nav className={styles.menuBar} id="nav-principal" aria-label="Menu principal">
+          <div className={styles.menuInner}>
+            <ul className={styles.menu}>
+              <li className={styles.menuHome}>
+                <Link to="/" aria-label="Início">
+                  <span className="material-icons" aria-hidden="true">home</span>
+                </Link>
               </li>
-            ))}
-          </ul>
+              {MENU.map((item, idx) => (
+                <li key={item.label} className={styles.menuItem}>
+                  <a
+                    href={item.href}
+                    target={item.href.startsWith('http') ? '_blank' : undefined}
+                    rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                    className={styles.menuLink}
+                  >
+                    {item.label}
+                  </a>
+                  {idx < MENU.length - 1 && <span className={styles.divider} aria-hidden="true">|</span>}
+                </li>
+              ))}
+            </ul>
 
-          <UserMenu />
-        </div>
-      </nav>
+            <UserMenu />
+          </div>
+        </nav>
+      )}
     </header>
   );
 }
