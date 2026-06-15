@@ -1,0 +1,117 @@
+.accordion {
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.accordionOpen {
+  border-color: var(--color-primary);
+}
+
+.accordionHeader {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color var(--transition-fast);
+}
+
+.accordionHeader:hover {
+  background-color: var(--color-primary-soft);
+}
+
+.accordionOpen .accordionHeader {
+  background-color: var(--color-primary-soft);
+}
+
+.accordionTitle {
+  font-size: var(--size-4);
+  font-weight: var(--weight-semibold);
+  color: var(--color-primary);
+  line-height: 1.2;
+}
+
+.accordionOpen .accordionTitle {
+  color: var(--color-primary-dark);
+}
+
+@media (max-width: 600px) {
+  .accordionHeader { padding: var(--space-4); }
+}
+
+.accordionIcon {
+  font-size: 22px;
+  color: var(--color-primary);
+  flex-shrink: 0;
+  transition: transform var(--transition-base);
+}
+
+.accordionIconOpen {
+  transform: rotate(180deg);
+}
+
+.accordionBody {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--transition-base);
+}
+
+.accordionOpen .accordionBody {
+  grid-template-rows: 1fr;
+}
+
+.accordionBodyInner {
+  overflow: hidden;
+  padding: 0 var(--space-5);
+  transition: padding var(--transition-base);
+}
+
+.accordionOpen .accordionBodyInner {
+  padding: var(--space-5);
+  border-top: 1px solid var(--color-rule);
+}
+
+@media print {
+  .accordion {
+    border: none !important;
+    background: none !important;
+    box-shadow: none !important;
+    margin: 0 0 10pt 0 !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  .accordionHeader {
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    cursor: default;
+  }
+  .accordionTitle {
+    font-size: 14pt;
+    font-weight: 700;
+    color: #000 !important;
+    display: block;
+    margin: 8pt 0 4pt 0;
+    border-bottom: 0.5pt solid #000;
+    padding-bottom: 2pt;
+    page-break-after: avoid;
+  }
+  .accordionIcon { display: none !important; }
+  .accordionBody {
+    display: block !important;
+    grid-template-rows: 1fr !important;
+    max-height: none !important;
+    overflow: visible !important;
+    height: auto !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  .accordionBodyInner { padding: 4pt 0 0 0 !important; }
+}

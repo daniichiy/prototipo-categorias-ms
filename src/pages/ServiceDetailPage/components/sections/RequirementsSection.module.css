@@ -1,0 +1,40 @@
+.docList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.docItem {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+  font-size: var(--size-3);
+  color: var(--color-text);
+  line-height: var(--leading-normal);
+}
+
+.docItem::before {
+  content: '';
+  display: block;
+  width: 6px;
+  height: 6px;
+  min-width: 6px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  margin-top: 7px;
+}
+
+@media print {
+  .docList { margin: 0; padding-left: 16pt; }
+  .docItem {
+    font-size: 12pt;
+    line-height: 1.5;
+    margin: 0 0 3pt 0;
+    color: #000 !important;
+    page-break-inside: avoid;
+  }
+  .docItem::before { display: none; }
+}

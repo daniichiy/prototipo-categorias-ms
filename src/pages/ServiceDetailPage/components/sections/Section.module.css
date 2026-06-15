@@ -1,0 +1,17 @@
+/* Texto base compartilhado entre Description, WhoCanUse e fallback de Requirements. */
+.sectionText {
+  font-size: var(--size-3);
+  color: var(--color-text);
+  line-height: var(--leading-normal);
+  margin: 0;
+}
+
+@media print {
+  .sectionText {
+    font-size: 12pt;
+    line-height: 1.55;
+    margin: 0 0 6pt 0;
+    color: #000 !important;
+    text-align: justify;
+  }
+}

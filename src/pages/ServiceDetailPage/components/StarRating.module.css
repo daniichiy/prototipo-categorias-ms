@@ -1,0 +1,47 @@
+.metaRatingWrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.metaRatingLabel {
+  font-size: var(--size-2);
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
+.metaStars {
+  display: inline-flex;
+  align-items: center;
+}
+
+.metaRatingPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: var(--color-primary);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+}
+
+.metaRatingScore {
+  font-size: var(--size-2);
+  font-weight: var(--weight-bold);
+  color: #fff;
+}
+
+.metaRatingCount {
+  font-size: var(--size-2);
+  color: #fff;
+  white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+  .metaRatingWrapper { width: 100%; justify-content: flex-start; }
+}
+
+@media print {
+  .metaRatingWrapper, .metaStars { display: none !important; }
+}

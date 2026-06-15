@@ -1,0 +1,76 @@
+.metaBar {
+  background-color: var(--color-bg);
+  border-bottom: 1px solid var(--color-rule);
+  padding-block: var(--space-3);
+}
+
+.metaBarInner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  flex-wrap: wrap;
+}
+
+.metaDate {
+  font-size: var(--size-2);
+  color: var(--color-muted);
+  white-space: nowrap;
+}
+
+.metaActions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-left: auto;
+}
+
+.metaActionBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-md);
+  color: var(--color-muted);
+  cursor: pointer;
+  transition: border-color var(--transition-fast), color var(--transition-fast);
+}
+.metaActionBtn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+.metaActionBtn .material-icons { font-size: 20px; }
+
+/* Mobile: empilha date, rating e actions em linhas separadas com gap menor.
+   Antes: gap horizontal de 24px gerava colunas vazias + linha quebrada feia. */
+@media (max-width: 600px) {
+  .metaBarInner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+  .metaDate { width: 100%; }
+  .metaActions {
+    margin-left: 0;
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+
+@media print {
+  .metaBar, .metaBarInner {
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    display: block !important;
+  }
+  .metaDate {
+    font-size: 10pt;
+    display: block;
+    margin-bottom: 12pt;
+    color: #000 !important;
+  }
+  .metaActions { display: none !important; }
+}
