@@ -28,11 +28,31 @@
 }
 
 .columnTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0;
+  text-align: left;
+  font-family: inherit;
   font-size: 1rem;
   font-weight: 700;
   letter-spacing: var(--tracking-wide);
   color: #606062;
   text-transform: uppercase;
+  cursor: default;
+}
+
+/* Chevron só aparece no mobile (accordion). Desktop: oculto. */
+.columnTitle .material-icons {
+  display: none;
+  font-size: 20px;
+  transition: transform 0.15s ease;
+}
+.columnTitle[aria-expanded='true'] .material-icons {
+  transform: rotate(180deg);
 }
 
 .columnList {
@@ -50,6 +70,25 @@
 
 .columnList a:hover {
   color: var(--color-primary);
+}
+
+/* ── Mobile (1 coluna): colunas com título viram accordion ── */
+@media (max-width: 639px) {
+  .topInner { gap: 0; }
+  .column {
+    gap: 0;
+    border-bottom: 1px solid var(--color-rule);
+  }
+  .columnTitle {
+    cursor: pointer;
+    padding-block: var(--space-3);
+  }
+  .columnTitle .material-icons { display: inline-flex; }
+  .columnList {
+    display: none;
+    padding-bottom: var(--space-3);
+  }
+  .columnList.open { display: flex; }
 }
 
 .addressBand {

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styles from './SiteFooter.module.css';
 
 const COLUMNS: { title?: string; links: { label: string; href: string }[] }[] = [
@@ -45,28 +46,50 @@ const COLUMNS: { title?: string; links: { label: string; href: string }[] }[] = 
 ];
 
 export function SiteFooter() {
+  // Mobile: colunas com título viram accordion (colapsadas por padrão). Desktop: sempre abertas via CSS.
+  const [openCols, setOpenCols] = useState<Set<number>>(new Set());
+  const toggleCol = (i: number) =>
+    setOpenCols((prev) => {
+      const next = new Set(prev);
+      next.has(i) ? next.delete(i) : next.add(i);
+      return next;
+    });
+
   return (
     <footer className={styles.footer}>
       <div className={styles.topBand}>
         <div className={styles.topInner}>
-          {COLUMNS.map((col, index) => (
-            <div key={col.title ?? `col-${index}`} className={styles.column}>
-              {col.title && <p className={styles.columnTitle}>{col.title}</p>}
-              <ul className={styles.columnList}>
-                {col.links.map((link) => (
-                  <li key={link.label}>
-                    <a
-                      href={link.href}
-                      target={link.href.startsWith('http') ? '_blank' : undefined}
-                      rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                    >
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          {COLUMNS.map((col, index) => {
+            const isOpen = openCols.has(index);
+            return (
+              <div key={col.title ?? `col-${index}`} className={styles.column}>
+                {col.title && (
+                  <button
+                    type="button"
+                    className={styles.columnTitle}
+                    aria-expanded={isOpen}
+                    onClick={() => toggleCol(index)}
+                  >
+                    {col.title}
+                    <span className="material-icons" aria-hidden="true">expand_more</span>
+                  </button>
+                )}
+                <ul className={`${styles.columnList} ${isOpen || !col.title ? styles.open : ''}`}>
+                  {col.links.map((link) => (
+                    <li key={link.label}>
+                      <a
+                        href={link.href}
+                        target={link.href.startsWith('http') ? '_blank' : undefined}
+                        rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                      >
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            );
+          })}
         </div>
       </div>
 
