@@ -91,14 +91,23 @@ export function ServiceDetailPage({ service = DEFAULT_SERVICE }: Props) {
               />
             )}
 
-            <RatingFeedback />
           </article>
 
-          {/* Botão "Iniciar" fica FORA do <aside> — sibling do sidebar dentro da coluna direita.
-              Mobile: vira CTA fixo via CSS (position:fixed). */}
+          {/* Coluna direita no desktop (botão Iniciar + sidebar). No mobile vira
+              display:contents → botão fica no topo e a sidebar vai após as seções. */}
           <div className={styles.sidebarColumn}>
-            {service.externalUrl && <ServiceStartButton url={service.externalUrl} />}
-            <ServiceSidebar service={service} />
+            {service.externalUrl && (
+              <div className={styles.startWrap}>
+                <ServiceStartButton url={service.externalUrl} />
+              </div>
+            )}
+            <div className={styles.sidebarWrap}>
+              <ServiceSidebar service={service} />
+            </div>
+          </div>
+
+          <div className={styles.feedbackWrap}>
+            <RatingFeedback />
           </div>
         </div>
       </LayoutContainer>

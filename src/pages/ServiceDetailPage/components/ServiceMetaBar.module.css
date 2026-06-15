@@ -41,6 +41,13 @@
   border-color: var(--color-primary);
   color: var(--color-primary);
 }
+
+.metaActionBtnActive,
+.metaActionBtnActive:hover {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #ffffff;
+}
 .metaActionBtn .material-icons { font-size: 20px; }
 
 /* Mobile: empilha date, rating e actions em linhas separadas com gap menor.

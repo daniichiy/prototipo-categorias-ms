@@ -38,6 +38,8 @@
   .contentGrid {
     grid-template-columns: 1fr 360px;
   }
+  /* Feedback fica sob a coluna de conteúdo (esquerda), não na sidebar. */
+  .feedbackWrap { grid-column: 1; }
 }
 
 .accordionCol {
@@ -53,15 +55,16 @@
   gap: var(--space-4);
 }
 
-/* Mobile: sidebarColumn precede o conteúdo principal.
-   - order: -1 coloca o wrapper como primeiro item do grid
-     (assim o botão "Iniciar" aparece ANTES de "O que é este serviço?").
-   - position: static libera o sticky do botão filho funcionar. */
+/* Mobile: a coluna direita "se dissolve" (display:contents) e seus filhos viram
+   itens do grid. Ordem desejada: botão Iniciar (topo) → seções → sidebar (após Saiba mais). */
 @media (max-width: 767px) {
   .sidebarColumn {
-    position: static;
-    order: -1;
+    display: contents;
   }
+  .startWrap { order: -1; }
+  .accordionCol { order: 0; }
+  .sidebarWrap { order: 1; }
+  .feedbackWrap { order: 2; }
 }
 
 /* =========================================================

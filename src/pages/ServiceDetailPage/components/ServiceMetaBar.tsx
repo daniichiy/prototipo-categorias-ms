@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { LayoutContainer } from '@/components/LayoutContainer';
 import styles from './ServiceMetaBar.module.css';
 import { StarRating } from './StarRating';
@@ -17,6 +18,8 @@ export function ServiceMetaBar({
   isExportingPdf,
   onExportPdf,
 }: Props) {
+  const [favorited, setFavorited] = useState(false);
+
   return (
     <div className={styles.metaBar}>
       <LayoutContainer>
@@ -26,8 +29,14 @@ export function ServiceMetaBar({
           <StarRating rating={rating} count={ratingCount} />
 
           <div className={styles.metaActions}>
-            <button type="button" className={styles.metaActionBtn} aria-label="Favoritar serviço">
-              <span className="material-icons">bookmark_border</span>
+            <button
+              type="button"
+              className={`${styles.metaActionBtn} ${favorited ? styles.metaActionBtnActive : ''}`}
+              aria-label={favorited ? 'Remover dos favoritos' : 'Favoritar serviço'}
+              aria-pressed={favorited}
+              onClick={() => setFavorited((f) => !f)}
+            >
+              <span className="material-icons">{favorited ? 'bookmark' : 'bookmark_border'}</span>
             </button>
             <button
               type="button"
