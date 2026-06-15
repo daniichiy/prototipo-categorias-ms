@@ -38,8 +38,14 @@
   .contentGrid {
     grid-template-columns: 1fr 360px;
   }
-  /* Feedback fica sob a coluna de conteúdo (esquerda), não na sidebar. */
-  .feedbackWrap { grid-column: 1; }
+}
+
+/* Coluna esquerda: seções + feedback empilhados (feedback direto sob as seções). */
+.mainCol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  min-width: 0;
 }
 
 .accordionCol {
@@ -55,9 +61,10 @@
   gap: var(--space-4);
 }
 
-/* Mobile: a coluna direita "se dissolve" (display:contents) e seus filhos viram
-   itens do grid. Ordem desejada: botão Iniciar (topo) → seções → sidebar (após Saiba mais). */
+/* Mobile: mainCol e sidebarColumn "se dissolvem" (display:contents) e seus filhos
+   viram itens diretos do grid. Ordem: Iniciar → seções → sidebar → feedback. */
 @media (max-width: 767px) {
+  .mainCol,
   .sidebarColumn {
     display: contents;
   }

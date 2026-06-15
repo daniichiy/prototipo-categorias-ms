@@ -62,6 +62,7 @@ export function ServiceDetailPage({ service = DEFAULT_SERVICE }: Props) {
 
       <LayoutContainer>
         <div className={styles.contentGrid}>
+          <div className={styles.mainCol}>
           <article className={styles.accordionCol}>
             <DescriptionSection
               description={service.description}
@@ -93,8 +94,13 @@ export function ServiceDetailPage({ service = DEFAULT_SERVICE }: Props) {
 
           </article>
 
-          {/* Coluna direita no desktop (botão Iniciar + sidebar). No mobile vira
-              display:contents → botão fica no topo e a sidebar vai após as seções. */}
+          <div className={styles.feedbackWrap}>
+            <RatingFeedback />
+          </div>
+          </div>
+
+          {/* Coluna direita no desktop (botão Iniciar + sidebar). No mobile, mainCol e
+              sidebarColumn viram display:contents e a ordem é controlada por `order`. */}
           <div className={styles.sidebarColumn}>
             {service.externalUrl && (
               <div className={styles.startWrap}>
@@ -104,10 +110,6 @@ export function ServiceDetailPage({ service = DEFAULT_SERVICE }: Props) {
             <div className={styles.sidebarWrap}>
               <ServiceSidebar service={service} />
             </div>
-          </div>
-
-          <div className={styles.feedbackWrap}>
-            <RatingFeedback />
           </div>
         </div>
       </LayoutContainer>
