@@ -19,6 +19,16 @@
   box-shadow: var(--shadow-card-hover);
 }
 
+/* Desktop: botão "Iniciar" fixo ao rolar — gruda no topo enquanto a página rola,
+   mesmo quando a sidebar é mais alta que a viewport. */
+@media (min-width: 768px) {
+  .btnIniciar {
+    position: sticky;
+    top: var(--space-5);
+    z-index: 20;
+  }
+}
+
 /* Mobile: botão sticky no topo do conteúdo (fica visível ao scrollar).
    Sticky, NÃO fixed — assim entra no fluxo, aparece como primeiro item
    visível e "gruda" no topo conforme usuário rola. */

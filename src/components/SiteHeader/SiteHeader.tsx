@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
+import { CIDADAO_FEATURED } from '@/data/featuredServices';
 import { UserMenu } from './UserMenu';
 import styles from './SiteHeader.module.css';
 
@@ -61,6 +62,8 @@ const SOCIAL = [
 export function SiteHeader() {
   const location = useLocation();
   const isServicePage = location.pathname.startsWith('/servico');
+  const serviceId = isServicePage ? location.pathname.replace('/servico/', '') : '';
+  const service = serviceId ? CIDADAO_FEATURED.find((s) => s.id === serviceId) : undefined;
 
   return (
     <header className={styles.header} role="banner">

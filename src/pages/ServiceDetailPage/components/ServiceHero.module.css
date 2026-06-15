@@ -1,6 +1,6 @@
 .hero {
   background-color: var(--color-primary);
-  padding-block: var(--space-5) var(--space-4);
+  padding-block: var(--space-7) var(--space-6);
   border-bottom: none;
 }
 
@@ -32,6 +32,16 @@
   color: rgba(255, 255, 255, 0.8);
   margin: 0;
   line-height: var(--leading-normal);
+}
+
+.heroPopularLabel {
+  font-weight: var(--weight-semibold);
+  font-style: normal;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.heroPopularText {
+  font-style: italic;
 }
 
 .verMaisBtn {
@@ -76,5 +86,6 @@
     margin: 0 0 8pt 0;
     color: #000 !important;
   }
+  .heroPopularLabel { font-style: normal; font-weight: 700; }
   .verMaisBtn { display: none !important; }
 }

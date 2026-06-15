@@ -9,13 +9,21 @@ interface Props {
   truncateAt?: number;
 }
 
+/** Trunca em até `max` caracteres recuando ao último limite de palavra. */
+function truncateAtWord(text: string, max: number): string {
+  if (text.length <= max) return text;
+  const slice = text.slice(0, max);
+  const lastSpace = slice.lastIndexOf(' ');
+  return (lastSpace > 0 ? slice.slice(0, lastSpace) : slice).trimEnd();
+}
+
 export const ServiceHero = forwardRef<HTMLDivElement, Props>(function ServiceHero(
   { icon, title, popularName, truncateAt = 60 },
   ref,
 ) {
   const [expanded, setExpanded] = useState(false);
   const needsTruncate = !!popularName && popularName.length > truncateAt;
-  const short = needsTruncate ? popularName!.slice(0, truncateAt) : popularName ?? '';
+  const short = needsTruncate ? truncateAtWord(popularName!, truncateAt) : popularName ?? '';
 
   return (
     <div ref={ref} className={styles.hero}>
@@ -28,10 +36,14 @@ export const ServiceHero = forwardRef<HTMLDivElement, Props>(function ServiceHer
             <h1 className={styles.heroTitle}>{title}</h1>
             {popularName && (
               <p className={styles.heroPopular}>
-                {expanded ? popularName : short}
+                <span className={styles.heroPopularLabel}>Também buscado como: </span>
+                <span className={styles.heroPopularText}>
+                  {expanded ? popularName : short}
+                  {needsTruncate && !expanded && '…'}
+                </span>
                 {needsTruncate && (
                   <>
-                    {!expanded && '… '}
+                    {' '}
                     <button
                       type="button"
                       className={styles.verMaisBtn}

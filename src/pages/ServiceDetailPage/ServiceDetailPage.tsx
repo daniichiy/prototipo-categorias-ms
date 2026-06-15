@@ -1,8 +1,6 @@
-import { useRef } from 'react';
 import { CIDADAO_FEATURED, type ServiceDetail } from '@/data/featuredServices';
 import { LayoutContainer } from '@/components/LayoutContainer';
 import styles from './ServiceDetailPage.module.css';
-import { ALL_SECTIONS } from './types';
 import { useAccordionSections } from './hooks/useAccordionSections';
 import { useStickyOnScroll } from './hooks/useStickyOnScroll';
 import { usePdfExport } from './hooks/usePdfExport';
@@ -28,20 +26,15 @@ interface Props {
 export function ServiceDetailPage({ service = DEFAULT_SERVICE }: Props) {
   const sections = useAccordionSections(['descricao']);
   const { ref: heroRef, stuck: showStickyBar } = useStickyOnScroll<HTMLDivElement>();
-  const pdfRef = useRef<HTMLElement>(null);
 
-  const { exportPdf, isGenerating } = usePdfExport(pdfRef, {
-    fileName: `carta-de-servico-${service.id}`,
-    beforeCapture: () => sections.replace(ALL_SECTIONS),
-    afterCapture: () => sections.replace(['descricao']),
-  });
+  const { exportPdf, isGenerating } = usePdfExport(service);
 
   const rating = service.rating ?? 4.5;
   const ratingCount = service.ratingCount ?? 892;
   const updatedAt = service.updatedAt ?? '—';
 
   return (
-    <main className={styles.page} ref={pdfRef}>
+    <main className={styles.page}>
       <TopSearchBar />
 
       {showStickyBar && (

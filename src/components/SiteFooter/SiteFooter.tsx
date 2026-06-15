@@ -90,7 +90,7 @@ export function SiteFooter() {
           </div>
 
           <img
-            src="https://noticias.ms.gov.br/uploads/midias/cacee1933e254ba39122d2344cbdbdda.svg"
+            src="/logo-ms-rodape.svg"
             alt="Governo de Mato Grosso do Sul — Fazer bem-feito para fazer dar certo"
             className={styles.logo}
           />
