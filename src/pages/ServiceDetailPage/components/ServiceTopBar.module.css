@@ -1,0 +1,88 @@
+.bar {
+  background-color: #ffffff;
+  border-bottom: 1px solid var(--color-rule);
+  padding-block: var(--space-3);
+}
+
+/* Desktop: breadcrumb à esquerda + busca centralizada na barra (grid 3 colunas:
+   o breadcrumb ocupa a 1ª coluna 1fr, a busca a coluna central auto, e a 3ª 1fr
+   vazia equilibra — mantendo a busca no centro real da barra). */
+.inner {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  list-style: none;
+  font-size: var(--size-2);
+  justify-self: start;
+}
+
+.crumbLink {
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-primary);
+  transition: color var(--transition-fast);
+}
+.crumbLink:hover { color: var(--color-primary-ink); text-decoration: underline; }
+.crumbLink .material-icons { font-size: 16px; vertical-align: middle; }
+
+.sep { color: var(--color-muted-soft); user-select: none; }
+
+/* Busca: coluna central do grid, largura fixa → centralizada na barra */
+.searchWrapper {
+  grid-column: 2;
+  width: 560px;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--color-rule-strong);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.searchInput {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  padding: 10px 20px;
+  font-size: var(--size-4);
+  color: var(--color-text);
+  background: transparent;
+}
+
+.searchBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  padding: 0 16px;
+  color: var(--color-primary);
+  cursor: pointer;
+}
+.searchBtn .material-icons { font-size: 22px; }
+
+/* Mobile: empilha breadcrumb em cima, busca embaixo (full width) */
+@media (max-width: 767px) {
+  .inner {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+    gap: var(--space-3);
+  }
+  .searchWrapper {
+    grid-column: 1;
+    width: 100%;
+  }
+}
+
+@media print {
+  .bar { display: none !important; }
+}

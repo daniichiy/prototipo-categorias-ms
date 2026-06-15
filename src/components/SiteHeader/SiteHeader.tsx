@@ -1,5 +1,4 @@
 import { Link, useLocation } from 'react-router-dom';
-import { CIDADAO_FEATURED } from '@/data/featuredServices';
 import { UserMenu } from './UserMenu';
 import styles from './SiteHeader.module.css';
 
@@ -62,8 +61,9 @@ const SOCIAL = [
 export function SiteHeader() {
   const location = useLocation();
   const isServicePage = location.pathname.startsWith('/servico');
-  const serviceId = isServicePage ? location.pathname.replace('/servico/', '') : '';
-  const service = serviceId ? CIDADAO_FEATURED.find((s) => s.id === serviceId) : undefined;
+
+  // Página de serviço não usa o cabeçalho global — tem barra própria (ServiceTopBar).
+  if (isServicePage) return null;
 
   return (
     <header className={styles.header} role="banner">
@@ -90,7 +90,7 @@ export function SiteHeader() {
         </div>
       </div>
 
-      {/* Band 2: navy brand bar with logo + social */}
+      {/* Band 2: navy brand bar — logo + (serviço: breadcrumb + busca | demais: redes sociais) */}
       <div className={styles.brandBar}>
         <div className={styles.brandInner}>
           <Link to="/" className={styles.brand} aria-label="ms.gov.br — Página inicial">
@@ -116,9 +116,8 @@ export function SiteHeader() {
       </div>
 
       {/* Band 3: white menu bar with home + nav items + Entrar */}
-      {!isServicePage && (
-        <nav className={styles.menuBar} id="nav-principal" aria-label="Menu principal">
-          <div className={styles.menuInner}>
+      <nav className={styles.menuBar} id="nav-principal" aria-label="Menu principal">
+        <div className={styles.menuInner}>
             <ul className={styles.menu}>
               <li className={styles.menuHome}>
                 <Link to="/" aria-label="Início">
@@ -143,7 +142,6 @@ export function SiteHeader() {
             <UserMenu />
           </div>
         </nav>
-      )}
     </header>
   );
 }

@@ -6,6 +6,7 @@ interface Props {
   icon: string;
   title: string;
   popularName?: string;
+  channel?: string;
   truncateAt?: number;
 }
 
@@ -18,7 +19,7 @@ function truncateAtWord(text: string, max: number): string {
 }
 
 export const ServiceHero = forwardRef<HTMLDivElement, Props>(function ServiceHero(
-  { icon, title, popularName, truncateAt = 60 },
+  { icon, title, popularName, channel, truncateAt = 60 },
   ref,
 ) {
   const [expanded, setExpanded] = useState(false);
@@ -54,6 +55,11 @@ export const ServiceHero = forwardRef<HTMLDivElement, Props>(function ServiceHer
                   </>
                 )}
               </p>
+            )}
+            {channel && (
+              <div className={styles.heroTags}>
+                <span className={styles.heroTag}>{channel}</span>
+              </div>
             )}
           </div>
         </div>

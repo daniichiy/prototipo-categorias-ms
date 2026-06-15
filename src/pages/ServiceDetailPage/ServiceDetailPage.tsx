@@ -4,8 +4,7 @@ import styles from './ServiceDetailPage.module.css';
 import { useAccordionSections } from './hooks/useAccordionSections';
 import { useStickyOnScroll } from './hooks/useStickyOnScroll';
 import { usePdfExport } from './hooks/usePdfExport';
-import { TopSearchBar } from './components/TopSearchBar';
-import { ServiceBreadcrumb } from './components/ServiceBreadcrumb';
+import { ServiceTopBar } from './components/ServiceTopBar';
 import { ServiceHero } from './components/ServiceHero';
 import { ServiceMetaBar } from './components/ServiceMetaBar';
 import { ServiceStartButton } from './components/ServiceStartButton';
@@ -35,7 +34,7 @@ export function ServiceDetailPage({ service = DEFAULT_SERVICE }: Props) {
 
   return (
     <main className={styles.page}>
-      <TopSearchBar />
+      <ServiceTopBar category={service.category} categorySlug={service.categorySlug} />
 
       {showStickyBar && (
         <div
@@ -45,13 +44,12 @@ export function ServiceDetailPage({ service = DEFAULT_SERVICE }: Props) {
         />
       )}
 
-      <ServiceBreadcrumb category={service.category} categorySlug={service.categorySlug} />
-
       <ServiceHero
         ref={heroRef}
         icon={service.icon}
         title={service.title}
         popularName={service.popularName}
+        channel={service.channel}
       />
 
       <ServiceMetaBar

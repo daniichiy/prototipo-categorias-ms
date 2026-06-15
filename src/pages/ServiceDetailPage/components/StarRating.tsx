@@ -11,7 +11,7 @@ export function StarRating({ rating, count }: Props) {
       className={styles.metaRatingWrapper}
       aria-label={`Avaliação: ${rating.toFixed(1)} de 5 estrelas, ${count.toLocaleString('pt-BR')} avaliações`}
     >
-      <span className={styles.metaRatingLabel} style={{ fontWeight: 700, fontSize: 16 }}>
+      <span className={styles.metaRatingLabel} style={{ fontWeight: 700 }}>
         Avaliação:
       </span>
       <span
@@ -23,14 +23,14 @@ export function StarRating({ rating, count }: Props) {
           const filled = rating >= star - 0.5;
           const color = filled ? 'var(--color-primary-600, #002F5F)' : '#EAEBEC';
           return (
-            <span key={star} className="material-icons" style={{ fontSize: 24, color }}>
+            <span key={star} className="material-icons" style={{ fontSize: 18, color }}>
               star
             </span>
           );
         })}
         <span
           style={{
-            fontSize: 16,
+            fontSize: 13,
             color: 'var(--color-text-light, #6E757A)',
             marginLeft: 4,
             fontWeight: 500,
