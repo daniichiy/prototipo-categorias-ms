@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { LayoutContainer } from '@/components/LayoutContainer';
-import { CIDADAO_FEATURED } from '@/data/featuredServices';
+import { CIDADAO_FEATURED_CARDS } from '@/data/featuredServices';
 import type { Category } from '@/types/category';
 import styles from './HighlightedServices.module.css';
 
@@ -81,21 +81,39 @@ export function HighlightedServices({ categories }: Props) {
 
         <ul className={styles.grid} role="tabpanel">
           {isCidadao
-            ? CIDADAO_FEATURED.map((svc) => (
-                <li key={svc.id} className={styles.cell}>
-                  <Link
-                    to={`/servico/${svc.id}`}
-                    className={styles.card}
-                    aria-label={`${svc.title} — ${svc.agency}`}
-                  >
-                    <span className={`material-icons ${styles.cardIcon}`} aria-hidden="true">{svc.icon}</span>
-                    <div className={styles.cardBody}>
-                      <p className={styles.cardAgency}>{svc.agency}</p>
-                      <h3 className={styles.cardTitle}>{svc.title}</h3>
-                    </div>
-                  </Link>
-                </li>
-              ))
+            ? CIDADAO_FEATURED_CARDS.map((svc) =>
+                svc.redirectUrl ? (
+                  <li key={svc.id} className={styles.cell}>
+                    <a
+                      href={svc.redirectUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={styles.card}
+                      aria-label={`${svc.title} — ${svc.agency}. Abre o serviço no portal em nova aba.`}
+                    >
+                      <span className={`material-icons ${styles.cardIcon}`} aria-hidden="true">{svc.icon}</span>
+                      <div className={styles.cardBody}>
+                        <p className={styles.cardAgency}>{svc.agency}</p>
+                        <h3 className={styles.cardTitle}>{svc.title}</h3>
+                      </div>
+                    </a>
+                  </li>
+                ) : (
+                  <li key={svc.id} className={styles.cell}>
+                    <Link
+                      to={`/servico/${svc.id}`}
+                      className={styles.card}
+                      aria-label={`${svc.title} — ${svc.agency}`}
+                    >
+                      <span className={`material-icons ${styles.cardIcon}`} aria-hidden="true">{svc.icon}</span>
+                      <div className={styles.cardBody}>
+                        <p className={styles.cardAgency}>{svc.agency}</p>
+                        <h3 className={styles.cardTitle}>{svc.title}</h3>
+                      </div>
+                    </Link>
+                  </li>
+                ),
+              )
             : (dynamicByAudience.get(active) ?? []).map((item) => (
                 <li key={item.id} className={styles.cell}>
                   <a

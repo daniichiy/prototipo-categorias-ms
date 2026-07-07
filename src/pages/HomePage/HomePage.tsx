@@ -42,11 +42,11 @@ export function HomePage() {
 
   return (
     <main className={styles.page}>
-      <PromoBanner
+      {/* <PromoBanner
         imageUrl="/banner-ipva.png"
         ctaUrl="https://www.sefaz.ms.gov.br/ipva/"
         alt="IPVA 2026 — campanha oficial do Governo do Estado de Mato Grosso do Sul"
-      />
+      /> */}
 
       <SearchBar />
 
