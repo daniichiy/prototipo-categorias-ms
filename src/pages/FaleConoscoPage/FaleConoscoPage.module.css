@@ -1,0 +1,117 @@
+.page {
+  background-color: var(--color-bg);
+  padding-block: var(--space-6) var(--space-8);
+  min-height: 60vh;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-width: 640px;
+}
+
+.title {
+  font-size: var(--size-7);
+  font-weight: var(--weight-bold);
+  color: var(--color-ink);
+  line-height: var(--leading-tight);
+}
+
+.subtitle {
+  font-size: var(--size-3);
+  color: var(--color-muted);
+  line-height: var(--leading-normal);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+  list-style: none;
+}
+
+@media (min-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.cell {
+  list-style: none;
+  display: block;
+}
+
+.card {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  height: 100%;
+  padding: var(--space-4) var(--space-5);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-sm);
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.card:hover {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-1px);
+}
+
+.icon {
+  font-size: 28px;
+  color: var(--color-primary);
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.cardTitle {
+  font-size: var(--size-4);
+  font-weight: var(--weight-semibold);
+  color: var(--color-primary);
+  line-height: var(--leading-snug);
+}
+
+.cardText {
+  font-size: var(--size-2);
+  color: var(--color-text);
+  line-height: var(--leading-normal);
+}
+
+.cardLink {
+  margin-top: var(--space-1);
+  font-size: var(--size-2);
+  font-weight: var(--weight-medium);
+  color: var(--color-primary);
+  align-self: flex-start;
+  transition: color var(--transition-fast);
+}
+
+.cardLink:hover {
+  color: var(--color-primary-ink);
+  text-decoration: underline;
+}

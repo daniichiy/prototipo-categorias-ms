@@ -2,12 +2,18 @@ import { Link, useLocation } from 'react-router-dom';
 import { UserMenu } from './UserMenu';
 import styles from './SiteHeader.module.css';
 
-const MENU = [
+interface MenuItem {
+  label: string;
+  href?: string;
+  to?: string;
+}
+
+const MENU: MenuItem[] = [
   { label: 'Governo', href: 'https://www.ms.gov.br/' },
   { label: 'Serviços', href: '#categorias' },
   { label: 'Órgãos e Secretarias', href: 'https://www.ms.gov.br/orgaos' },
   { label: 'Comunicação', href: 'https://agenciadenoticias.ms.gov.br/' },
-  { label: 'Fale Conosco', href: 'https://www.ms.gov.br/fale-conosco' },
+  { label: 'Fale Conosco', to: '/fale-conosco' },
 ];
 
 function FacebookIcon() {
@@ -126,14 +132,20 @@ export function SiteHeader() {
               </li>
               {MENU.map((item, idx) => (
                 <li key={item.label} className={styles.menuItem}>
-                  <a
-                    href={item.href}
-                    target={item.href.startsWith('http') ? '_blank' : undefined}
-                    rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                    className={styles.menuLink}
-                  >
-                    {item.label}
-                  </a>
+                  {item.to ? (
+                    <Link to={item.to} className={styles.menuLink}>
+                      {item.label}
+                    </Link>
+                  ) : (
+                    <a
+                      href={item.href}
+                      target={item.href?.startsWith('http') ? '_blank' : undefined}
+                      rel={item.href?.startsWith('http') ? 'noopener noreferrer' : undefined}
+                      className={styles.menuLink}
+                    >
+                      {item.label}
+                    </a>
+                  )}
                   {idx < MENU.length - 1 && <span className={styles.divider} aria-hidden="true">|</span>}
                 </li>
               ))}

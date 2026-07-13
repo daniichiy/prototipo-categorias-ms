@@ -7,6 +7,7 @@ import { ServiceDetailPage } from '@/pages/ServiceDetailPage';
 import { DashboardPage } from '@/pages/DashboardPage';
 import { DashboardPage2 } from '@/pages/DashboardPage2';
 import { ProfilesPage, MetodologiaPage } from '@/pages/ProfilesPage';
+import { FaleConoscoPage } from '@/pages/FaleConoscoPage';
 
 function PortalLayout() {
   return (
@@ -27,6 +28,7 @@ export function App() {
       <Route path="/perfis/metodologia" element={<MetodologiaPage />} />
       <Route element={<PortalLayout />}>
         <Route path="/" element={<HomePage />} />
+        <Route path="/fale-conosco" element={<FaleConoscoPage />} />
         <Route path="/categoria/:id" element={<CategoryPage />} />
         {/* layouts específicos — IDs fixos, sem :id no path */}
         <Route path="/servico/boletim-acidente-transito" element={<ServiceDetailPage />} />
