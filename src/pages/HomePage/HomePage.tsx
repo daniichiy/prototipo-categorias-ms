@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useCategories } from '@/hooks/useCategories';
 import { CategoriesGrid } from '@/features/categories/CategoriesGrid';
-import { PromoBanner } from '@/features/home/PromoBanner';
+// import { PromoBanner } from '@/features/home/PromoBanner';
 import { SearchBar } from '@/features/home/SearchBar';
 import { HighlightedServices } from '@/features/home/HighlightedServices';
 import { NewsBlock } from '@/features/home/NewsBlock';
