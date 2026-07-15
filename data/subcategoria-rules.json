@@ -7,21 +7,25 @@
     "id": "agronegocio-e-meio-ambiente",
     "icon": "agriculture"
   },
-  "Arte, Esporte e Turismo": {
-    "id": "arte-esporte-e-turismo",
-    "icon": "theater_comedy"
-  },
-  "Assistência Social, Habitação e Cidadania": {
-    "id": "assistencia-social-habitacao-e-cidadania",
+  "Assistência Social, Cidadania e Habitação": {
+    "id": "assistencia-social-cidadania-e-habitacao",
     "icon": "diversity_3"
   },
-  "Ciência, Educação e Pesquisa": {
-    "id": "ciencia-educacao-e-pesquisa",
-    "icon": "auto_stories"
+  "Ciência e Tecnologia": {
+    "id": "ciencia-e-tecnologia",
+    "icon": "science"
   },
   "Comunicação e Transparência": {
     "id": "comunicacao-e-transparencia",
     "icon": "campaign"
+  },
+  "Cultura, Esporte e Turismo": {
+    "id": "cultura-esporte-e-turismo",
+    "icon": "theater_comedy"
+  },
+  "Educação": {
+    "id": "educacao",
+    "icon": "auto_stories"
   },
   "Empresa, Indústria e Comércio": {
     "id": "empresa-industria-e-comercio",
