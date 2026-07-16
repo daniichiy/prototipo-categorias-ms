@@ -4,7 +4,7 @@ import { CategoriesGrid } from '@/features/categories/CategoriesGrid';
 // import { PromoBanner } from '@/features/home/PromoBanner';
 import { SearchBar } from '@/features/home/SearchBar';
 import { HighlightedServices } from '@/features/home/HighlightedServices';
-import { NewsBlock } from '@/features/home/NewsBlock';
+// import { NewsBlock } from '@/features/home/NewsBlock'; // seção oculta — reativar quando necessário
 import { IndicatorsBlock } from '@/features/home/IndicatorsBlock';
 import { AppsBlock } from '@/features/home/AppsBlock';
 import { LayoutContainer } from '@/components/LayoutContainer';
@@ -54,7 +54,8 @@ export function HomePage() {
 
       <CategoriesGrid categories={categories} />
 
-      <NewsBlock />
+      {/* Seção de notícias oculta temporariamente — reativar quando necessário */}
+      {/* <NewsBlock /> */}
 
       <IndicatorsBlock
         totalCards={totals.totalCards}
