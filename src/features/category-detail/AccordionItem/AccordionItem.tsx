@@ -24,7 +24,6 @@ export function AccordionItem({ subcategory, defaultOpen = false }: Props) {
       >
         <span className={styles.name}>{subcategory.name}</span>
         <span className={styles.meta}>
-          <span className={styles.count}>{subcategory.count} cartas</span>
           <span className={`material-icons ${styles.caret}`} aria-hidden="true">
             {isOpen ? 'expand_less' : 'expand_more'}
           </span>

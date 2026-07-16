@@ -35,7 +35,7 @@ export function CategoryHero({ category }: Props) {
         </div>
 
         <p className={styles.count}>
-          Serviços (<strong>{category.count}</strong>) em {category.subcategories.length} subcategorias
+          {category.subcategories.length} subcategorias
         </p>
       </LayoutContainer>
     </section>

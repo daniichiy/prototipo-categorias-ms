@@ -12,14 +12,13 @@ function CategoryCardComponent({ category }: Props) {
     <Link
       to={`/categoria/${category.id}`}
       className={styles.tile}
-      aria-label={`${category.name} — ${category.count} cartas de serviço`}
+      aria-label={`${category.name} — ver serviços`}
     >
       <span className={`material-icons ${styles.icon}`} aria-hidden="true">
         {category.icon}
       </span>
       <span className={styles.info}>
         <h3 className={styles.label}>{category.name}</h3>
-        <span className={styles.count}>{category.count} cartas</span>
       </span>
     </Link>
   );
