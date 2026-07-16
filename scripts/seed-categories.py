@@ -1,19 +1,20 @@
 """
 Seed script: gera `src/data/categories.json` a partir de:
-  1. data/Categorias-ajustada-pos-sugestoes-sites-09-07-26-PROPOSTA2-v4.xlsx
-     (sheet 'Categorias e Subcategorias') — taxonomia oficial (categoria,
-     subcategoria, título da carta). Fonte de verdade do mapeamento.
-  2. data/Todas as cartas.xlsx (sheets 'Proposta 2' + 'servicos_ativos (1)') — lookup de
-     URL, órgão e sigla por título (a planilha de taxonomia não tem essas colunas).
-  3. data/subcategoria-rules.json — metadados por categoria (id slug + ícone Material).
-  4. data/url-overrides.json — {título na v4: url}, preenchido à mão para as cartas que a
-     v4 renomeou a ponto de não casar com nenhum título do banco. Tem prioridade sobre o
-     match automático; órgão e sigla saem do banco pela url.
+  1. data/Categorias-ajustada-pos-sugestoes-sites-09-07-26-PROPOSTA2-v8.xlsx
+     (sheet 'Categorias e Subcategorias') — taxonomia oficial: categoria, subcategoria,
+     título da carta e ÓRGÃO (sigla). Fonte de verdade do mapeamento. A coluna Órgão é o
+     que permite diferenciar serviços comuns a vários órgãos (ouvidoria, LAI, peticionamento,
+     vista e cópia): cada órgão vira uma carta com a sua própria página.
+  2. data/cartas-ativas-com-url.xlsx (sheet 'cartas_ativas') — lookup da URL por
+     (título, sigla do órgão). É a lista viva de páginas do portal.
+  3. data/Todas as cartas.xlsx (sheets 'Proposta 2' + 'servicos_ativos (1)') — apenas para
+     mapear a sigla do órgão no nome completo exibido no card.
+  4. data/subcategoria-rules.json — metadados por categoria (id slug + ícone Material).
 
-Match por título normalizado (sem acentos, lowercase). Quando não há match exato,
-tenta fuzzy match (difflib) com cutoff 0.85.
+Match por (título, sigla) normalizados (sem acentos, lowercase). Quando a sigla diverge,
+tenta fuzzy no título dentro do mesmo órgão (difflib, cutoff 0.9).
 
-Categorias saem em ordem alfabética; subcategorias mantêm a ordem da planilha.
+Categorias e subcategorias saem em ordem alfabética.
 
 Run:  npm run seed     (ou:  python scripts/seed-categories.py)
 """
@@ -31,24 +32,22 @@ import openpyxl
 
 ROOT = Path(__file__).resolve().parent.parent
 TAXONOMY_PATH = (
-    ROOT / "data" / "Categorias-ajustada-pos-sugestoes-sites-09-07-26-PROPOSTA2-v4.xlsx"
+    ROOT / "data" / "Categorias-ajustada-pos-sugestoes-sites-09-07-26-PROPOSTA2-v8.xlsx"
 )
+ACTIVE_PATH = ROOT / "data" / "cartas-ativas-com-url.xlsx"
 LEGACY_PATH = ROOT / "data" / "Todas as cartas.xlsx"
 META_PATH = ROOT / "data" / "subcategoria-rules.json"
-OVERRIDES_PATH = ROOT / "data" / "url-overrides.json"
 OUTPUT_PATH = ROOT / "src" / "data" / "categories.json"
 
 TAXONOMY_SHEET = "Categorias e Subcategorias"
-# Ordem importa: a primeira aba que tiver o título vence.
+ACTIVE_SHEET = "cartas_ativas"
+# Ordem importa para o nome do órgão: a primeira aba que tiver a sigla vence.
 LEGACY_SHEETS = ("Proposta 2", "servicos_ativos (1)")
 
-FUZZY_CUTOFF = 0.85
-# Em títulos curtos, 0.85 aceita match errado (ex.: "Solicitar consulta" x "Solicitar
-# teleconsulta" = 0.90, serviços diferentes). Abaixo de SHORT_TITLE_LEN, exigir quase igual.
-SHORT_TITLE_LEN = 30
-SHORT_TITLE_CUTOFF = 0.95
+# Fuzzy só entra quando a sigla diverge; cutoff alto para não trocar serviços parecidos.
+FUZZY_CUTOFF = 0.90
 
-# Renomeações de subcategoria aplicadas por cima da planilha v4 (chave = nome na planilha).
+# Renomeações de subcategoria aplicadas por cima da planilha (chave = nome na planilha).
 SUBCATEGORY_RENAMES = {
     "Contencioso": "Processos Administrativos Tributários",
 }
@@ -68,84 +67,65 @@ def slugify(text: str) -> str:
 
 
 def clean(text: object) -> str:
-    """Collapse runs of whitespace — a few células da planilha têm espaço duplo."""
+    """Collapse runs of whitespace — algumas células da planilha têm espaço duplo."""
     return re.sub(r"\s+", " ", str(text)).strip()
 
 
-def load_taxonomy() -> list[tuple[str, str, str]]:
-    """Read the new spreadsheet. Returns [(categoria, subcategoria, titulo), ...]
-    with cascade-fill on empty cells (Excel-merged style)."""
+def load_taxonomy() -> list[tuple[str, str, str, str]]:
+    """Read the taxonomy. Returns [(categoria, subcategoria, titulo, sigla), ...] com
+    cascade-fill nas células vazias de categoria/subcategoria (estilo Excel mesclado)."""
     wb = openpyxl.load_workbook(TAXONOMY_PATH, data_only=True, read_only=True)
     ws = wb[TAXONOMY_SHEET]
-    rows: list[tuple[str, str, str]] = []
+    rows: list[tuple[str, str, str, str]] = []
     current_cat, current_sub = None, None
     for row in ws.iter_rows(min_row=4, values_only=True):
-        cat, sub, titulo = row[0], row[1], row[2]
+        cat, sub, titulo, orgao = row[0], row[1], row[2], row[3]
         if cat:
             current_cat = clean(cat)
         if sub:
             current_sub = clean(sub)
             current_sub = SUBCATEGORY_RENAMES.get(current_sub, current_sub)
         if titulo and current_cat and current_sub:
-            rows.append((current_cat, current_sub, clean(titulo)))
+            rows.append((current_cat, current_sub, clean(titulo), clean(orgao) if orgao else ""))
     return rows
 
 
-def load_legacy_lookup() -> tuple[dict[str, dict[str, str]], dict[str, dict[str, str]]]:
-    """Read old spreadsheet and index it two ways: {normalized_title: {sigla, url, orgao}}
-    e {url: {sigla, orgao}} — o índice por url atende as cartas de `url-overrides.json`,
-    que foram renomeadas na v4 mas continuam apontando para a página original.
+def load_url_lookup() -> tuple[dict[tuple[str, str], str], dict[str, list[str]]]:
+    """cartas-ativas-com-url.xlsx → índice da URL por (título, sigla).
 
-    Duplicates: same title across rows resolves to the same service — the first
-    sheet in LEGACY_SHEETS wins."""
+    Retorna:
+      by_ts:            {(norm_título, norm_sigla): url}
+      titles_by_sigla:  {norm_sigla: [norm_título, ...]}  (base do fuzzy por órgão)
+    """
+    ws = openpyxl.load_workbook(ACTIVE_PATH, data_only=True, read_only=True)[ACTIVE_SHEET]
+    by_ts: dict[tuple[str, str], str] = {}
+    titles_by_sigla: dict[str, list[str]] = defaultdict(list)
+    for row in ws.iter_rows(min_row=2, values_only=True):
+        sigla = clean(row[0]) if row[0] else ""
+        titulo = clean(row[1]) if row[1] else ""
+        url = clean(row[2]) if row[2] else ""
+        if not titulo or not url:
+            continue
+        key = (normalize(titulo), normalize(sigla))
+        if key not in by_ts:
+            by_ts[key] = url
+            titles_by_sigla[normalize(sigla)].append(normalize(titulo))
+    return by_ts, titles_by_sigla
+
+
+def load_orgao_names() -> dict[str, str]:
+    """Todas as cartas.xlsx → {norm_sigla: nome completo do órgão} para exibição."""
     wb = openpyxl.load_workbook(LEGACY_PATH, data_only=True, read_only=True)
-    by_title: dict[str, dict[str, str]] = {}
-    by_url: dict[str, dict[str, str]] = {}
+    names: dict[str, str] = {}
     for sheet_name in LEGACY_SHEETS:
         if sheet_name not in wb.sheetnames:
             continue
         for row in wb[sheet_name].iter_rows(min_row=2, values_only=True):
-            sigla, titulo, _categoria, url, orgao = row[:5]
-            if not titulo:
-                continue
-            entry = {
-                "sigla": clean(sigla) if sigla else "",
-                "url": clean(url) if url else "",
-                "orgao": clean(orgao) if orgao else "",
-            }
-            key = normalize(titulo)
-            if key not in by_title or not by_title[key]["url"]:
-                by_title[key] = entry
-            if entry["url"] and entry["url"] not in by_url:
-                by_url[entry["url"]] = entry
-    return by_title, by_url
-
-
-def load_url_overrides() -> dict[str, dict[str, str]]:
-    """Read {título na v4: {banco, url}}, keyed by normalized title. `banco` é o título
-    equivalente em `Todas as cartas.xlsx`, usado para achar órgão e sigla."""
-    if not OVERRIDES_PATH.exists():
-        return {}
-    raw = json.loads(OVERRIDES_PATH.read_text(encoding="utf-8"))
-    return {
-        normalize(titulo): {"url": clean(entry["url"]), "banco": clean(entry.get("banco", ""))}
-        for titulo, entry in raw.items()
-        if entry.get("url")
-    }
-
-
-def fuzzy_lookup(
-    title: str,
-    lookup: dict[str, dict[str, str]],
-    keys_list: list[str],
-) -> dict[str, str] | None:
-    """Try fuzzy match when exact lookup fails."""
-    norm = normalize(title)
-    cutoff = SHORT_TITLE_CUTOFF if len(norm) < SHORT_TITLE_LEN else FUZZY_CUTOFF
-    matches = difflib.get_close_matches(norm, keys_list, n=1, cutoff=cutoff)
-    if matches:
-        return lookup[matches[0]]
-    return None
+            sigla, _titulo, _cat, _url, orgao = row[:5]
+            key = normalize(sigla)
+            if key and orgao and key not in names:
+                names[key] = clean(orgao)
+    return names
 
 
 def main() -> None:
@@ -154,70 +134,54 @@ def main() -> None:
 
     print(f"[seed] Lendo taxonomia: {TAXONOMY_PATH.relative_to(ROOT)} (sheet: {TAXONOMY_SHEET})")
     records = load_taxonomy()
-    print(f"[seed]   {len(records)} cartas com (categoria, subcategoria, título)")
+    print(f"[seed]   {len(records)} cartas com (categoria, subcategoria, título, órgão)")
 
-    print(f"[seed] Lendo lookup de URLs: {LEGACY_PATH.relative_to(ROOT)} "
-          f"(sheets: {', '.join(LEGACY_SHEETS)})")
-    legacy, legacy_by_url = load_legacy_lookup()
-    legacy_keys = list(legacy.keys())
-    print(f"[seed]   {len(legacy)} títulos no lookup")
+    print(f"[seed] Lendo URLs por (título, órgão): {ACTIVE_PATH.relative_to(ROOT)}")
+    by_ts, titles_by_sigla = load_url_lookup()
+    print(f"[seed]   {len(by_ts)} páginas ativas")
+
+    print(f"[seed] Lendo nomes de órgão: {LEGACY_PATH.relative_to(ROOT)}")
+    orgao_names = load_orgao_names()
 
     print(f"[seed] Lendo metadados de categoria: {META_PATH.relative_to(ROOT)}")
     meta = json.loads(META_PATH.read_text(encoding="utf-8"))
 
-    print(f"[seed] Lendo overrides de URL: {OVERRIDES_PATH.relative_to(ROOT)}")
-    overrides = load_url_overrides()
-    print(f"[seed]   {len(overrides)} url(s) definida(s) à mão")
-
-    # category_name -> list[(subcategoria, card_dict)]
     grouped: dict[str, list[tuple[str, dict]]] = defaultdict(list)
     exact_hits = 0
     fuzzy_hits = 0
-    override_hits = 0
     no_match = 0
-    no_url: list[tuple[str, str, str]] = []
+    no_url: list[tuple[str, str, str, str]] = []
     seen_ids: dict[str, int] = {}
 
-    unknown_cats = sorted({c for c, _, _ in records} - set(meta))
+    unknown_cats = sorted({c for c, _, _, _ in records} - set(meta))
     if unknown_cats:
         print(f"[seed] AVISO: categoria(s) fora de {META_PATH.name} "
               f"(id/ícone gerados por slug): {', '.join(unknown_cats)}")
 
-    for cat_name, sub_name, titulo in records:
-        norm = normalize(titulo)
-        override = overrides.get(norm)
-        if override:
-            # A url do override manda; órgão e sigla saem do banco — pela url quando ela já
-            # está lá, senão pelo título equivalente informado em `banco`.
-            from_banco = (
-                legacy_by_url.get(override["url"])
-                or legacy.get(normalize(override["banco"]))
-                or {}
-            )
-            override_hits += 1
-            info = {
-                "sigla": from_banco.get("sigla", ""),
-                "url": override["url"],
-                "orgao": from_banco.get("orgao", ""),
-            }
-        elif (info := legacy.get(norm)) is not None:
+    for cat_name, sub_name, titulo, sigla in records:
+        nt, ns = normalize(titulo), normalize(sigla)
+        url = by_ts.get((nt, ns), "")
+        if url:
             exact_hits += 1
         else:
-            info = fuzzy_lookup(titulo, legacy, legacy_keys)
-            if info is not None:
+            # Sigla diverge: procura o título mais próximo dentro do mesmo órgão.
+            near = difflib.get_close_matches(nt, titles_by_sigla.get(ns, []), n=1, cutoff=FUZZY_CUTOFF)
+            if near:
+                url = by_ts.get((near[0], ns), "")
+            if url:
                 fuzzy_hits += 1
             else:
                 no_match += 1
-                info = {"sigla": "", "url": "", "orgao": ""}
 
-        # Sem match na planilha de origem — ou com match, mas com a coluna url vazia.
-        if not info["url"]:
-            no_url.append((cat_name, sub_name, titulo))
+        if not url:
+            no_url.append((cat_name, sub_name, titulo, sigla))
+
+        agency = orgao_names.get(ns) or sigla
 
         cat_id = meta.get(cat_name, {}).get("id") or slugify(cat_name)
         sub_id = slugify(sub_name)
-        card_id = f"{cat_id}--{sub_id}--{slugify(titulo)[:80]}"
-        # Mesmo título repetido dentro da subcategoria: sufixo para manter o id único.
+        card_id = f"{cat_id}--{sub_id}--{slugify(f'{titulo}-{sigla}')[:90]}"
+        # Mesma (carta, órgão) repetida na subcategoria: sufixo para manter o id único.
         seen_ids[card_id] = seen_ids.get(card_id, 0) + 1
         if seen_ids[card_id] > 1:
             card_id = f"{card_id}-{seen_ids[card_id]}"
@@ -225,9 +189,9 @@ def main() -> None:
         grouped[cat_name].append((sub_name, {
             "id": card_id,
             "title": titulo,
-            "url": info["url"],
-            "agency": info["orgao"],
-            "agencyCode": info["sigla"],
+            "url": url,
+            "agency": agency,
+            "agencyCode": sigla,
         }))
 
     # Categorias e subcategorias em ordem alfabética (ignorando acentos).
@@ -242,7 +206,7 @@ def main() -> None:
 
         subcategories_out = []
         for sub_name in sorted(sub_cards, key=normalize):
-            cards = sorted(sub_cards[sub_name], key=lambda c: normalize(c["title"]))
+            cards = sorted(sub_cards[sub_name], key=lambda c: (normalize(c["title"]), c["agencyCode"]))
             subcategories_out.append({
                 "id": slugify(sub_name),
                 "name": sub_name,
@@ -269,21 +233,14 @@ def main() -> None:
     total_cards = sum(c["count"] for c in output)
     print()
     print(f"[seed] Total: {total_cards} cartas")
-    matched = exact_hits + fuzzy_hits + override_hits
-    print(f"[seed] Título match: {exact_hits} exato + {fuzzy_hits} fuzzy + {override_hits} override "
+    matched = exact_hits + fuzzy_hits
+    print(f"[seed] URL match: {exact_hits} exato + {fuzzy_hits} fuzzy "
           f"= {matched} ({100 * matched // max(total_cards, 1)}%); {no_match} sem match")
-
-    unused = sorted(set(overrides) - {normalize(t) for _, _, t in records})
-    if unused:
-        print(f"[seed] AVISO: {len(unused)} override(s) sem carta correspondente na planilha "
-              f"(título mudou ou está com erro de digitação?):")
-        for key in unused:
-            print(f"        - {key}")
     if no_url:
         print()
         print(f"[seed] {len(no_url)} carta(s) SEM URL (link vazio):")
-        for cat_name, sub_name, titulo in no_url:
-            print(f"        - [{cat_name} / {sub_name}] {titulo}")
+        for cat_name, sub_name, titulo, sigla in no_url:
+            print(f"        - [{cat_name} / {sub_name}] {titulo}  ({sigla or 'sem órgão'})")
 
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT_PATH.write_text(json.dumps(output, ensure_ascii=False, indent=2), encoding="utf-8")
