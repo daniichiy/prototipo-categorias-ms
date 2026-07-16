@@ -48,6 +48,11 @@ FUZZY_CUTOFF = 0.85
 SHORT_TITLE_LEN = 30
 SHORT_TITLE_CUTOFF = 0.95
 
+# Renomeações de subcategoria aplicadas por cima da planilha v4 (chave = nome na planilha).
+SUBCATEGORY_RENAMES = {
+    "Contencioso": "Processos Administrativos Tributários",
+}
+
 
 def normalize(text: str | None) -> str:
     if not text:
@@ -80,6 +85,7 @@ def load_taxonomy() -> list[tuple[str, str, str]]:
             current_cat = clean(cat)
         if sub:
             current_sub = clean(sub)
+            current_sub = SUBCATEGORY_RENAMES.get(current_sub, current_sub)
         if titulo and current_cat and current_sub:
             rows.append((current_cat, current_sub, clean(titulo)))
     return rows
@@ -224,22 +230,18 @@ def main() -> None:
             "agencyCode": info["sigla"],
         }))
 
-    # Categorias em ordem alfabética (ignorando acentos); subcategorias na ordem da planilha.
+    # Categorias e subcategorias em ordem alfabética (ignorando acentos).
     output = []
     for cat_name in sorted(grouped, key=normalize):
         items = grouped[cat_name]
         cat_meta = meta.get(cat_name) or {"id": slugify(cat_name), "icon": "category"}
 
-        # Group cards by subcategoria preserving first-encounter order
-        sub_order: list[str] = []
         sub_cards: dict[str, list[dict]] = defaultdict(list)
         for sub_name, card in items:
-            if sub_name not in sub_cards:
-                sub_order.append(sub_name)
             sub_cards[sub_name].append(card)
 
         subcategories_out = []
-        for sub_name in sub_order:
+        for sub_name in sorted(sub_cards, key=normalize):
             cards = sorted(sub_cards[sub_name], key=lambda c: normalize(c["title"]))
             subcategories_out.append({
                 "id": slugify(sub_name),
