@@ -14,7 +14,7 @@ export function CategoryHero({ category }: Props) {
       <LayoutContainer className={styles.inner}>
         <Breadcrumb
           items={[
-            { label: 'Início', to: '/' },
+            { label: 'Início', to: '/#categorias' },
             { label: 'Categorias', to: '/#categorias' },
             { label: category.name },
           ]}
@@ -28,7 +28,7 @@ export function CategoryHero({ category }: Props) {
             <h1 id="category-headline" className={styles.title}>{category.name}</h1>
           </div>
 
-          <Link to="/" className={styles.back}>
+          <Link to="/#categorias" className={styles.back}>
             <span className="material-icons" aria-hidden="true">arrow_back</span>
             <span>Voltar</span>
           </Link>

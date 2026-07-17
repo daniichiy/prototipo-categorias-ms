@@ -35,7 +35,7 @@ function MsUtilBar() {
 function MsHeader() {
   return (
     <header className="ms-header">
-      <Link to="/" className="ms-logo" aria-label="Voltar ao portal">
+      <Link to="/#categorias" className="ms-logo" aria-label="Voltar ao portal">
         <img src="/logo-ms.svg" alt="ms.gov.br" />
       </Link>
       <div className="ms-search">
@@ -60,7 +60,7 @@ function MsHeader() {
 function Breadcrumb() {
   return (
     <nav className="breadcrumb" aria-label="Breadcrumb">
-      <Link to="/"><Ic name="home" size={16} stroke={2} /><span>Portal</span></Link>
+      <Link to="/#categorias"><Ic name="home" size={16} stroke={2} /><span>Portal</span></Link>
       <span className="sep"><Ic name="chevron-right" size={14} /></span>
       <span className="current">Perfis do cidadão</span>
     </nav>

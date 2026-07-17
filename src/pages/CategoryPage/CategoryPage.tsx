@@ -23,7 +23,7 @@ export function CategoryPage() {
   }
 
   if (notFound || !category) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/#categorias" replace />;
   }
 
   return (

@@ -10,7 +10,7 @@ interface MenuItem {
 
 const MENU: MenuItem[] = [
   { label: 'Governo', href: 'https://www.ms.gov.br/' },
-  { label: 'Serviços', href: '#categorias' },
+  { label: 'Serviços', to: '/#categorias' },
   { label: 'Órgãos e Secretarias', href: 'https://www.ms.gov.br/orgaos' },
   { label: 'Comunicação', href: 'https://agenciadenoticias.ms.gov.br/' },
   { label: 'Fale Conosco', to: '/fale-conosco' },
@@ -99,7 +99,7 @@ export function SiteHeader() {
       {/* Band 2: navy brand bar — logo + (serviço: breadcrumb + busca | demais: redes sociais) */}
       <div className={styles.brandBar}>
         <div className={styles.brandInner}>
-          <Link to="/" className={styles.brand} aria-label="ms.gov.br — Página inicial">
+          <Link to="/#categorias" className={styles.brand} aria-label="ms.gov.br — Página inicial">
             <img src="/logo-ms.svg" alt="ms.gov.br" className={styles.brandLogo} />
           </Link>
 
@@ -126,7 +126,7 @@ export function SiteHeader() {
         <div className={styles.menuInner}>
             <ul className={styles.menu}>
               <li className={styles.menuHome}>
-                <Link to="/" aria-label="Início">
+                <Link to="/#categorias" aria-label="Início">
                   <span className="material-icons" aria-hidden="true">home</span>
                 </Link>
               </li>

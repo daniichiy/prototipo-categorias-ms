@@ -17,7 +17,7 @@ export function ServiceTopBar({ category, categorySlug, placeholder = 'Pesquisar
         <nav aria-label="Breadcrumb">
           <ol className={styles.breadcrumb}>
             <li>
-              <Link to="/" aria-label="Página inicial" className={styles.crumbLink}>
+              <Link to="/#categorias" aria-label="Página inicial" className={styles.crumbLink}>
                 <span className="material-icons" aria-hidden="true">home</span>
               </Link>
             </li>

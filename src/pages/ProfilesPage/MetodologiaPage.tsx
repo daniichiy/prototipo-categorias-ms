@@ -77,7 +77,7 @@ export function MetodologiaPage() {
   return (
     <div className="perfis-doc">
       <header className="pf-header">
-        <Link to="/" className="pf-brand" aria-label="MS Digital">
+        <Link to="/#categorias" className="pf-brand" aria-label="MS Digital">
           <span className="pf-brand-mark"><Ic name="star" size={20} /></span>
           <span className="pf-brand-text">MS <b>Digital</b></span>
         </Link>
@@ -85,7 +85,7 @@ export function MetodologiaPage() {
 
       <div className="pf-subbar">
         <nav className="pf-crumb" aria-label="Breadcrumb">
-          <Link to="/">Portal</Link>
+          <Link to="/#categorias">Portal</Link>
           <Ic name="chevron-right" size={13} />
           <Link to="/perfis">Perfis do cidadão</Link>
           <Ic name="chevron-right" size={13} />

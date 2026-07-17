@@ -48,7 +48,7 @@ interface SidebarProps {
 function Sidebar({ active, onChange, unreadCount }: SidebarProps) {
   return (
     <aside className="sidebar">
-      <Link to="/" className="brand" aria-label="Voltar ao portal">
+      <Link to="/#categorias" className="brand" aria-label="Voltar ao portal">
         <img src="/logo-ms.svg" alt="ms.gov.br" className="brand-logo" />
         <span className="brand-sub">Painel do Cidadão</span>
       </Link>
