@@ -1,0 +1,1 @@
+export { SuporteSistemasPage } from './SuporteSistemasPage';

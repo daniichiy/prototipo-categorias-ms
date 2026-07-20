@@ -75,6 +75,7 @@ export const CONTACT_CHANNELS: ContactChannel[] = [
     description: 'Nossos canais de suporte a sistemas',
     linkLabel: 'Acessar sistemas',
     href: 'https://www.ms.gov.br/',
+    to: '/fale-conosco/suporte-a-sistemas',
   },
   {
     icon: 'account_balance',
