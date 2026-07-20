@@ -4,7 +4,10 @@ export interface ContactChannel {
   title: string;
   description: string;
   linkLabel: string;
+  /** Link externo — ignorado quando `to` está definido */
   href: string;
+  /** Rota interna do protótipo */
+  to?: string;
 }
 
 export const CONTACT_CHANNELS: ContactChannel[] = [
@@ -64,6 +67,7 @@ export const CONTACT_CHANNELS: ContactChannel[] = [
     description: 'Nossa lista de telefones do governo',
     linkLabel: 'Acessar telefones',
     href: 'https://www.ms.gov.br/',
+    to: '/fale-conosco/telefones-uteis',
   },
   {
     icon: 'support_agent',

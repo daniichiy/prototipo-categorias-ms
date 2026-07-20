@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { LayoutContainer } from '@/components/LayoutContainer';
 import { Breadcrumb } from '@/components/Breadcrumb';
 import { CONTACT_CHANNELS } from './data';
@@ -34,14 +35,20 @@ export function FaleConoscoPage() {
                 <div className={styles.body}>
                   <h2 className={styles.cardTitle}>{channel.title}</h2>
                   <p className={styles.cardText}>{channel.description}</p>
-                  <a
-                    href={channel.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.cardLink}
-                  >
-                    {channel.linkLabel}
-                  </a>
+                  {channel.to ? (
+                    <Link to={channel.to} className={styles.cardLink}>
+                      {channel.linkLabel}
+                    </Link>
+                  ) : (
+                    <a
+                      href={channel.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={styles.cardLink}
+                    >
+                      {channel.linkLabel}
+                    </a>
+                  )}
                 </div>
               </article>
             </li>
