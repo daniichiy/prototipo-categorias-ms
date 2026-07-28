@@ -11,6 +11,7 @@ import { ProfilesPage, MetodologiaPage } from '@/pages/ProfilesPage';
 import { FaleConoscoPage } from '@/pages/FaleConoscoPage';
 import { TelefonesUteisPage } from '@/pages/TelefonesUteisPage';
 import { SuporteSistemasPage } from '@/pages/SuporteSistemasPage';
+import { SecretariasOrgaosPage } from '@/pages/SecretariasOrgaosPage';
 
 function PortalLayout() {
   return (
@@ -36,6 +37,7 @@ export function App() {
           <Route path="/fale-conosco" element={<FaleConoscoPage />} />
           <Route path="/fale-conosco/telefones-uteis" element={<TelefonesUteisPage />} />
           <Route path="/fale-conosco/suporte-a-sistemas" element={<SuporteSistemasPage />} />
+          <Route path="/fale-conosco/secretarias-e-orgaos" element={<SecretariasOrgaosPage />} />
           <Route path="/categoria/:id" element={<CategoryPage />} />
           {/* layouts específicos — IDs fixos, sem :id no path */}
           <Route path="/servico/boletim-acidente-transito" element={<ServiceDetailPage />} />

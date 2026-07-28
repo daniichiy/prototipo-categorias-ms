@@ -79,10 +79,11 @@ export const CONTACT_CHANNELS: ContactChannel[] = [
   },
   {
     icon: 'account_balance',
-    title: 'Secretárias e Órgãos',
+    title: 'Secretarias e Órgãos',
     description: 'Acesse informações sobre secretarias e órgãos do governo',
     linkLabel: 'Acessar secretarias e órgãos',
     href: 'https://www.ms.gov.br/orgaos',
+    to: '/fale-conosco/secretarias-e-orgaos',
   },
   {
     icon: 'maps_ugc',
